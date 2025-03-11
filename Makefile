@@ -7,7 +7,7 @@ SRCS= $(SRCS_DIR)/main.c
 OBJS= $(SRCS:.c=.o)
 
 all: $(NAME)
-	@echo "Project built, execute with <./minishell>!"
+	@echo "Project built, execute with ./minishell"
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
