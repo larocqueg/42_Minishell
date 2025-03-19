@@ -1,16 +1,16 @@
 NAME= minishell
 CC= cc
 CFLAGS = -g -Wall -Werror -Wextra -I $(INCLUDES)
+LDFLAGS = -lreadline
 INCLUDES= ./includes
 SRCS_DIR= ./srcs
 SRCS= $(SRCS_DIR)/main.c
 OBJS= $(SRCS:.c=.o)
 
 all: $(NAME)
-	@echo "Project built, execute with ./minishell"
 
 $(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -c $^ -o $@
