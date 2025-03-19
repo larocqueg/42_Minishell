@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 18:08:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:47:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,7 @@ char	*check_envp(char **envp)
 	}
 	return (NULL);
 }
-char *check_cmdpath(char **split_path)
-{
-	int		i;
-	char	*valid_path;
 
-	valid_path = NULL;
-	i = 0;
-	while (split_path[i])
-	{
-		if (access(split_path[i], F_OK | X_OK) == 0)
-			valid_path = split_path[i];
-		i++;
-	}
-	return (valid_path);
-}
 char **ft_split_path(char *env_path, char *cmd)
 {
 	char	**split_path;
@@ -82,6 +68,33 @@ char **ft_split_path(char *env_path, char *cmd)
 	return (split_path);
 
 }
+
+char *check_cmdpath(char **split_path, char **pwdpath)
+{
+	int		i;
+	char	*valid_path;
+
+	valid_path = NULL;
+	i = 0;
+	while (split_path && split_path[i])
+	{
+		if (access(split_path[i], F_OK | X_OK) == 0)
+			valid_path = split_path[i];
+		i++;
+	}
+	if (!valid_path)
+	{
+		i = 0;
+		while (pwdpath[i])
+		{
+			if (access(pwdpath[i], F_OK | X_OK) == 0)
+				valid_path = pwdpath[i];
+			i++;
+		}
+	}
+	return (valid_path);
+}
+
 int	only_spaces(char *str)
 {
 	int	i;
@@ -102,13 +115,16 @@ void	handle_prompt(char *prompt, char **envp)
 		char	*pwd;
 		char **cmd;
 		char **split_path;
+		char **pwdpath;
+
 		int pid;
 		if (prompt == NULL || prompt[0] == '\0' || only_spaces(prompt))
 			return;
 		pwd = NULL;
+		split_path = NULL;
 		cmd = ft_split(prompt, ' ');
 		pwd = getcwd(pwd, 4096);
-		if (check_cmd(cmd, prompt))
+		if (check_cmd(cmd, envp))
 			return ;
 		pid = fork();
 
@@ -118,18 +134,17 @@ void	handle_prompt(char *prompt, char **envp)
 			return ;
 		}
 		path = check_envp(envp);
-
-		split_path = ft_split_path(path, cmd[0]);
-		path = check_cmdpath(split_path);
+		if (path)
+		{
+			split_path = ft_split_path(path, cmd[0]);
+		}
+		pwdpath = ft_split_path(pwd, cmd[0]);
+		path = check_cmdpath(split_path, pwdpath);
 		if (!path)
 		{
-			split_path = ft_split_path(pwd, cmd[0]);
-			if (!(pwd = check_cmdpath(split_path)))
-			{
-				printf("minishell: %s: command not found\n", cmd[0]);
-				exit(0);
-			}
-			execve(pwd, cmd, envp);
+
+			ft_printf("testshell: %s: command not found\n", cmd[0]);
+			exit(1);
 		}
 		else
 			execve(path, cmd, envp);
