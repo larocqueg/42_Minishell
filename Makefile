@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/03/19 13:29:52 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/03/19 13:31:48 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,14 @@ NAME = minishell
 # Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS= -lreadline
+LDFLAGS= -lreadline -lncurses
 # Paths
 SRC_DIR = ./srcs
 INCLUDES = ./includes
 LIBFT_DIR = ./libs/libft
 
-
 # Sources
 SRC = $(SRC_DIR)/main.c \
-
 
 # Objects
 OBJS = $(SRC:.c=.o)

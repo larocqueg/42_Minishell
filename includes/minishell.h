@@ -6,12 +6,14 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 11:45:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:06:55 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#include "../libs/libft/libft.h"
 
 #include <stdio.h>        // for printf(), strerror(), perror()
 #include <stdlib.h>       // for malloc(), free(), exit(), getenv()
