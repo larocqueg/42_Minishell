@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 17:13:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:30:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@
 #include <term.h>         // for tgetent(), tgetflag(), tgetnum(), tgetstr(), tgoto(), tputs()
 #include <readline/readline.h>  // for readline()
 #include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
+#include <stdbool.h>
 
 #define PROGRAM_NAME "\033[0;31mminihell$< \033[0m"
 
 
 //functions
-int	check_cmd(char **cmd);
+int	check_cmd(char **cmd, char *prompt);
 #endif

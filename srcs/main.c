@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 17:27:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:08:09 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,8 @@ void	handle_prompt(char *prompt, char **envp)
 		pwd = NULL;
 		cmd = ft_split(prompt, ' ');
 		pwd = getcwd(pwd, 4096);
-		if (check_cmd(cmd))
+		if (check_cmd(cmd, prompt))
 			return ;
-
 		pid = fork();
 
 		if (pid != 0)
@@ -146,9 +145,6 @@ int	main(int ac, char *av[], char **envp)
 	pwd = malloc(sizeof(char) * 4096);
 	(void)ac;
 	(void)av;
-	(void)envp;
-
-
 
 	while (1)
 	{

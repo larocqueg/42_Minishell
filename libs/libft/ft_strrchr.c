@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:01:50 by gde-la-r          #+#    #+#             */
-/*   Updated: 2024/10/30 12:08:01 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:36:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+/* returns String from the point where it found the character or NULL if found none*/
 char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
