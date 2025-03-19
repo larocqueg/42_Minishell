@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 16:36:25 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:27:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,19 @@ char **ft_split_path(char *env_path, char *cmd)
 	return (split_path);
 
 }
+int	only_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(*str)
+	{
+		if (*str != 32 && !(*str >= 9 && *str <= 13))
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 void	handle_prompt(char *prompt, char **envp)
 {
@@ -90,10 +103,14 @@ void	handle_prompt(char *prompt, char **envp)
 		char **cmd;
 		char **split_path;
 		int pid;
-
-		pwd = NULL;
-		if (prompt == NULL || prompt[0] == '\0')
+		if (prompt == NULL || prompt[0] == '\0' || only_spaces(prompt))
 			return;
+		pwd = NULL;
+		cmd = ft_split(prompt, ' ');
+		pwd = getcwd(pwd, 4096);
+		if (check_cmd(cmd))
+			return ;
+
 		pid = fork();
 
 		if (pid != 0)
@@ -102,13 +119,11 @@ void	handle_prompt(char *prompt, char **envp)
 			return ;
 		}
 		path = check_envp(envp);
-		cmd = ft_split(prompt, ' ');
+
 		split_path = ft_split_path(path, cmd[0]);
 		path = check_cmdpath(split_path);
 		if (!path)
 		{
-			pwd = getcwd(pwd, 4096);
-			cmd = ft_split(prompt, ' ');
 			split_path = ft_split_path(pwd, cmd[0]);
 			if (!(pwd = check_cmdpath(split_path)))
 			{
@@ -117,7 +132,6 @@ void	handle_prompt(char *prompt, char **envp)
 			}
 			execve(pwd, cmd, envp);
 		}
-
 		else
 			execve(path, cmd, envp);
 
@@ -126,6 +140,7 @@ int	main(int ac, char *av[], char **envp)
 {
 	char	*prompt;
 	char	*pwd;
+	char	*name;
 
 	signal(SIGINT, signal_handler);
 	pwd = malloc(sizeof(char) * 4096);
@@ -133,13 +148,15 @@ int	main(int ac, char *av[], char **envp)
 	(void)av;
 	(void)envp;
 
-	getcwd(pwd, 4096);
-	pwd = ft_strrchr(pwd, '/');
-	ft_strlcat(pwd++, " <$ ", 4096);
+
 
 	while (1)
 	{
-		prompt = readline(PROGRAM_NAME);
+		getcwd(pwd, 4096);
+		pwd = ft_strrchr(pwd, '/');
+		ft_strlcat(++pwd, " ", 4096 );
+		name = ft_strjoin(pwd, PROGRAM_NAME);
+		prompt = readline(name);
 		handle_prompt(prompt, envp);
 	}
 

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 16:26:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:13:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,7 @@
 
 #define PROGRAM_NAME "\033[0;31mminihell$< \033[0m"
 
+
+//functions
+int	check_cmd(char **cmd);
 #endif
