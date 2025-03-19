@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 16:13:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:21:04 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,7 @@ int	main(int ac, char *av[], char **envp)
 
 	while (1)
 	{
-		printf("\033[0;31m%s\033[0m", pwd);
-		prompt = readline("");
+		prompt = readline(PROGRAM_NAME);
 		handle_prompt(prompt, envp);
 	}
 
