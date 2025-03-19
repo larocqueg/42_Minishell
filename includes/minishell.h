@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 16:23:40 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:26:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@
 #include <readline/readline.h>  // for readline()
 #include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
 
+#define PROGRAM_NAME "\033[0;31mminihell$< \033[0m"
 
-#define PROGRAM_NAME "\033[0;31m🤏hell$< \033[0m"
 #endif
