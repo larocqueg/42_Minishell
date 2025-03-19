@@ -1,27 +1,64 @@
-NAME= minishell
-CC= cc
-CFLAGS = -g -Wall -Werror -Wextra -I $(INCLUDES)
-LDFLAGS = -lreadline
-INCLUDES= ./includes
-SRCS_DIR= ./srcs
-SRCS= $(SRCS_DIR)/main.c
-OBJS= $(SRCS:.c=.o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
+#    Updated: 2025/03/19 13:29:52 by rafaelfe         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Output name
+NAME = minishell
+
+# Compilation
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS= -lreadline
+# Paths
+SRC_DIR = ./srcs
+INCLUDES = ./includes
+LIBFT_DIR = ./libs/libft
+
+
+# Sources
+SRC = $(SRC_DIR)/main.c \
+
+
+# Objects
+OBJS = $(SRC:.c=.o)
+LIBFT = $(LIBFT_DIR)/libft.a
 
 all: $(NAME)
 
-$(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $(NAME)
+	@clear
+	@echo "✅ Successfully built $(NAME)!"
 
-%.o : %.c
-	@$(CC) $(CFLAGS) -I $(INCLUDES) -c $^ -o $@
+$(LIBFT):
+	@make -C $(LIBFT_DIR) --silent
+
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -I $(LIBFT_DIR) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS)
-	@echo "Cleaning Objects!"
+	@make clean -C $(LIBFT_DIR) --silent
+	@clear
+	@echo "✅ clean completed successfully!"
+
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "Cleaning Objects and shell!"
-re: fclean all
+	@make fclean -C $(LIBFT_DIR) --silent
+	@rm -rf $(MLX_DIR)
+	@echo "✅ fclean completed successfully!"
+
+re: fclean
+	@make all
+	@clear
+	@echo "✅ minishell successfully rebuilt!"i
 
 .PHONY: all clean fclean re
-
