@@ -31,7 +31,7 @@
 #include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
 #include <stdbool.h>
 
-#define PROGRAM_NAME "\033[0;31mtestshell \033[0m"
+#define PROGRAM_NAME "\033[0;31mminihell \033[0m"
 
 
 //functions
