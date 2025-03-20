@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 19:47:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/20 19:35:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	handle_prompt(char *prompt, char **envp)
 		int pid;
 		if (prompt == NULL || prompt[0] == '\0' || only_spaces(prompt))
 			return;
+		add_history(prompt);
 		pwd = NULL;
 		split_path = NULL;
 		cmd = ft_split(prompt, ' ');
