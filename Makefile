@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/03/19 17:04:33 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/03/20 20:44:38 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ LIBFT_DIR = ./libs/libft
 
 # Sources
 SRC = $(SRC_DIR)/main.c \
-	$(SRC_DIR)/cmd.c
 
 # Objects
 OBJS = $(SRC:.c=.o)

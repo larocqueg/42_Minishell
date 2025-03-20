@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 19:36:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:00:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,47 @@
 
 #include "../libs/libft/libft.h"
 
-#include <stdio.h>        // for printf(), strerror(), perror()
-#include <stdlib.h>       // for malloc(), free(), exit(), getenv()
-#include <unistd.h>       // for write(), access(), open(), read(), close(), getcwd(), chdir(), execve(), dup(), dup2(), pipe(), isatty(), ttyname(), ttyslot()
-#include <sys/types.h>    // for types like pid_t, etc.
-#include <sys/wait.h>     // for wait(), waitpid(), wait3(), wait4()
-#include <signal.h>       // for signal(), sigaction(), sigemptyset(), sigaddset(), kill()
-#include <sys/stat.h>     // for stat(), lstat(), fstat()
-#include <fcntl.h>        // for file flags with open()
-#include <dirent.h>       // for opendir(), readdir(), closedir()
-#include <sys/ioctl.h>    // for ioctl()
-#include <termios.h>      // for tcsetattr(), tcgetattr()
-#include <term.h>         // for tgetent(), tgetflag(), tgetnum(), tgetstr(), tgoto(), tputs()
-#include <readline/readline.h>  // for readline()
-#include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <term.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <stdbool.h>
 
-#define PROGRAM_NAME "\033[0;31mminihell \033[0m"
+# define CMD=0
+# define PIPE=1
+# define HERE_DOC=2
+# define APPEND=3
+# define INFILE=4
+# define TOFILE=5
+# define PIPE=6
+# define ARG=7
 
+typedef	struct s_shell
+{
+	int		from_fd;
+	int		to_fd;
+
+	char	**envp;
+}	t_shell;
+
+typedef struct s_token
+{
+	char	*token;
+	int		type;
+	s_token *next;
+
+}	t_token;
 
 //functions
-int	check_cmd(char **cmd, char **envp);
+
 #endif
