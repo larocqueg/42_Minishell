@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 21:00:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:29:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define TOFILE=5
 # define PIPE=6
 # define ARG=7
+# define SINGLEQ_ARG= 8
+# define FILE= 9
 
 typedef	struct s_shell
 {
@@ -52,10 +54,10 @@ typedef struct s_token
 {
 	char	*token;
 	int		type;
+	bool	builtin;
 	s_token *next;
 
 }	t_token;
-
 //functions
 
 #endif

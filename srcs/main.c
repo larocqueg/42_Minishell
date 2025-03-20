@@ -6,12 +6,13 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 20:45:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:31:58 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	main(int argc, char **argv, char **envp)
 {
+	
 
-
+	return (0);
 }
