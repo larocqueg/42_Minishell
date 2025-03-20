@@ -165,6 +165,8 @@ int	main(int ac, char *av[], char **envp)
 		ft_strlcat(++pwd, "$> ", 4096 );
 		name = ft_strjoin(PROGRAM_NAME, pwd);
 		prompt = readline(name);
+		if (prompt != NULL && !only_spaces(prompt))
+			add_history(prompt);
 		handle_prompt(prompt, envp);
 	}
 
