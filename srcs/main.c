@@ -97,9 +97,6 @@ char *check_cmdpath(char **split_path, char **pwdpath)
 
 int	only_spaces(char *str)
 {
-	int	i;
-
-	i = 0;
 	while(*str)
 	{
 		if (*str != 32 && !(*str >= 9 && *str <= 13))
@@ -165,8 +162,8 @@ int	main(int ac, char *av[], char **envp)
 	{
 		getcwd(pwd, 4096);
 		pwd = ft_strrchr(pwd, '/');
-		ft_strlcat(++pwd, " ", 4096 );
-		name = ft_strjoin(pwd, PROGRAM_NAME);
+		ft_strlcat(++pwd, "$> ", 4096 );
+		name = ft_strjoin(PROGRAM_NAME, pwd);
 		prompt = readline(name);
 		handle_prompt(prompt, envp);
 	}
