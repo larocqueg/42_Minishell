@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cli.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 22:17:06 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/03/20 22:11:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	start_cli(t_shell *sh)
 {
-	t_shell	sh;
+	char	*prompt;
 
+	while (1)
+	{
+		get_cli_pwd(sh);
+		prompt = readline(sh->cli_text);
+		
+	}
 
-
-	start_cli(&sh);
-
-
-	return (0);
 }

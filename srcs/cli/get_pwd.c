@@ -1,25 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 22:17:06 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/20 22:07:22 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/03/20 22:17:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_shell	sh;
-
-
-
-	start_cli(&sh);
-
-
-	return (0);
-}
+#include "../../includes/minishell.h"
+	get_cli_pwd(sh);

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 21:29:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:15:40 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@
 # define SINGLEQ_ARG= 8
 # define FILE= 9
 
+# define PWD_BUFFER= 4096;
+
 typedef	struct s_shell
 {
 	int		from_fd;
 	int		to_fd;
-
+	char	*cli_text;
 	char	**envp;
 }	t_shell;
 
@@ -59,5 +61,9 @@ typedef struct s_token
 
 }	t_token;
 //functions
+
+
+//cli
+int	start_cli(t_shell *sh);
 
 #endif
