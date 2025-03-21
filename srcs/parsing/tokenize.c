@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:49:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:54:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	tokenize(char *str)
 {
-	int	i = 0;
-	while (str[i])
+	int	start = 0;
+	int end = 0;
+	while (str[end])
 	{
-		
+		if (is_space(str[end])|| is_redirect(str[end]))
+		{
+			
+		}
 	}
 
 }
