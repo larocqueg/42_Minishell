@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:51:49 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:36:12 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,19 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
-# define CMD 0
-# define PIPE 1
-# define HERE_DOC 2
-# define APPEND 3
-# define INFILE 4
-# define TOFILE 5
-# define FILE 6
-# define ARG 7
-# define SINGLEQ_ARG 8
+
+typedef enum e_type
+{
+	WORD = 0,
+	PIPE = 1,
+	HERE_DOC = 2,
+	APPEND = 3,
+	INFILE = 4,
+	TOFILE = 5,
+	FILE = 6,
+	ARG = 7,
+	SINGLEQ_ARG = 8
+}	t_type;
 
 typedef	struct s_shell
 {
@@ -52,7 +56,8 @@ typedef	struct s_shell
 typedef struct s_token
 {
 	char	*token;
-	int		type;
+	t_type	type;
+	bool	expand;
 	struct s_token *next;
 
 }	t_token;
