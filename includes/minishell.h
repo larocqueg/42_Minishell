@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 03:29:46 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 03:57:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 #include <stdbool.h>
 
 #define GIT_HEAD_FILE ".git/HEAD"
+#define START_GIT BOLD BLUE"git:("RESET
+#define END_GIT BOLD BLUE") "RESET
 #define PROGRAM_NAME GREEN"➜  "RESET BOLD
 //#define PROGRAM_NAME RED" minihell "RESET BOLD //minihell
 #define RESET "\033[0m"

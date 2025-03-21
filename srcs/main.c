@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 03:32:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 04:00:33 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,39 @@ void	handle_prompt(char *prompt, char **envp)
 			execve(path, cmd, envp);
 
 }
+
+char	*get_git(char *str)
+{
+	int	git_fd;
+	char *headline;
+	char *temp;
+	char *branch_line;
+	char *return_line;
+
+	(void)str;
+	git_fd = open(GIT_HEAD_FILE, O_RDONLY);
+	if (git_fd == -1)
+		return (NULL);
+	headline = get_next_line(git_fd);
+	if (!headline)
+		return (NULL);
+	branch_line = ft_strjoin(RED, BOLD);
+	temp = ft_strrchr(headline, '/');
+	temp = ft_strtrim(temp, "\n");
+	return_line = ft_strjoin(branch_line, temp + 1);
+	free(headline);
+	free(temp);
+	branch_line = ft_strjoin(return_line, RESET);
+	free(return_line);
+
+	temp = ft_strjoin(START_GIT, branch_line);
+	headline = ft_strjoin(temp, END_GIT);
+	return_line = ft_strjoin(str, headline);
+	free(temp);
+	free(headline);
+	return (return_line);
+
+}
 char *get_cli_pwd(void)
 {
 	char	*pwd;
@@ -173,9 +206,11 @@ char *get_cli_pwd(void)
 	}
 
 	str = ft_strjoin(PROGRAM_NAME, cli_str);
-	temp = get_git();
+	temp = get_git(str);
 	if (temp)
 	{
+		free(str);
+		str = temp;
 	}
 	free(cli_str);
 	free(pwd);
