@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 04:00:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:18:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,23 @@ char	*get_git(char *str)
 	int	git_fd;
 	char *headline;
 	char *temp;
+	char *temp2;
 	char *branch_line;
 	char *return_line;
+	char *git_name;
 
 	(void)str;
-	git_fd = open(GIT_HEAD_FILE, O_RDONLY);
+	git_fd = -1;
+	git_name = ft_strdup(GIT_HEAD_FILE);
+	for(int i = 0; i < 10; i++)
+	{
+		git_fd = open(git_name, O_RDONLY);
+		if (git_fd != -1)
+			break;
+		temp2 = ft_strjoin("../", git_name);
+		free(git_name);
+		git_name = temp2;
+	}
 	if (git_fd == -1)
 		return (NULL);
 	headline = get_next_line(git_fd);
@@ -171,7 +183,6 @@ char	*get_git(char *str)
 	free(temp);
 	branch_line = ft_strjoin(return_line, RESET);
 	free(return_line);
-
 	temp = ft_strjoin(START_GIT, branch_line);
 	headline = ft_strjoin(temp, END_GIT);
 	return_line = ft_strjoin(str, headline);
