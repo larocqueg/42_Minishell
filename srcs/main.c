@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 10:18:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:30:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,10 @@ char	*get_git(char *str)
 	{
 		git_fd = open(git_name, O_RDONLY);
 		if (git_fd != -1)
+		{
+			free(git_name);
 			break;
+		}
 		temp2 = ft_strjoin("../", git_name);
 		free(git_name);
 		git_name = temp2;
