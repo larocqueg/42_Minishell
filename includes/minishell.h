@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 19:36:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 03:10:11 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@
 #include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
 #include <stdbool.h>
 
-#define PROGRAM_NAME "\033[0;31mtestshell \033[0m"
+#define PROGRAM_NAME GREEN"➜  "RESET BOLD
+//#define PROGRAM_NAME RED" minihell "RESET BOLD //minihell
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define YELLOW "\033[33m"
+#define CYAN "\033[36m"
+#define MAGENTA "\033[35m"
+#define BOLD "\033[1m"
 
 
 //functions

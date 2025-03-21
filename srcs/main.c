@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 19:47:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 03:20:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,26 +147,53 @@ void	handle_prompt(char *prompt, char **envp)
 			execve(path, cmd, envp);
 
 }
+char *get_cli_pwd(void)
+{
+	char	*pwd;
+	char	*cli_str;
+	char	*temp;
+	char	*str;
+
+	pwd = getcwd(NULL, 4096);
+	if ((ft_strncmp(getenv("HOME"), pwd, ft_strlen(pwd)) == 0) &&
+		ft_strlen(getenv("HOME")) == ft_strlen(pwd))
+	{
+		//cli_str = ft_strdup(CYAN"~ $< "RESET); //minihell
+		cli_str = ft_strdup(CYAN"~  "RESET); //zsh theme
+	}
+	else
+	{
+		temp = ft_strrchr(pwd, '/'); //zsh theme
+		if (ft_strncmp("/home", pwd, 5) == 0 && ft_strlen(pwd) > 5)
+			temp = temp + 1;
+		temp = ft_strjoin(CYAN, temp); //zsh theme
+		cli_str = ft_strjoin(temp, " "RESET); //zsh theme
+		//cli_str = ft_strjoin(temp + 1, " $< "); minihell
+
+		free(temp);
+	}
+
+	str = ft_strjoin(PROGRAM_NAME, cli_str);
+	free(cli_str);
+	free(pwd);
+	return (str);
+}
 int	main(int ac, char *av[], char **envp)
 {
 	char	*prompt;
-	char	*pwd;
 	char	*name;
 
 	signal(SIGINT, signal_handler);
-	pwd = malloc(sizeof(char) * 4096);
 	(void)ac;
 	(void)av;
 
 	while (1)
 	{
-		getcwd(pwd, 4096);
-		pwd = ft_strrchr(pwd, '/');
-		ft_strlcat(++pwd, "$> ", 4096 );
-		name = ft_strjoin(PROGRAM_NAME, pwd);
+		name = get_cli_pwd();
 		prompt = readline(name);
 		if (prompt != NULL && !only_spaces(prompt))
 			add_history(prompt);
+		free(name);
 		handle_prompt(prompt, envp);
 	}
 
