@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: larocqueg <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:26:47 by larocqueg         #+#    #+#             */
-/*   Updated: 2025/02/04 16:21:18 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:17:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strchr(const char *str, int c);
 char	*ft_itoa(int n);
 char	*ft_strdup(const char *str);
+char	*ft_strndupmod(const char *str, int start, int end);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

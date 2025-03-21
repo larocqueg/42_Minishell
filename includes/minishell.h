@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/19 19:36:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:36:12 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,70 @@
 
 #include "../libs/libft/libft.h"
 
-#include <stdio.h>        // for printf(), strerror(), perror()
-#include <stdlib.h>       // for malloc(), free(), exit(), getenv()
-#include <unistd.h>       // for write(), access(), open(), read(), close(), getcwd(), chdir(), execve(), dup(), dup2(), pipe(), isatty(), ttyname(), ttyslot()
-#include <sys/types.h>    // for types like pid_t, etc.
-#include <sys/wait.h>     // for wait(), waitpid(), wait3(), wait4()
-#include <signal.h>       // for signal(), sigaction(), sigemptyset(), sigaddset(), kill()
-#include <sys/stat.h>     // for stat(), lstat(), fstat()
-#include <fcntl.h>        // for file flags with open()
-#include <dirent.h>       // for opendir(), readdir(), closedir()
-#include <sys/ioctl.h>    // for ioctl()
-#include <termios.h>      // for tcsetattr(), tcgetattr()
-#include <term.h>         // for tgetent(), tgetflag(), tgetnum(), tgetstr(), tgoto(), tputs()
-#include <readline/readline.h>  // for readline()
-#include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <term.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <stdbool.h>
 
-#define PROGRAM_NAME "\033[0;31mminihell \033[0m"
 
+typedef enum e_type
+{
+	WORD = 0,
+	PIPE = 1,
+	HERE_DOC = 2,
+	APPEND = 3,
+	INFILE = 4,
+	TOFILE = 5,
+	FILE = 6,
+	ARG = 7,
+	SINGLEQ_ARG = 8
+}	t_type;
 
+typedef	struct s_shell
+{
+	int		from_fd;
+	int		to_fd;
+	char	*cli_text;
+	char	**envp;
+}	t_shell;
+
+typedef struct s_token
+{
+	char	*token;
+	t_type	type;
+	bool	expand;
+	struct s_token *next;
+
+}	t_token;
 //functions
-int	check_cmd(char **cmd, char **envp);
+
+//tokens
+void	tokenize(char *str);
+
+//cli
+int		start_cli(t_shell *sh);
+void	get_cli_pwd(t_shell *sh);
+
+#define PROGRAM_NAME RED"minihell "RESET
+#define COLOR_STRING(COLOR, str) COLOR str RESET
+//colors
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define YELLOW "\033[33m"
+#define CYAN "\033[36m"
+#define MAGENTA "\033[35m"
+
 #endif

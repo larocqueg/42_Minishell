@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 10:47:11 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/20 22:07:22 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/03/21 10:48:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	get_cli_pwd(t_shell *sh)
 {
-	t_shell	sh;
+	char	*pwd;
+	char	*cli_str;
+	char	*temp;
 
-	sh.envp = envp;
-	start_cli(&sh);
-	return (0);
+	pwd = getcwd(NULL, 4096);
+	if (ft_strncmp(getenv("HOME"), pwd, ft_strlen(pwd)) == 0)
+	{
+		cli_str = ft_strdup("~ $< ");
+	}
+	else
+	{
+		temp = ft_strrchr(pwd, '/');
+		cli_str = ft_strjoin(temp + 1, " $< " );
+	}
+	sh->cli_text = ft_strjoin(PROGRAM_NAME, cli_str);
+	free(cli_str);
+	free(pwd);
 }
