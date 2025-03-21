@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cli.c                                              :+:      :+:    :+:   */
+/*   ft_strndupmod.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:46:52 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/21 11:08:33 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/03/21 11:40:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	start_cli(t_shell *sh)
+char	*ft_strndupmod(const char *str, int start, int end)
 {
-	char	*prompt;
+	char	*newstr;
+	int		i;
+	int		total_len;
 
-	while (1)
+	i = 0;
+	total_len = end - start + 1;
+	newstr = (char *)malloc(total_len + 1);
+	if (!newstr)
+		return (NULL);
+	while (i < total_len)
 	{
-		get_cli_pwd(sh);
-		prompt = readline(sh->cli_text);
-		free(sh->cli_text);
-		tokenize(prompt);
+		newstr[i] = str[start];
+		i++;
+		start++;
 	}
+	newstr[i] = '\0';
+	return (newstr);
 }

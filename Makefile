@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/03/21 02:04:59 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/03/21 13:10:45 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ LIBFT_DIR = ./libs/libft
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/cli/cli.c \
 	$(SRC_DIR)/cli/get_pwd.c \
+	$(SRC_DIR)/parsing/tokenize.c \
 
 # Objects
 OBJS = $(SRC:.c=.o)
@@ -36,7 +37,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $(NAME)
-	@clear
 	@echo "✅ Successfully built $(NAME)!"
 
 $(LIBFT):
@@ -54,12 +54,10 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@make fclean -C $(LIBFT_DIR) --silent
-	@rm -rf $(MLX_DIR)
 	@echo "✅ fclean completed successfully!"
 
 re: fclean
 	@make all
-	@clear
 	@echo "✅ minishell successfully rebuilt!"i
 
 .PHONY: all clean fclean re

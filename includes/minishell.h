@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 02:29:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:51:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@
 # define APPEND 3
 # define INFILE 4
 # define TOFILE 5
-# define PIPE 6
+# define FILE 6
 # define ARG 7
 # define SINGLEQ_ARG 8
-# define FILE 9
 
 typedef	struct s_shell
 {
@@ -54,12 +53,13 @@ typedef struct s_token
 {
 	char	*token;
 	int		type;
-	bool	builtin;
 	struct s_token *next;
 
 }	t_token;
 //functions
 
+//tokens
+void	tokenize(char *str);
 
 //cli
 int		start_cli(t_shell *sh);

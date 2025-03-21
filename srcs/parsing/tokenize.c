@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cli.c                                              :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:46:52 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/03/21 11:49:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	start_cli(t_shell *sh)
+void	tokenize(char *str)
 {
-	char	*prompt;
-
-	while (1)
+	int	i = 0;
+	while (str[i])
 	{
-		get_cli_pwd(sh);
-		prompt = readline(sh->cli_text);
-		free(sh->cli_text);
-		tokenize(prompt);
+		
 	}
+
 }
+
