@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/20 22:15:40 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 02:29:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,16 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
-# define CMD=0
-# define PIPE=1
-# define HERE_DOC=2
-# define APPEND=3
-# define INFILE=4
-# define TOFILE=5
-# define PIPE=6
-# define ARG=7
-# define SINGLEQ_ARG= 8
-# define FILE= 9
-
-# define PWD_BUFFER= 4096;
+# define CMD 0
+# define PIPE 1
+# define HERE_DOC 2
+# define APPEND 3
+# define INFILE 4
+# define TOFILE 5
+# define PIPE 6
+# define ARG 7
+# define SINGLEQ_ARG 8
+# define FILE 9
 
 typedef	struct s_shell
 {
@@ -57,13 +55,25 @@ typedef struct s_token
 	char	*token;
 	int		type;
 	bool	builtin;
-	s_token *next;
+	struct s_token *next;
 
 }	t_token;
 //functions
 
 
 //cli
-int	start_cli(t_shell *sh);
+int		start_cli(t_shell *sh);
+void	get_cli_pwd(t_shell *sh);
+
+#define PROGRAM_NAME RED"minihell "RESET
+#define COLOR_STRING(COLOR, str) COLOR str RESET
+//colors
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define YELLOW "\033[33m"
+#define CYAN "\033[36m"
+#define MAGENTA "\033[35m"
 
 #endif
