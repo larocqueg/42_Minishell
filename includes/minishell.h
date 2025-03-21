@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 03:10:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 03:29:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #include <readline/history.h>   // for rl_clear_history(), rl_on_new_line(), rl_replace_line(), rl_redisplay(), add_history()
 #include <stdbool.h>
 
+#define GIT_HEAD_FILE ".git/HEAD"
 #define PROGRAM_NAME GREEN"➜  "RESET BOLD
 //#define PROGRAM_NAME RED" minihell "RESET BOLD //minihell
 #define RESET "\033[0m"

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 03:20:42 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/21 03:32:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,12 +168,15 @@ char *get_cli_pwd(void)
 			temp = temp + 1;
 		temp = ft_strjoin(CYAN, temp); //zsh theme
 		cli_str = ft_strjoin(temp, " "RESET); //zsh theme
-		//cli_str = ft_strjoin(temp + 1, " $< "); minihell
-
 		free(temp);
+		//cli_str = ft_strjoin(temp + 1, " $< "); minihell
 	}
 
 	str = ft_strjoin(PROGRAM_NAME, cli_str);
+	temp = get_git();
+	if (temp)
+	{
+	}
 	free(cli_str);
 	free(pwd);
 	return (str);
