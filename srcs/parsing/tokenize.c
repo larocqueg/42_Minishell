@@ -31,18 +31,20 @@ static t_type	get_token_type(char *token)
 {
 	if (!token)
 		return (WORD);
-	if (strcmp(token, "|") == 0)
+	if (ft_strncmp(token, "|", 1) == 0)
 		return (PIPE);
-	if (strcmp(token, "<<") == 0)
+	if (ft_strncmp(token, "<<", 2) == 0)
 		return (HERE_DOC);
-	if (strcmp(token, ">") == 0)
+	if (ft_strncmp(token, ">", 1) == 0)
 		return (OVERWRITE);
-	if (strcmp(token, ">>") == 0)
+	if (ft_strncmp(token, ">>", 2) == 0)
 		return (APPEND);
-	if (strcmp(token, "<") == 0)
+	if (ft_strncmp(token, "<", 1) == 0)
 		return (INFILE);
-	if (strcmp(token, ">") == 0)
+	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
+	if (ft_strncmp(token, "'", 1) == 0)
+		return (SINGLEQ_ARG);
 	return (WORD);
 }
 
