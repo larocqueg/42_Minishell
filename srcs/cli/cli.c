@@ -14,6 +14,7 @@
 
 int	start_cli(t_shell *sh)
 {
+	t_token	*token;
 	char	*prompt;
 
 	while (1)
@@ -21,6 +22,11 @@ int	start_cli(t_shell *sh)
 		get_cli_pwd(sh);
 		prompt = readline(sh->cli_text);
 		free(sh->cli_text);
-		tokenize(prompt);
+		token = tokenize(prompt);
+		while (token)
+		{
+			ft_printf("token = %s type =%d\n", token->token, token->type);
+			token = token->next;
+		}
 	}
 }

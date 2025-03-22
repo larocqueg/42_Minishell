@@ -24,27 +24,21 @@ t_token	*ft_tokennew(char *str, int type)
 	n_token->next = NULL;
 	return (n_token);
 }
-void	ft_token_addback(t_token **token, t_token *new)
+void	ft_token_addback(t_token **token, t_token *new_token)
 {
 	t_token	*temp;
 
-	if (!new)
+	if (!new_token)
 		return ;
 	if (!*token)
 	{
-		*token = new;
+		*token = new_token;
 		return ;
 	}
-	while (*token)
-	{
-		if ((*token)->next == NULL)
-		{
-			temp = (*token);
-			break;
-		}
-		(*token) = (*token)->next;
-	}
-	temp->next = new;
+	temp = *token;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_token;
 }
 
 

@@ -28,6 +28,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/cli/cli.c \
 	$(SRC_DIR)/cli/get_pwd.c \
 	$(SRC_DIR)/parsing/tokenize.c \
+	$(SRC_DIR)/parsing/token_utils.c \
 
 # Objects
 OBJS = $(SRC:.c=.o)
