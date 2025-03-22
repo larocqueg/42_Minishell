@@ -25,7 +25,11 @@ int	start_cli(t_shell *sh)
 		token = tokenize(prompt);
 		while (token)
 		{
-			ft_printf("token = %s type =%d\n", token->token, token->type);
+			ft_printf("token = %s type = %d", token->token, token->type);
+			if (token->expand)
+				ft_printf(" expand = true\n");
+			else
+				ft_printf(" expand = false\n");
 			token = token->next;
 		}
 	}

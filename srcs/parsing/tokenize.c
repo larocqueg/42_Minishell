@@ -80,7 +80,7 @@ static void	extract_token(char *prompt, int *i, t_token **tokens)
 		while (prompt[*i] && !is_space(prompt[*i]) && !is_operator(prompt[*i]))
 			token[j++] = prompt[(*i)++];
 	token[j] = '\0';
-	new_token = ft_tokennew(strdup(token), get_token_type(token));
+	new_token = ft_tokennew(ft_strdup(token), get_token_type(token), expand);
 	ft_token_addback(tokens, new_token);
 }
 

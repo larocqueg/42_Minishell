@@ -66,7 +66,7 @@ typedef struct s_token
 
 //tokens
 t_token	*tokenize(char *str);
-t_token	*ft_tokennew(char *str, int type);
+t_token	*ft_tokennew(char *str, int type, bool expand);
 void	ft_token_addback(t_token **token, t_token *new_token);
 
 //cli
