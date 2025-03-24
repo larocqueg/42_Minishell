@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:06:52 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 10:45:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:40:55 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,14 +206,14 @@ char *get_cli_pwd(void)
 		ft_strlen(getenv("HOME")) == ft_strlen(pwd))
 	{
 		//cli_str = ft_strdup(CYAN"~ $< "RESET); //minihell
-		cli_str = ft_strdup(CYAN"~  "RESET); //zsh theme
+		cli_str = ft_strdup(WHITE"~  "RESET); //zsh theme
 	}
 	else
 	{
 		temp = ft_strrchr(pwd, '/'); //zsh theme
 		if (ft_strncmp("/home", pwd, 5) == 0 && ft_strlen(pwd) > 5)
 			temp = temp + 1;
-		temp = ft_strjoin(CYAN, temp); //zsh theme
+		temp = ft_strjoin(WHITE, temp); //zsh theme
 		cli_str = ft_strjoin(temp, " "RESET); //zsh theme
 		free(temp);
 		//cli_str = ft_strjoin(temp + 1, " $< "); minihell
