@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/24 14:41:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:55:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 #include <stdbool.h>
 
 #define GIT_HEAD_FILE ".git/HEAD"
-#define START_GIT BOLD BLUE"git:("RESET
-#define END_GIT BOLD BLUE") "RESET
+#define START_GIT BOLD BLACK"git:("RESET
+#define END_GIT BOLD BLACK") "RESET
 //#define PROGRAM_NAME GREEN"➜  "RESET BOLD
 #define PROGRAM_NAME BOLD RED" minihell ➜ "RESET BOLD //minihell
 #define RESET "\033[0m"
@@ -45,7 +45,7 @@
 #define CYAN "\033[36m"
 #define MAGENTA "\033[35m"
 #define BOLD "\033[1m"
-
+#define BLACK "\033[30m"
 
 //functions
 int	check_cmd(char **cmd, char **envp);
