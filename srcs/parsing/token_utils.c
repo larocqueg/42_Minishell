@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_token	*ft_tokennew(char *str, int type, bool expand)
+t_token	*ft_tokennew(char *str, int type)
 {
 	t_token	*n_token;
 
@@ -24,7 +24,6 @@ t_token	*ft_tokennew(char *str, int type, bool expand)
 	n_token->token = str;
 	n_token->type = type;
 	n_token->next = NULL;
-	n_token->expand = expand;
 	return (n_token);
 }
 void	ft_token_addback(t_token **token, t_token *new_token)

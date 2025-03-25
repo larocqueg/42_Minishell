@@ -34,16 +34,12 @@
 
 typedef enum e_type
 {
-	WORD = 0,
-	PIPE = 1,
-	HERE_DOC = 2,
-	OVERWRITE = 3,
-	APPEND = 4,
-	INFILE = 5,
-	TOFILE = 6,
-	_FILE = 7,
-	ARG = 8,
-	SINGLEQ_ARG = 9
+	WORD,
+	PIPE,
+	HERE_DOC,
+	APPEND,
+	INFILE,
+	TOFILE,
 }	t_type;
 
 typedef	struct s_shell
@@ -66,7 +62,7 @@ typedef struct s_token
 
 //tokens
 t_token	*tokenize(char *str);
-t_token	*ft_tokennew(char *str, int type, bool expand);
+t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 
 //cli

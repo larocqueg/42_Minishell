@@ -35,16 +35,12 @@ static t_type	get_token_type(char *token)
 		return (PIPE);
 	if (ft_strncmp(token, "<<", 2) == 0)
 		return (HERE_DOC);
-	if (ft_strncmp(token, ">", 1) == 0)
-		return (OVERWRITE);
 	if (ft_strncmp(token, ">>", 2) == 0)
 		return (APPEND);
 	if (ft_strncmp(token, "<", 1) == 0)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
-	if (ft_strncmp(token, "'", 1) == 0)
-		return (SINGLEQ_ARG);
 	return (WORD);
 }
 
@@ -52,35 +48,19 @@ static void	extract_token(char *prompt, int *i, t_token **tokens)
 {
 	int		j;
 	char	token[4096];
-	char	quote;
-	bool	expand;
 	t_token	*new_token;
 
 	j = 0;
-	expand = true;
-	if (prompt[*i] == '"' || prompt[*i] == '\'')
-	{
-		quote = prompt[(*i)++];
-		if (quote == '\'')
-			expand = false;
-		token[j++] = quote;
-		while (prompt[*i] && prompt[*i] != quote)
-			token[j++] = prompt[(*i)++];
-		if (prompt[*i] == quote)
-			token[j++] = prompt[(*i)++];
-	}
-	else if (is_operator(prompt[*i]))
+	if (is_operator(prompt[*i]))
 	{
 		token[j++] = prompt[(*i)++];
-		if ((token[0] == '>' && prompt[*i] == '>')
-			|| (token[0] == '<' && prompt[*i] == '<'))
+		if (prompt[*i] == token[j])
 			token[j++] = prompt[(*i)++];
 	}
-	else
-		while (prompt[*i] && !is_space(prompt[*i]) && !is_operator(prompt[*i]))
-			token[j++] = prompt[(*i)++];
+	while (prompt[*i] && !is_space(prompt[*i]) && !is_operator(prompt[*i]))
+		token[j++] = prompt[(*i)++];
 	token[j] = '\0';
-	new_token = ft_tokennew(ft_strdup(token), get_token_type(token), expand);
+	new_token = ft_tokennew(ft_strdup(token), get_token_type(token));
 	ft_token_addback(tokens, new_token);
 }
 
