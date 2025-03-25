@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:28:46 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 21:36:26 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:51:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@ char	*ft_insertstr(char	*string, int index, char *substr)
 	int		total_len;
 	char	*after_str;
 	char	*result;
-
-	if (!substr || !*substr)
-		return (ft_strdup(string));
+	int		substr_len;
 
 	total_len = ft_strlen(string) + ft_strlen(substr) + 1;
 	result = malloc(sizeof(char) * total_len);
 	if (!result)
 		return (NULL);
 	after_str = NULL;
+
+	ft_strlcpy(result, string, index);
+	while(ft_isalnum(string[index]))
+		index++;
 	if (index <= ft_strlen(string))
 		after_str = string + index;
-	ft_strlcpy(result, string, index);
-	ft_strlcat(result, substr, total_len);
+	if (ft_strlen(substr) > 0)
+		ft_strlcat(result, substr, total_len);
 	ft_strlcat(result, after_str, total_len);
 
 	return (result);
