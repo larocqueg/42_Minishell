@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-/* returns String from the point where it found the character or NULL if found none*/
+
 char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
