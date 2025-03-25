@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 17:42:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:29:32 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,23 @@ void	expand_tokens(t_token *token)
 		token = token -> next;
 	}
 }
-
+void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
+{
+	if (c == 39 && !in_quotes)
+	{
+		if (*in_single_quotes)
+			*in_single_quotes = false;
+		else
+			*in_single_quotes = true;
+	}
+	else if (c == 34 && !*in_single_quotes)
+	{
+		if (*in_quotes)
+			*in_quotes = false;
+		else
+			*in_quotes = true;
+	}
+}
 char	*expand(char *str)
 {
 	bool	expand;
@@ -42,6 +58,12 @@ char	*expand(char *str)
 	int	i;
 	while (str[i])
 	{
-		
+		set_quotes(str[i], &in_single_quotes, &in_quotes);
+		if (str[i] = '$' && !in_single_quotes)
+		{
+			
+		}
+
+		i++;
 	}
 }

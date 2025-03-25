@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:28:46 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 18:25:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:19:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_insertstr(char	*string, int index, char *substr)
 	char	*after_str;
 	char	*result;
 
-	if (!substr || !*substr)CDISCARD
+	if (!substr || !*substr)
 		return (string);
 
 	total_len = ft_strlen(string) + ft_strlen(substr) + 1;
