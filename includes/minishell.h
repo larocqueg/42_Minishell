@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 16:36:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:19:32 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,16 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+extern int exit_code;
+
 //tokens
 t_token	*tokenize(char *str);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
+char	*ft_insertstr(char	*string, int index, char *substr);
+void	expand_tokens(t_token *token);
 
 //cli
 int		start_cli(t_shell *sh);

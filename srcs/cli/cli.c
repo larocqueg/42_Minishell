@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:46:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:20:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	start_cli(t_shell *sh)
 		prompt = readline(sh->cli_text);
 		free(sh->cli_text);
 		token = tokenize(prompt);
+		expand_tokens(token);
 		while (token)
 		{
 			ft_printf("token = %s type = %d\n", token->token, token->type);

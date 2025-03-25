@@ -6,12 +6,14 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:08:33 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:40:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:23:53 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*Copy a string from an index to an index, returns a null terminated
+malloc'ed string with the content or NULL if the allocation fails*/
 char	*ft_strndupmod(const char *str, int start, int end)
 {
 	char	*newstr;

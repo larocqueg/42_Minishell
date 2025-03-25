@@ -39,6 +39,7 @@ SRCS =	$(SRC_DIR)/ft_atoi.c \
 		$(SRC_DIR)/ft_memmove.c \
 		$(SRC_DIR)/ft_strtrim.c \
 		$(SRC_DIR)/ft_putchar_fd.c \
+		$(SRC_DIR)/ft_strndupmod.c \
 		$(SRC_DIR)/ft_putstr_fd.c \
 		$(SRC_DIR)/ft_putnbr_fd.c \
 		$(SRC_DIR)/ft_putendl_fd.c \
@@ -82,7 +83,7 @@ clean:
 	rm -rf $(OBJS)
 
 # fclean rule runs clean then removes libft.a
-fclean: clean 
+fclean: clean
 	rm -rf $(NAME)
 
 # re rule runs fclean then runs make again
