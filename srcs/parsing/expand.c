@@ -15,12 +15,12 @@
 void	expand_tokens(t_token *token)
 {
 	char	*temp;
-	t_token *head;
+	t_token	*head;
 
 	head = token;
 	while (token)
 	{
-		if (token ->type = WORD)
+		if (token->type == WORD)
 		{
 			temp = expand(token-> token);
 			if (!temp)
