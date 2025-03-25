@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 17:08:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:41:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,51 @@ static t_type	get_token_type(char *token)
 		return (TOFILE);
 	return (WORD);
 }
+void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
+{
+	if (c == 39 && !in_quotes)
+	{
+		if (*in_single_quotes)
+			*in_single_quotes = false;
+		else
+			*in_single_quotes = true;
+	}
+	else if (c == 34 && !*in_single_quotes)
+	{
+		if (*in_quotes)
+			*in_quotes = false;
+		else
+			*in_quotes = true;
+	}
+}
 
 int	extract_token(char *prompt, int i, t_token **tokens)
 {
 	int		j;
 	char*	token;
 	t_token	*new_token;
+	bool	in_quotes;
+	bool	in_single_quotes;
 
+	in_quotes = false;
+	in_single_quotes = false;
 	j = 0;
 	token = malloc(sizeof(char) * 4096);
-	if (!token)
-		//sla oq faz aqui dai
+
+	while (prompt[i])
+	{
+		set_quotes(prompt[i], &in_single_quotes, &in_quotes);
+		if ((is_space(prompt[i]) || is_operator(prompt[i])) && (!in_quotes && !in_single_quotes))
+			break;
+		token[j++] = prompt[i++];
+	}
 	if (is_operator(prompt[i]))
 	{
 		token[j++] = prompt[i++];
 		if (prompt[i] == token[j])
 			token[j++] = prompt[i++];
 	}
-	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
-		token[j++] = prompt[i++];
+
 	token[j] = '\0';
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
@@ -73,7 +99,6 @@ t_token	*tokenize(char *prompt)
 {
 	int		i;
 	t_token	*tokens;
-
 	i = 0;
 	tokens = NULL;
 	while (prompt[i])

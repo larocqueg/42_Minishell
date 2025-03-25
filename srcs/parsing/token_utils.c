@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:00:51 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 11:21:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:08:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*ft_tokennew(char *str, int type)
 		return (NULL);
 	if (!str)
 		return (free(n_token), NULL);
-	n_token->token = str;
+	n_token->token = ft_strdup(str);
 	n_token->type = type;
 	n_token->next = NULL;
 	return (n_token);

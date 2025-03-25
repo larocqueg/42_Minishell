@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 16:47:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:42:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	expand_tokens(t_token *token)
 {
 	char	*temp;
+	t_token *head;
 
+	head = token;
 	while (token)
 	{
 		if (token ->type = WORD)
@@ -40,5 +42,6 @@ char	*expand(char *str)
 	int	i;
 	while (str[i])
 	{
+		
 	}
 }
