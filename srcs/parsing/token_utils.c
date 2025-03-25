@@ -26,6 +26,7 @@ t_token	*ft_tokennew(char *str, int type)
 	n_token->next = NULL;
 	return (n_token);
 }
+
 void	ft_token_addback(t_token **token, t_token *new_token)
 {
 	t_token	*temp;
@@ -42,5 +43,3 @@ void	ft_token_addback(t_token **token, t_token *new_token)
 		temp = temp->next;
 	temp->next = new_token;
 }
-
-
