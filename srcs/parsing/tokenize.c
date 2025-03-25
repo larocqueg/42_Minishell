@@ -12,21 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-static int	is_operator(char prompt)
-{
-	if (prompt == '\'' || prompt == '"' || prompt == '|'
-		|| prompt == '>' || prompt == '<')
-		return (1);
-	return (0);
-}
-
-static int	is_space(char prompt)
-{
-	if (prompt == 32 || (prompt >= 9 && prompt <= 13))
-		return (1);
-	return (0);
-}
-
 static t_type	get_token_type(char *token)
 {
 	if (!token)
@@ -43,51 +28,41 @@ static t_type	get_token_type(char *token)
 		return (TOFILE);
 	return (WORD);
 }
-void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
+
+static int	extract_quotes(char *prompt, int i, char *token, int *j)
 {
-	if (c == 39 && !in_quotes)
-	{
-		if (*in_single_quotes)
-			*in_single_quotes = false;
-		else
-			*in_single_quotes = true;
-	}
-	else if (c == 34 && !*in_single_quotes)
-	{
-		if (*in_quotes)
-			*in_quotes = false;
-		else
-			*in_quotes = true;
-	}
+	char	quote;
+
+	quote = prompt[i];
+	token[(*j)++] = prompt[i++];
+	while (prompt[i] && prompt[i] != quote)
+		token[(*j)++] = prompt[i++];
+	if (prompt[i] == quote)
+		token[(*j)++] = prompt[i++];
+	return (i);
 }
 
 int	extract_token(char *prompt, int i, t_token **tokens)
 {
 	int		j;
-	char*	token;
+	char	*token;
+	char	quote;
 	t_token	*new_token;
-	bool	in_quotes;
-	bool	in_single_quotes;
 
-	in_quotes = false;
-	in_single_quotes = false;
 	j = 0;
 	token = malloc(sizeof(char) * 4096);
-
-	while (prompt[i])
-	{
-		set_quotes(prompt[i], &in_single_quotes, &in_quotes);
-		if ((is_space(prompt[i]) || is_operator(prompt[i])) && (!in_quotes && !in_single_quotes))
-			break;
-		token[j++] = prompt[i++];
-	}
 	if (is_operator(prompt[i]))
 	{
 		token[j++] = prompt[i++];
-		if (prompt[i] == token[j])
+		if (prompt[i] == token[j - 1])
 			token[j++] = prompt[i++];
 	}
-
+	else if (prompt[i] == '\'' || prompt[i] == '"')
+		i = extract_quotes(prompt, i, token, &j);
+	else
+		while (prompt[i] && !is_operator(prompt[i]) && !is_space(prompt[i])
+			&& prompt[i] != '\'' && prompt[i] != '"')
+			token[j++] = prompt[i++];
 	token[j] = '\0';
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
@@ -99,6 +74,7 @@ t_token	*tokenize(char *prompt)
 {
 	int		i;
 	t_token	*tokens;
+
 	i = 0;
 	tokens = NULL;
 	while (prompt[i])

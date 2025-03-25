@@ -60,6 +60,8 @@ typedef struct s_token
 t_token	*tokenize(char *str);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
+int		is_space(char prompt);
+int		is_operator(char prompt);
 
 //cli
 int		start_cli(t_shell *sh);

@@ -16,9 +16,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
-
 	sh.envp = envp;
 	start_cli(&sh);
-
 	return (0);
 }

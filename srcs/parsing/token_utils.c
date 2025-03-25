@@ -43,3 +43,17 @@ void	ft_token_addback(t_token **token, t_token *new_token)
 		temp = temp->next;
 	temp->next = new_token;
 }
+
+int	is_operator(char prompt)
+{
+	if (prompt == '|' || prompt == '>' || prompt == '<')
+		return (1);
+	return (0);
+}
+
+int	is_space(char prompt)
+{
+	if (prompt == 32 || (prompt >= 9 && prompt <= 13))
+		return (1);
+	return (0);
+}
