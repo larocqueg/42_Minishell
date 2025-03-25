@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/21 13:54:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:50:24 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,25 @@ static t_type	get_token_type(char *token)
 	return (WORD);
 }
 
-static void	extract_token(char *prompt, int *i, t_token **tokens)
+int	extract_token(char *prompt, int i, t_token **tokens)
 {
 	int		j;
 	char	token[4096];
 	t_token	*new_token;
 
 	j = 0;
-	if (is_operator(prompt[*i]))
+	if (is_operator(prompt[i]))
 	{
-		token[j++] = prompt[(*i)++];
-		if (prompt[*i] == token[j])
-			token[j++] = prompt[(*i)++];
+		token[j++] = prompt[i++];
+		if (prompt[i] == token[j])
+			token[j++] = prompt[i++];
 	}
-	while (prompt[*i] && !is_space(prompt[*i]) && !is_operator(prompt[*i]))
-		token[j++] = prompt[(*i)++];
+	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
+		token[j++] = prompt[i++];
 	token[j] = '\0';
 	new_token = ft_tokennew(ft_strdup(token), get_token_type(token));
 	ft_token_addback(tokens, new_token);
+	return (i);
 }
 
 t_token	*tokenize(char *prompt)
@@ -77,7 +78,7 @@ t_token	*tokenize(char *prompt)
 			i++;
 		if (!prompt[i])
 			break ;
-		extract_token(prompt, &i, &tokens);
+		i = extract_token(prompt, i, &tokens);
 	}
 	return (tokens);
 }
