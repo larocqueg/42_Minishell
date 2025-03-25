@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 16:53:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:08:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	extract_token(char *prompt, int i, t_token **tokens)
 	j = 0;
 	token = malloc(sizeof(char) * 4096);
 	if (!token)
-		//sla oq faz aqui dai 
+		//sla oq faz aqui dai
 	if (is_operator(prompt[i]))
 	{
 		token[j++] = prompt[i++];
@@ -63,7 +63,7 @@ int	extract_token(char *prompt, int i, t_token **tokens)
 	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
 		token[j++] = prompt[i++];
 	token[j] = '\0';
-	new_token = ft_tokennew(ft_strdup(token), get_token_type(token));
+	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
 	free(token);
 	return (i);
