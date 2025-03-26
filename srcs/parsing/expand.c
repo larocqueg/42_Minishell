@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 21:30:44 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:06:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char	*extract_variable(char *str, int i)
 	char *variable;
 	int	j;
 	j = i;
-	while (ft_isalnum(str[j]))
+	while (ft_isalnum(str[j]) || str[j] == '_')
 		j++;
 	if (j >= i)
-		return (ft_strndupmod(str, i, j));
+		return (ft_strndupmod(str, i, --j));
 	return (NULL);
 }
 char	*expand(char *str, bool in_quotes, bool in_single_quotes)
@@ -55,8 +55,9 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 	while (str[i])
 	{
 		set_quotes(str[i], &in_single_quotes, &in_quotes);
-		if (str[i++] == '$' && !in_single_quotes)
+		if (str[i] == '$' && !in_single_quotes)
 		{
+			i++;
 			if (str[i] == '?')
 			{
 				temp = ft_insertstr(str, i--, exit_str);
@@ -64,7 +65,7 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 				str = temp;
 				i += ft_strlen(exit_str);
 			}
-			else if (!ft_isdigit(str[i]))
+			else if (!ft_isdigit(str[i]) && ft_isalnum(str[i]) || str[i] == '_')
 			{
 				variable_name = extract_variable(str, i);
 				temp = ft_insertstr(str, i--, getenv(variable_name));

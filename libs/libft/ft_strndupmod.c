@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:08:33 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 21:23:53 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:59:06 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ char	*ft_strndupmod(const char *str, int start, int end)
 		start++;
 	}
 	newstr[i] = '\0';
+	ft_printf("\nvariable '%s'\n", newstr);
 	return (newstr);
 }
