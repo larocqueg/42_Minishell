@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 18:43:42 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:46:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ typedef struct s_fd
 
 typedef struct s_cmd
 {
-	char	**cmd;
-	next;
-	t_fd	*fds;
+	char		**cmd;
+	struct s_cmd *next;
+	bool		to_pipe;
+	bool		from_pipe;
+	int			fd_in;
+	int			fd_out;
+
 }	t_cmd;
 
 
