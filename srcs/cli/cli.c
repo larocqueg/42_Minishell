@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 20:30:04 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:36:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,32 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 	ft_cmd_addback(cmd, newcmd);
 }
 
+void	create_cmds(t_shell *sh, t_token *token)
+{
+	bool from_pipe = false;
+	sh->cmd = NULL;
+	while (token)
+	{
+		if (token->type == PIPE)
+		{
+			from_pipe = true;
+			token = token -> next;
+		}
+		extract_cmd(&sh->cmd, &token, from_pipe);
+	}
+	while(sh->cmd)
+	{
+		printf("-----------------------\n");
+		for(int i = 0; sh->cmd->cmd[i]; i++)
+			printf("%s ", sh->cmd->cmd[i]);
+		printf("\nfdin %d\n", sh->cmd->fd_in);
+		printf("fdout %d\n", sh->cmd->fd_out);
+		printf("topipe  "); sh->cmd->to_pipe ? printf("true\n") : printf("false\n");
+		printf("frompipe  "); sh->cmd->from_pipe ? printf("true\n") : printf("false\n");
+		sh->cmd = sh->cmd->next;
+	}
 
+}
 
 int	start_cli(t_shell *sh)
 {
@@ -116,31 +141,7 @@ int	start_cli(t_shell *sh)
 		free(sh->cli_text);
 		token = tokenize(prompt);
 		expand_tokens(token);
-		t_cmd *cmds;
-
-		bool from_pipe = false;
-		cmds = NULL;
-		while (token)
-		{
-			if (token->type == PIPE)
-			{
-				from_pipe = true;
-				token = token -> next;
-			}
-			extract_cmd(&cmds, &token, from_pipe);
-			//ft_printf("token = %s type = %d\n", token->token, token->type);
-		}
-		while(cmds)
-		{
-			printf("-----------------------\n");
-			for(int i = 0; cmds->cmd[i]; i++)
-				printf("%s ", cmds->cmd[i]);
-			printf("\nfdin %d\n", cmds->fd_in);
-			printf("fdout %d\n", cmds->fd_out);
-			printf("topipe  "); cmds->to_pipe ? printf("true\n") : printf("false\n");
-			printf("frompipe  "); cmds->from_pipe ? printf("true\n") : printf("false\n");
-			cmds = cmds->next;
-		}
+		create_cmds(sh, token);
 	}
 }
 

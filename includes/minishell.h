@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 18:46:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:36:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,24 @@ typedef enum e_type
 	TOFILE,
 }	t_type;
 
+typedef struct s_cmd
+{
+	char		**cmd;
+	struct s_cmd *next;
+	bool		to_pipe;
+	bool		from_pipe;
+	int			fd_in;
+	int			fd_out;
+
+}	t_cmd;
+
 typedef struct s_shell
 {
 	int		from_fd;
 	int		to_fd;
 	char	*cli_text;
 	char	**envp;
+	t_cmd	*cmd;
 	int		pipe_old[2];
 	int		pipe_new[2];
 }	t_shell;
@@ -64,16 +76,7 @@ typedef struct s_fd
 	int	fd_out;
 } t_fd;
 
-typedef struct s_cmd
-{
-	char		**cmd;
-	struct s_cmd *next;
-	bool		to_pipe;
-	bool		from_pipe;
-	int			fd_in;
-	int			fd_out;
 
-}	t_cmd;
 
 
 
