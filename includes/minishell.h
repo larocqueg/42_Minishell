@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 21:19:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:43:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_shell
 	int		to_fd;
 	char	*cli_text;
 	char	**envp;
+	int		pipe_old[2];
+	int		pipe_new[2];
 }	t_shell;
 
 typedef struct s_token
@@ -55,6 +57,21 @@ typedef struct s_token
 	bool			expand;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_fd
+{
+	int	fd_in;
+	int	fd_out;
+} t_fd;
+
+typedef struct s_cmd
+{
+	char	**cmd;
+	next;
+	t_fd	*fds;
+}	t_cmd;
+
+
 
 extern int exit_code;
 

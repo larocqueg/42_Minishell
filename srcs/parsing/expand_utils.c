@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:28:46 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/25 21:51:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:50:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ char	*ft_insertstr(char	*string, int index, char *substr)
 	after_str = NULL;
 
 	ft_strlcpy(result, string, index);
-	while(ft_isalnum(string[index]))
+	while(ft_isalnum(string[index]) || string[index] == '_')
+		index++;
+	if (string[index] == '?' && string[index - 1] == '$')
 		index++;
 	if (index <= ft_strlen(string))
 		after_str = string + index;

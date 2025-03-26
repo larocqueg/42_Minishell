@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 14:06:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:40:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 {
-	if (c == 39 && !in_quotes)
+	if (c == 39 && !*in_quotes)
 	{
 		if (*in_single_quotes)
 			*in_single_quotes = false;
@@ -30,6 +30,34 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 			*in_quotes = true;
 	}
 }
+
+void	remove_quotes(t_token *token, bool in_single_quotes, bool in_quotes)
+{
+	char	quote;
+	char	*result;
+	int		i;
+	int		j;
+	result = malloc(sizeof(char) * ft_strlen(token->token) + 1);
+	i = 0;
+	j = 0;
+	quote = '\0';
+	while (token->token[i])
+	{
+		if ((token->token[i] == '\'' || token->token[i] == '"') && quote == '\0')
+			quote = token->token[i++];
+		else if (token->token[i] == quote)
+		{
+			i++;
+			quote = '\0';
+		}
+		else
+			result[j++] = token->token[i++];
+	}
+	result[j] = '\0';
+	free(token->token);
+	token->token = result;
+}
+
 char	*extract_variable(char *str, int i)
 {
 	char *variable;
@@ -72,20 +100,21 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 				free(str);
 				str = temp;
 				if (getenv(variable_name))
-					i += ft_strlen(getenv(variable_name));
+					i += (ft_strlen(getenv(variable_name)) - 1);
 			}
 		}
 		i++;
 	}
+
+	free(exit_str);
 	return (str);
 }
 
 void	expand_tokens(t_token *token)
 {
 	char	*temp;
-	t_token	*head;
+	temp = NULL;
 
-	head = token;
 	while (token)
 	{
 		if (token->type == WORD)
@@ -94,9 +123,9 @@ void	expand_tokens(t_token *token)
 			if (!temp)
 				//free all tokens
 			free(token->token);
-			token -> token = temp;
+			token-> token = temp;
+			remove_quotes(token, false, false);
 		}
 		token = token -> next;
 	}
-
 }
