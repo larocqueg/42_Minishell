@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 14:45:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:56:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,16 @@ void	create_cmds(t_shell *sh, t_token *token)
 		}
 		extract_cmd(&sh->cmd, &token, from_pipe);
 	}
-	while(sh->cmd)
-	{
-		printf("-----------------------\n");
-		for(int i = 0; sh->cmd->cmd[i]; i++)
-			printf("%s ", sh->cmd->cmd[i]);
-		printf("\nfdin %d\n", sh->cmd->fd_in);
-		printf("fdout %d\n", sh->cmd->fd_out);
-		printf("topipe  "); sh->cmd->to_pipe ? printf("true\n") : printf("false\n");
-		printf("frompipe  "); sh->cmd->from_pipe ? printf("true\n") : printf("false\n");
-		sh->cmd = sh->cmd->next;
-	}
+	// t_cmd *cmd = sh->cmd;
+	// while(cmd)
+	// {
+	// 	printf("-----------------------\n");
+	// 	for(int i = 0; cmd->cmd[i]; i++)
+	// 		printf("%s ", cmd->cmd[i]);
+	// 	printf("\nfdin %d\n", cmd->fd_in);
+	// 	printf("fdout %d\n", cmd->fd_out);
+	// 	printf("topipe  "); cmd->to_pipe ? printf("true\n") : printf("false\n");
+	// 	printf("frompipe  "); cmd->from_pipe ? printf("true\n") : printf("false\n");
+	// 	cmd = cmd->next;
+	// }
 }

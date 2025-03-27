@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 14:40:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:43:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_shell
 	char	*cli_text;
 	char	**envp;
 	t_cmd	*cmd;
-	int		pipe_old[2];
-	int		pipe_new[2];
+	int		*pipe_old;
+	int		*pipe_new;
 }	t_shell;
 
 typedef struct s_token
@@ -90,6 +90,9 @@ int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, int index, char *substr);
 void	expand_tokens(t_token *token);
+void	create_cmds(t_shell *sh, t_token *token);
+
+void	execute(t_shell *sh); // test function
 
 //cli
 int		start_cli(t_shell *sh);
