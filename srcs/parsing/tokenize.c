@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 22:19:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 23:21:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,42 @@ static int	extract_quotes(char *prompt, int i, char *token, int *j)
     return (i);
 }
 
-int	extract_token(char *prompt, int i, t_token **tokens)
+int extract_token(char *prompt, int i, t_token **tokens)
 {
-    int		j;
-    char	*token;
-    t_token	*new_token;
+	int j;
+	char *token;
+	t_token *new_token;
 
-    j = 0;
-    token = malloc(sizeof(char) * 4096);
-    if (!token)
-        return (i); // Handle malloc failure
-    while (prompt[i] && !is_space(prompt[i])) // Keep building the token until a space
-    {
-        if (is_operator(prompt[i]))
-        {
-            if (j > 0) // If there's already a token being built, finalize it
-                break;
-            token[j++] = prompt[i++];
-            if (prompt[i] == token[j - 1]) // Handle double operators like ">>" or "||"
-                token[j++] = prompt[i++];
-            break;
-        }
-        else if (prompt[i] == '\'' || prompt[i] == '"') // Handle quoted sections
-            i = extract_quotes(prompt, i, token, &j);
-        else
-            token[j++] = prompt[i++]; // Add regular characters to the token
-    }
-    token[j] = '\0';
-    new_token = ft_tokennew(token, get_token_type(token));
-    ft_token_addback(tokens, new_token);
-    free(token);
-    return (i);
+	j = 0;
+	token = malloc(sizeof(char) * 4096);
+	if (!token)
+		return (i);
+
+	while (prompt[i] && !is_space(prompt[i]))
+	{
+		if (is_operator(prompt[i]))
+		{
+			if (j > 0)
+				break;
+			token[j++] = prompt[i++];
+			if (prompt[i] == token[j - 1])
+				token[j++] = prompt[i++];
+			break;
+		}
+		else if (prompt[i] == '\'' || prompt[i] == '"')
+			i = extract_quotes(prompt, i, token, &j);
+		else
+			token[j++] = prompt[i++];
+	}
+
+	token[j] = '\0';
+	new_token = ft_tokennew(token, get_token_type(token));
+	ft_token_addback(tokens, new_token);
+	free(token);
+	return (i);
 }
+
+
 
 
 t_token	*tokenize(char *prompt)

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 22:59:40 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 23:19:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ int	start_cli(t_shell *sh)
 			create_cmds(sh, token);
 			execute(sh);
 		}
-		free(prompt);
 	}
+	rl_clear_history();
+	rl_free_line_state();
+	rl_free(prompt);
+	rl_deprep_terminal();
+
 return 666;
 }
 
