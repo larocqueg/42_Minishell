@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 21:58:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 23:03:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,13 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 	int outfd;
 
 	outfd = 1;
-	//close(sh->pipe_new[0]);
 	if (cmd -> to_pipe && cmd ->fd_out == -1)
 	{
 		outfd = sh->pipe_new[1];
 	}
 	else if (cmd -> fd_out != -1)
 	{
-		close (sh->pipe_new[1]);
+
 		outfd = cmd -> fd_out;
 	}
 	return (outfd);
@@ -117,8 +116,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 {
 	int fdin = 0;
 
-	//close(sh->pipe_old[1]);
-	if (cmd -> from_pipe)
+	if (cmd -> from_pipe && fdin != -1)
 	{
 		fdin = sh->pipe_old[0];
 	}
