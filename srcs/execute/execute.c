@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 19:58:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 21:38:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	executecmd(char **cmds, char **env)
 	{
 		ft_command_error(cmds);
 		ft_error(NULL);
+		exit(127);
 	}
 	x = execve(path, cmds, env);
 	exit_code = x;
@@ -106,7 +107,7 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 	}
 	else if (cmd -> fd_out != -1)
 	{
-		//close (sh->pipe_new[1]);
+		close (sh->pipe_new[1]);
 		outfd = cmd -> fd_out;
 	}
 	return (outfd);
@@ -125,7 +126,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	{
 		fdin = cmd -> fd_in;
 	}
-	return(sh->pipe_old[0]);
+	return(fdin);
 }
 
 void	handle_child(t_shell *sh, t_cmd *cmd)
@@ -168,6 +169,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		if (sh->pipe_old)
 			free(sh->pipe_old);
 		sh->pipe_old = sh->pipe_new;
+		close(sh->pipe_old[1]);
 		}
 		if ((cmd) -> to_pipe)
 		{
@@ -186,18 +188,11 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 }
 void execute(t_shell *sh)
 {
-    t_cmd *cmd = sh->cmd;
+	t_cmd *cmd;
+	cmd = sh->cmd;
 
-    pid_t pid = fork();
-    if (pid != 0)  // Parent
-    {
-        waitpid(pid, NULL, 0); // Wait for the child to finish
-    }
-    else  // Child
-    {
         exec_cmd(sh, cmd); // Execute the commands
-        exit(0); // Ensure child exits cleanly after executing commands
-    }
+
 }
 // void	execute(t_shell *sh)
 // {

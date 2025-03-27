@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 19:55:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 21:36:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,17 @@ int	start_cli(t_shell *sh)
 		add_history(prompt);
 		free(sh->cli_text);
 		pid = fork();
-		if (pid == 0)
+		if (pid != 0)
+		 	waitpid(pid, &status, 0);
+		else if (pid == 0)
 		{
 			token = tokenize(prompt);
 			expand_tokens(token);
 			create_cmds(sh, token);
 			execute(sh);
-			free(prompt);
-			exit(0);
 		}
-		else
-			waitpid(pid, &status, 0);
 		free(prompt);
 	}
+return 666;
 }
 
