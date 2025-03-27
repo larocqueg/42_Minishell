@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 21:38:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/27 21:58:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,7 @@ void execute(t_shell *sh)
 {
 	t_cmd *cmd;
 	cmd = sh->cmd;
-
-        exec_cmd(sh, cmd); // Execute the commands
+	exec_cmd(sh, cmd); // Execute the commands
 
 }
 // void	execute(t_shell *sh)
