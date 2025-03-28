@@ -12,6 +12,23 @@
 
 #include "../../includes/minishell.h"
 
+static int	is_var(char *token)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(token[0]) && token[0] != '_')
+		return (0);
+	while (token[i])
+	{
+		if (ft_isalnum(token[i]) || token[i]=='_')
+			i++;
+		if (token[i] == '=')
+			return (1);
+	}
+	return (0);
+}
+
 static t_type	get_token_type(char *token)
 {
 	if (!token)
@@ -26,6 +43,8 @@ static t_type	get_token_type(char *token)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
+	if (is_var(token))
+		return (VAR);
 	return (WORD);
 }
 
@@ -104,5 +123,7 @@ t_token	*tokenize(char *prompt)
 			break ;
 		i = extract_token(prompt, i, &tokens);
 	}
+	if (tokens->type == VAR)
+		printf("VAR\n");
 	return (tokens);
 }

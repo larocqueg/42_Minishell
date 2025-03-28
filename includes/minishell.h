@@ -38,6 +38,7 @@ typedef enum e_type
 	APPEND,
 	INFILE,
 	TOFILE,
+	VAR,
 }	t_type;
 
 typedef struct s_cmd

@@ -111,8 +111,6 @@ int	ft_is_builtin(char **cmds)
 {
 	if (ft_strncmp(cmds[0], "exit", 4) == 0)
 		return (1);
-	else if (ft_strncmp(cmds[0], "env", 4) == 0)
-		return (1);
 	return (0);
 }
 
