@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 18:04:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:49:23 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ int	start_cli(t_shell *sh)
 		token = tokenize(prompt);
 		expand_tokens(token);
 		create_cmds(sh, token);
+	// 	while(sh->cmd)
+	// {
+	// 	printf("-----------------------\n");
+	// 	for(int i = 0; sh->cmd->cmd[i]; i++)
+	// 		printf("%s ", sh->cmd->cmd[i]);
+	// 	printf("\nfdin %d\n", sh->cmd->fd_in);
+	// 	printf("fdout %d\n", sh->cmd->fd_out);
+	// 	printf("topipe  "); sh->cmd->to_pipe ? printf("true\n") : printf("false\n");
+	// 	printf("frompipe  "); sh->cmd->from_pipe ? printf("true\n") : printf("false\n");
+	// 	sh->cmd = sh->cmd->next;
+	// }
 		execute(sh);
 	}
 

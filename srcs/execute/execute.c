@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 19:59:37 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:49:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 	}
 	else if (cmd -> fd_out != -1)
 	{
-
+		close(sh->pipe_new[1]);
 		outfd = cmd -> fd_out;
 	}
 	return (outfd);
@@ -141,6 +141,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	}
 	if (cmd -> fd_in != -1)
 	{
+		close(sh->pipe_old[0]);
 		fdin = cmd -> fd_in;
 	}
 	return(fdin);
