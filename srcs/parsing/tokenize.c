@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:28:37 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:37:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ static int	is_var(char *token)
 	i = 1;
 	if (!ft_isalpha(token[0]) && token[0] != '_')
 		return (0);
-	while (token[i])
-	{
-		if (ft_isalnum(token[i]) || token[i]=='_')
+	while (token[i] && (ft_isalnum(token[i]) || token[i]=='_'))
 			i++;
-		if (token[i] == '=')
+	if (token[i] == '=')
 			return (1);
-		else
-			return (0);
-	}
 	return (0);
 }
 
@@ -70,7 +65,7 @@ static int	extract_word(char *prompt, int i)
 	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
-			extract_quotes(prompt, i);
+			i = extract_quotes(prompt, i);
 		i++;
 	}
 	return (i);
