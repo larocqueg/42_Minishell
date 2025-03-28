@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 19:21:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:19:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,11 @@ static t_type	get_token_type(char *token)
 
 static int	extract_quotes(char *prompt, int i, char **token)
 {
-	int		start;
-    char	quote;
+	char	quote;
 
-	start = i;
-    quote = prompt[i++];
+	quote = prompt[i++];
 	while(prompt[i] && prompt[i] != quote)
 		i++;
-	*token = ft_strndupmod(prompt, start, i);
 	if (prompt[i] == quote)
 		i++;
 	return(i);
@@ -67,12 +64,19 @@ static int	extract_quotes(char *prompt, int i, char **token)
 
 static int	extract_word(char *prompt, int i, char **token)
 {
-	int	start;
+	char	quote;
 
-	start = i;
+	quote = '\0';
 	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
+	{
+		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
+			quote = prompt[i++];
+		while(prompt[i] && prompt[i] != quote)
+			i++;
+		if (prompt[i] == quote)
+			quote = '\0';
 		i++;
-	*token = ft_strndupmod(prompt, start, i - 1);
+	}
 	return (i);
 }
 
@@ -80,7 +84,7 @@ int extract_token(char *prompt, int i, t_token **tokens)
 {
 	int		start;
 	char	*token;
-	t_token *new_token;
+	t_token	*new_token;
 
 	start = 0;
 	while (prompt[i] && !is_space(prompt[i]))
@@ -93,17 +97,18 @@ int extract_token(char *prompt, int i, t_token **tokens)
 				i++;
 			token = ft_strndupmod(prompt, start, i);
 		}
-		else if (prompt[i] == '\'' || prompt[i] == '"')
-			i = extract_quotes(prompt, i, &token);
 		else
+		{
+			start = i;
 			i = extract_word(prompt, i, &token);
+		}
 	}
+	token = ft_strndupmod(prompt, start, i - 1);
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
 	free(token);
 	return (i);
 }
-
 
 t_token	*tokenize(char *prompt)
 {
@@ -120,7 +125,5 @@ t_token	*tokenize(char *prompt)
 			break ;
 		i = extract_token(prompt, i, &tokens);
 	}
-	if (tokens->type == VAR)
-		printf("VAR\n");
 	return (tokens);
 }
