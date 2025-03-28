@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 20:22:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:21:23 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	is_var(char *token)
 			i++;
 		if (token[i] == '=')
 			return (1);
+		else
+			return (0);
 	}
 	return (0);
 }
@@ -54,15 +56,13 @@ static int	extract_quotes(char *prompt, int i, char **token)
     char	quote;
 
 	start = i;
-    quote = prompt[i];
-	i++;
+    quote = prompt[i++];
 	while(prompt[i] && prompt[i] != quote)
 		i++;
+	*token = ft_strndupmod(prompt, start, i);
 	if (prompt[i] == quote)
-		*token = ft_strndupmod(prompt, start, i++);
-	else
-		*token = ft_strndupmod(prompt, start, i - 1);
-	return (i);
+		i++;
+	return(i);
 }
 
 static int	extract_word(char *prompt, int i, char **token)
@@ -70,12 +70,9 @@ static int	extract_word(char *prompt, int i, char **token)
 	int	start;
 
 	start = i;
-	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i])
-			&& prompt[i] != '\'' && prompt[i] != '"')
+	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
 		i++;
 	*token = ft_strndupmod(prompt, start, i - 1);
-	// if (prompt[i] == '\'' || prompt[i] == '"')
-	// 	i--;
 	return (i);
 }
 
@@ -123,5 +120,7 @@ t_token	*tokenize(char *prompt)
 			break ;
 		i = extract_token(prompt, i, &tokens);
 	}
+	if (tokens->type == VAR)
+		printf("VAR\n");
 	return (tokens);
 }
