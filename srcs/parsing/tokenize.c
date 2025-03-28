@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:19:38 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:23:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	extract_word(char *prompt, int i, char **token)
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
 			quote = prompt[i++];
-		while(prompt[i] && prompt[i] != quote)
+		while(quote != '\0' && prompt[i] && prompt[i] != quote)
 			i++;
 		if (prompt[i] == quote)
 			quote = '\0';
