@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:23:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:28:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_type	get_token_type(char *token)
 	return (WORD);
 }
 
-static int	extract_quotes(char *prompt, int i, char **token)
+static int	extract_quotes(char *prompt, int i)
 {
 	char	quote;
 
@@ -62,7 +62,7 @@ static int	extract_quotes(char *prompt, int i, char **token)
 	return(i);
 }
 
-static int	extract_word(char *prompt, int i, char **token)
+static int	extract_word(char *prompt, int i)
 {
 	char	quote;
 
@@ -70,11 +70,7 @@ static int	extract_word(char *prompt, int i, char **token)
 	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
-			quote = prompt[i++];
-		while(quote != '\0' && prompt[i] && prompt[i] != quote)
-			i++;
-		if (prompt[i] == quote)
-			quote = '\0';
+			extract_quotes(prompt, i);
 		i++;
 	}
 	return (i);
@@ -95,12 +91,11 @@ int extract_token(char *prompt, int i, t_token **tokens)
 			i++;
 			if (prompt[i] == prompt[i - 1])
 				i++;
-			token = ft_strndupmod(prompt, start, i);
 		}
 		else
 		{
 			start = i;
-			i = extract_word(prompt, i, &token);
+			i = extract_word(prompt, i);
 		}
 	}
 	token = ft_strndupmod(prompt, start, i - 1);
