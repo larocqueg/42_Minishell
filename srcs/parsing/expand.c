@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 17:40:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:36:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 	char	*exit_str;
 	char	*variable_name;
 
-	exit_str = ft_itoa(exit_code);
+	exit_str = ft_itoa(g_exit_code);
 
 	i = 0;
 	while (str[i])
@@ -105,7 +105,6 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 		}
 		i++;
 	}
-
 	free(exit_str);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 21:36:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:02:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ typedef enum e_type
 
 typedef struct s_cmd
 {
-	char		**cmd;
-	struct s_cmd *next;
-	bool		to_pipe;
-	bool		from_pipe;
-	int			fd_in;
-	int			fd_out;
+	char			**cmd;
+	struct s_cmd	*next;
+	bool			to_pipe;
+	bool			from_pipe;
+	int				fd_in;
+	int				fd_out;
 
 }	t_cmd;
 
@@ -74,13 +74,9 @@ typedef struct s_fd
 {
 	int	fd_in;
 	int	fd_out;
-} t_fd;
+}	t_fd;
 
-
-
-
-
-extern int exit_code;
+extern int	g_exit_code;
 
 //tokens
 t_token	*tokenize(char *str);
@@ -98,7 +94,6 @@ int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
 
 # define PROGRAM_NAME RED"minihell "RESET
-# define COLOR_STRING(COLOR, str) COLOR str RESET
 //colors
 # define RESET "\033[0m"
 # define RED "\033[31m"

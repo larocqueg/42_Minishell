@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 23:03:22 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:02:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	executecmd(char **cmds, char **env)
 		exit(127);
 	}
 	x = execve(path, cmds, env);
-	exit_code = x;
+	g_exit_code = x;
 	if (x == -1)
 		ft_error(NULL);
 }
