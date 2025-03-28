@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 19:00:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:59:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,10 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	infd = get_fdin(cmd, sh);
 	dup2(outfd, STDOUT_FILENO);
 	dup2(infd, STDIN_FILENO);
+	if (cmd -> fd_out != -1)
+		close (cmd->fd_out);
+	if (cmd -> fd_in != -1)
+		close(cmd ->fd_in);
 	if (ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
 	else
@@ -174,6 +178,10 @@ void	handle_parent(t_shell *sh, t_cmd *cmd)
 	infd = get_fdin(cmd, sh);
 	dup2(outfd, STDOUT_FILENO);
 	dup2(infd, STDIN_FILENO);
+	if (cmd -> fd_out != -1)
+		close (cmd->fd_out);
+	if (cmd -> fd_in != -1)
+		close(cmd ->fd_in);
 	if (ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
 	else
