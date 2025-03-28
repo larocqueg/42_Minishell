@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 10:02:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:00:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,27 @@ void	executecmd(char **cmds, char **env)
 		ft_error(NULL);
 }
 
+void 	execute_builtin(t_cmd *cmd, t_shell *sh)
+{
+
+
+	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+}
+
+
+int	ft_is_builtin(char **cmds)
+{
+	if (ft_strncmp(cmds[0], "exit", 4) == 0)
+		return (1);
+	else if (ft_strncmp(cmds[0], "env", 4) == 0)
+		return (1);
+	return (0);
+}
+
 int	get_fdout(t_cmd *cmd, t_shell *sh)
 {
 	int outfd;
@@ -137,8 +158,10 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	infd = get_fdin(cmd, sh);
 	dup2(outfd, STDOUT_FILENO);
 	dup2(infd, STDIN_FILENO);
-
-	executecmd(cmd->cmd, sh->envp);
+	if (ft_is_builtin(cmd->cmd))
+		execute_builtin(cmd, sh);
+	else
+		executecmd(cmd->cmd, sh->envp);
 	close(outfd);
 	close(infd);
 }
@@ -147,25 +170,34 @@ void	handle_parent(t_shell *sh, t_cmd *cmd)
 {
 	int outfd;
 	int infd;
+	int pid;
 
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
-
 	dup2(outfd, STDOUT_FILENO);
 	dup2(infd, STDIN_FILENO);
-	executecmd(cmd->cmd, sh->envp);
+	if (ft_is_builtin(cmd->cmd))
+		execute_builtin(cmd, sh);
+	else
+		executecmd(cmd->cmd, sh->envp);
 	close(outfd);
 	close(infd);
 }
 void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
 	int pid;
+
+	pid = 0;
 	while (cmd)
 	{
 		if (cmd -> from_pipe)
 		{
 		if (sh->pipe_old)
+		{
+			close(sh->pipe_old[0]);
 			free(sh->pipe_old);
+			sh->pipe_old = NULL;
+		}
 		sh->pipe_old = sh->pipe_new;
 		close(sh->pipe_old[1]);
 		}
@@ -173,6 +205,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			sh -> pipe_new = malloc(sizeof(int) * 2);
 			pipe(sh -> pipe_new);
+
 			pid = fork();
 			if (pid != 0)
 				wait(NULL);
@@ -180,7 +213,16 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 				handle_child(sh, (cmd));
 		}
 		else
-			handle_parent(sh, (cmd));
+		{
+			if (cmd->from_pipe || !ft_is_builtin(cmd->cmd)) // if not export, exit and unset and myvar FORK
+				pid = fork();
+			if (pid != 0)
+			{
+				wait(NULL);
+			}
+			else if (pid == 0)
+				handle_parent(sh, (cmd));
+		}
 		(cmd) = (cmd)->next;
 	}
 }

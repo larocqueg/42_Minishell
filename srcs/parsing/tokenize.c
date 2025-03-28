@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 23:21:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:21:23 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int extract_token(char *prompt, int i, t_token **tokens)
 	free(token);
 	return (i);
 }
-
-
 
 
 t_token	*tokenize(char *prompt)
