@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 19:21:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:22:08 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static int	extract_word(char *prompt, int i, char **token)
 			&& prompt[i] != '\'' && prompt[i] != '"')
 		i++;
 	*token = ft_strndupmod(prompt, start, i - 1);
-	if (prompt[i] == '\'' || prompt[i] == '"')
-		i--;
+	// if (prompt[i] == '\'' || prompt[i] == '"')
+	// 	i--;
 	return (i);
 }
 
@@ -123,7 +123,5 @@ t_token	*tokenize(char *prompt)
 			break ;
 		i = extract_token(prompt, i, &tokens);
 	}
-	if (tokens->type == VAR)
-		printf("VAR\n");
 	return (tokens);
 }
