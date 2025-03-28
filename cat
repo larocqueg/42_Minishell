@@ -1,9 +1,0 @@
-cat
-file
-includes
-libs
-Makefile
-minishell
-readline.supp
-srcs
-valgrind.sh

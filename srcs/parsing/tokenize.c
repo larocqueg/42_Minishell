@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:37:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:40:33 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int	extract_word(char *prompt, int i)
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
 			i = extract_quotes(prompt, i);
-		i++;
+		else
+			i++;
 	}
 	return (i);
 }
