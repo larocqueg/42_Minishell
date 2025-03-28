@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:40:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:42:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,9 @@ static int	extract_quotes(char *prompt, int i)
 
 static int	extract_word(char *prompt, int i)
 {
-	char	quote;
-
-	quote = '\0';
 	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
 	{
-		if ((prompt[i] == '\'' || prompt[i] == '"') && quote == '\0')
+		if ((prompt[i] == '\'' || prompt[i] == '"'))
 			i = extract_quotes(prompt, i);
 		else
 			i++;
