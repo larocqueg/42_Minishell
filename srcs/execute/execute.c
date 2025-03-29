@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 14:27:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:49:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,18 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		printf("exit\n");
 		exit(0);
 	}
+	if (ft_strncmp(cmd->cmd[0], "print", 5) == 0)
+	{
+		printf("print\n");
+	}
 }
 
 
 int	ft_is_builtin(char **cmds)
 {
 	if (ft_strncmp(cmds[0], "exit", 4) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "print", 5) == 0)
 		return (1);
 	return (0);
 }
@@ -167,29 +173,7 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	close(infd);
 }
 
-void	handle_parent(t_shell *sh, t_cmd *cmd)
-{
-	int outfd;
-	int infd;
-	int pid;
 
-	if (sh->DEBUG)
-		printf("---------------executing parent!-------------\n");
-	outfd = get_fdout(cmd, sh);
-	infd = get_fdin(cmd, sh);
-	dup2(outfd, STDOUT_FILENO);
-	dup2(infd, STDIN_FILENO);
-	if (cmd -> fd_out != -1)
-		close (cmd->fd_out);
-	if (cmd -> fd_in != -1)
-		close(cmd ->fd_in);
-	if (ft_is_builtin(cmd->cmd))
-		execute_builtin(cmd, sh);
-	else
-		executecmd(cmd->cmd, sh->envp);
-	close(outfd);
-	close(infd);
-}
 /*
 void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
@@ -266,14 +250,17 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			sh->pipe_new = malloc(sizeof(int) * 2);
 			pipe(sh->pipe_new);
 		}
-		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
+		{
+			if (sh->DEBUG)
+				printf("forked!!!!\n");
 			pids[i] = fork();
+		}
 		else
 			pids[i] = 0;
 		if (pids[i] == 0)
 		{
 			handle_child(sh, cmd);
-			exit(0);
 		}
 		if (cmd->from_pipe)
 		{
@@ -296,6 +283,15 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		i++;
 	}
 	free(pids);
+	t_cmd *temp = sh->cmd;
+	while(temp)
+	{
+;
+		tmp = temp;
+		ft_free(tmp->cmd);
+		temp = temp->next;
+		free(tmp);
+	}
 }
 
 void execute(t_shell *sh)

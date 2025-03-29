@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 22:49:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:50:45 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ int	start_cli(t_shell *sh)
 	{
 		get_cli_pwd(sh);
 		prompt = readline(sh->cli_text);
-		add_history(prompt);
+		if (prompt)
+		{
+			add_history(prompt);
+			token = tokenize(prompt, sh);
+			expand_tokens(token);
+			create_cmds(sh, token);
+			execute(sh);
+			free(prompt);
+			dup2(sh->original_stdin, STDIN_FILENO);
+			dup2(sh->original_stdout, STDOUT_FILENO);
+			prompt = NULL;
+		}
 		free(sh->cli_text);
-		token = tokenize(prompt, sh);
-		expand_tokens(token);
-		create_cmds(sh, token);
-		execute(sh);
 	}
-
+	close(sh->original_stdin);
+	close(sh->original_stdout);
 	rl_clear_history();
 
 return 666;

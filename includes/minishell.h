@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 10:02:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:42:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_shell
 	t_cmd	*cmd;
 	int		*pipe_old;
 	int		*pipe_new;
+	int		original_stdout;
+	int		original_stdin;
 	int		DEBUG;
 }	t_shell;
 
