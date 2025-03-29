@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 22:49:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/28 23:01:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 
 			pid = fork();
 			if (pid != 0)
-				wait(NULL);
+				waitpid(pid, NULL, 0);
 			else
 				handle_child(sh, (cmd));
 		}
@@ -225,7 +225,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 				pid = fork();
 			if (pid != 0)
 			{
-				wait(NULL);
+				waitpid(pid, NULL, 0);
 			}
 			else if (pid == 0)
 				handle_parent(sh, (cmd));

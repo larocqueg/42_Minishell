@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 21:42:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 13:35:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,28 @@ int extract_token(char *prompt, int i, t_token **tokens)
 	start = 0;
 	while (prompt[i] && !is_space(prompt[i]))
 	{
-		if (is_operator(prompt[i]))
+		if (!is_operator(prompt[i]))
+		{
+			start = i;
+			i = extract_word(prompt, i);
+		}
+		else
 		{
 			start = i;
 			i++;
 			if (prompt[i] == prompt[i - 1])
 				i++;
 		}
-		else
-		{
-			start = i;
-			i = extract_word(prompt, i);
-		}
 	}
 	token = ft_strndupmod(prompt, start, i - 1);
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
+
 	free(token);
 	return (i);
 }
 
-t_token	*tokenize(char *prompt)
+t_token	*tokenize(char *prompt, t_shell *sh)
 {
 	int		i;
 	t_token	*tokens;
@@ -113,5 +114,19 @@ t_token	*tokenize(char *prompt)
 			break ;
 		i = extract_token(prompt, i, &tokens);
 	}
+	if (!sh->DEBUG)
+		return tokens;
+	t_token *temp;
+	temp = tokens;
+
+	printf("-----TOKENS------------\n");
+	while (temp)
+	{
+		printf("token->token: '%s', token->type= %d\n", temp->token, temp->type);
+		temp = temp -> next;
+	}
+
+	printf("-----ENDTOKENS---------\n");
+
 	return (tokens);
 }

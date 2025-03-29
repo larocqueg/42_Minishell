@@ -61,6 +61,7 @@ typedef struct s_shell
 	t_cmd	*cmd;
 	int		*pipe_old;
 	int		*pipe_new;
+	int		DEBUG;
 }	t_shell;
 
 typedef struct s_token
@@ -80,7 +81,7 @@ typedef struct s_fd
 extern int	g_exit_code;
 
 //tokens
-t_token	*tokenize(char *str);
+t_token	*tokenize(char *str, t_shell *sh);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);

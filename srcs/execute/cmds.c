@@ -117,16 +117,20 @@ void	create_cmds(t_shell *sh, t_token *token)
 		}
 		extract_cmd(&sh->cmd, &token, from_pipe);
 	}
-	// t_cmd *cmd = sh->cmd;
-	// while(cmd)
-	// {
-	// 	printf("-----------------------\n");
-	// 	for(int i = 0; cmd->cmd[i]; i++)
-	// 		printf("%s ", cmd->cmd[i]);
-	// 	printf("\nfdin %d\n", cmd->fd_in);
-	// 	printf("fdout %d\n", cmd->fd_out);
-	// 	printf("topipe  "); cmd->to_pipe ? printf("true\n") : printf("false\n");
-	// 	printf("frompipe  "); cmd->from_pipe ? printf("true\n") : printf("false\n");
-	// 	cmd = cmd->next;
-	// }
+	
+	if (!sh->DEBUG)
+		return;
+	t_cmd *cmd = sh->cmd;
+	 while(cmd)
+	 {
+		printf("-------CMDS---------\n");
+	 	for(int i = 0; cmd->cmd[i]; i++)
+			printf("%s ", cmd->cmd[i]);
+		printf("\nfdin %d\n", cmd->fd_in);
+	 	printf("fdout %d\n", cmd->fd_out);
+	 	printf("topipe  "); cmd->to_pipe ? printf("true\n") : printf("false\n");
+	 	printf("frompipe  "); cmd->from_pipe ? printf("true\n") : printf("false\n");
+	 	cmd = cmd->next;
+	 }
+	printf("---------END CMDS--------\n");
 }

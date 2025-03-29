@@ -18,6 +18,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
 
+
+	sh.DEBUG = 0;
+	if (argc == 2)
+		sh.DEBUG = 1;
 	g_exit_code = 2;
 	sh.envp = envp;
 	sh.pipe_old = NULL;

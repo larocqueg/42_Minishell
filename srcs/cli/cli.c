@@ -27,20 +27,9 @@ int	start_cli(t_shell *sh)
 		prompt = readline(sh->cli_text);
 		add_history(prompt);
 		free(sh->cli_text);
-		token = tokenize(prompt);
+		token = tokenize(prompt, sh);
 		expand_tokens(token);
 		create_cmds(sh, token);
-	// 	while(sh->cmd)
-	// {
-	// 	printf("-----------------------\n");
-	// 	for(int i = 0; sh->cmd->cmd[i]; i++)
-	// 		printf("%s ", sh->cmd->cmd[i]);
-	// 	printf("\nfdin %d\n", sh->cmd->fd_in);
-	// 	printf("fdout %d\n", sh->cmd->fd_out);
-	// 	printf("topipe  "); sh->cmd->to_pipe ? printf("true\n") : printf("false\n");
-	// 	printf("frompipe  "); sh->cmd->from_pipe ? printf("true\n") : printf("false\n");
-	// 	sh->cmd = sh->cmd->next;
-	// }
 		execute(sh);
 	}
 
