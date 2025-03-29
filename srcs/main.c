@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 15:43:25 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 16:16:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	g_exit_code;
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
-
 
 	sh.DEBUG = 0;
 	if (argc == 2)

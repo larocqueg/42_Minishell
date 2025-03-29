@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 15:49:42 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 16:43:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	{
 		printf("print\n");
 	}
+	if (cmd->to_pipe || cmd->from_pipe)
+		exit(0);
 }
 
 
@@ -286,7 +288,6 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	t_cmd *temp = sh->cmd;
 	while(temp)
 	{
-;
 		tmp = temp;
 		ft_free(tmp->cmd);
 		temp = temp->next;

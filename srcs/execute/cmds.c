@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 20:13:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 16:35:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 		}
 		else if ((*token) -> type == HERE_DOC)
 		{
-			//newcmd -> fd_out = open(), O_RDWR | O_APPEND);
+			//newcmd -> fd_out = sh->here_docs[here_doc_num][0];
 		}
 		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
@@ -117,7 +117,7 @@ void	create_cmds(t_shell *sh, t_token *token)
 		}
 		extract_cmd(&sh->cmd, &token, from_pipe);
 	}
-	
+
 	if (!sh->DEBUG)
 		return;
 	t_cmd *cmd = sh->cmd;
