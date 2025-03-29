@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 13:53:49 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 14:27:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 	}
 	else if (cmd -> fd_out != -1)
 	{
-		close(sh->pipe_new[1]);
 		outfd = cmd -> fd_out;
 	}
 	return (outfd);
@@ -139,7 +138,6 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	}
 	if (cmd -> fd_in != -1)
 	{
-		close(sh->pipe_old[0]);
 		fdin = cmd -> fd_in;
 	}
 	return(fdin);
@@ -151,6 +149,8 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	int outfd;
 	int infd;
 
+	if (sh->DEBUG)
+		printf("---------------executing child!-------------\n");
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
 	dup2(outfd, STDOUT_FILENO);
@@ -173,6 +173,8 @@ void	handle_parent(t_shell *sh, t_cmd *cmd)
 	int infd;
 	int pid;
 
+	if (sh->DEBUG)
+		printf("---------------executing parent!-------------\n");
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
 	dup2(outfd, STDOUT_FILENO);
@@ -213,7 +215,11 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 
 			pid = fork();
 			if (pid != 0)
+			{
 				waitpid(pid, NULL, 0);
+				if (sh->DEBUG)
+					printf("---------end child!-------------\n");
+			}
 			else
 				handle_child(sh, (cmd));
 		}
@@ -222,7 +228,11 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			if (cmd->from_pipe || !ft_is_builtin(cmd->cmd)) // if not export, exit and unset and myvar FORK
 				pid = fork();
 			if (pid != 0)
+			{
 				waitpid(pid, NULL, 0);
+				if (sh->DEBUG)
+					printf("---------end parent!-------------\n");
+			}
 			else if (pid == 0)
 				handle_parent(sh, (cmd));
 		}
