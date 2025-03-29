@@ -190,6 +190,7 @@ void	handle_parent(t_shell *sh, t_cmd *cmd)
 	close(outfd);
 	close(infd);
 }
+/*
 void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
 	int pid;
@@ -238,11 +239,69 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		}
 		(cmd) = (cmd)->next;
 	}
+}*/
+
+static void	exec_cmd(t_shell *sh, t_cmd *cmd)
+{
+	int		*pids;
+	int		i;
+	int		pid_count;
+	t_cmd	*tmp;
+
+	pid_count = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		pid_count++;
+		tmp = tmp->next;
+	}
+	pids = malloc(sizeof(int) * pid_count);
+	if (!pids)
+		return ;
+	i = 0;
+	while (cmd)
+	{
+		if (cmd->to_pipe)
+		{
+			sh->pipe_new = malloc(sizeof(int) * 2);
+			pipe(sh->pipe_new);
+		}
+		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+			pids[i] = fork();
+		else
+			pids[i] = 0;
+		if (pids[i] == 0)
+		{
+			handle_child(sh, cmd);
+			exit(0);
+		}
+		if (cmd->from_pipe)
+		{
+			close(sh->pipe_old[0]);
+			free(sh->pipe_old);
+			sh->pipe_old = NULL;
+		}
+		if (cmd->to_pipe)
+		{
+			sh->pipe_old = sh->pipe_new;
+			close(sh->pipe_old[1]);
+		}
+		cmd = cmd->next;
+		i++;
+	}
+	i = 0;
+	while (i < pid_count)
+	{
+		waitpid(pids[i], NULL, 0);
+		i++;
+	}
+	free(pids);
 }
+
 void execute(t_shell *sh)
 {
 	t_cmd *cmd;
 	cmd = sh->cmd;
-	exec_cmd(sh, cmd); // Execute the commands
+	exec_cmd(sh, cmd);
 
 }
