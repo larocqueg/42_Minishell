@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 23:01:22 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 13:53:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	executecmd(char **cmds, char **env)
 
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
-
-
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
@@ -199,14 +197,14 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	{
 		if (cmd -> from_pipe)
 		{
-		if (sh->pipe_old)
-		{
-			close(sh->pipe_old[0]);
-			free(sh->pipe_old);
-			sh->pipe_old = NULL;
-		}
-		sh->pipe_old = sh->pipe_new;
-		close(sh->pipe_old[1]);
+			if (sh->pipe_old)
+			{
+				close(sh->pipe_old[0]);
+				free(sh->pipe_old);
+				sh->pipe_old = NULL;
+			}
+			sh->pipe_old = sh->pipe_new;
+			close(sh->pipe_old[1]);
 		}
 		if ((cmd) -> to_pipe)
 		{
@@ -224,9 +222,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			if (cmd->from_pipe || !ft_is_builtin(cmd->cmd)) // if not export, exit and unset and myvar FORK
 				pid = fork();
 			if (pid != 0)
-			{
 				waitpid(pid, NULL, 0);
-			}
 			else if (pid == 0)
 				handle_parent(sh, (cmd));
 		}
@@ -240,11 +236,3 @@ void execute(t_shell *sh)
 	exec_cmd(sh, cmd); // Execute the commands
 
 }
-// void	execute(t_shell *sh)
-// {
-// 	t_cmd *cmd;
-// 	int		pid;
-
-// 	cmd = sh->cmd;
-// 	exec_cmd(sh, cmd);
-// }

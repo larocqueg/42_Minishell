@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 13:35:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 13:54:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ int extract_token(char *prompt, int i, t_token **tokens)
 	t_token	*new_token;
 
 	start = 0;
-	while (prompt[i] && !is_space(prompt[i]))
+	token = NULL;
+	while (prompt[i] && !token)
 	{
 		if (!is_operator(prompt[i]))
 		{
 			start = i;
 			i = extract_word(prompt, i);
+			token = ft_strndupmod(prompt, start, i - 1);
 		}
 		else
 		{
@@ -89,13 +91,14 @@ int extract_token(char *prompt, int i, t_token **tokens)
 			i++;
 			if (prompt[i] == prompt[i - 1])
 				i++;
+			token = ft_strndupmod(prompt, start, i - 1);
 		}
 	}
-	token = ft_strndupmod(prompt, start, i - 1);
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
 
 	free(token);
+	token = NULL;
 	return (i);
 }
 
