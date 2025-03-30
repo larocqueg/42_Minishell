@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 17:22:44 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:03:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	execute(t_shell *sh);
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
 
-# define PROGRAM_NAME RED"minihell "RESET
+# define PROGRAM_NAME RED"minihellv3 "RESET
 //colors
 # define RESET "\033[0m"
 # define RED "\033[31m"
