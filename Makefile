@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/03/27 17:07:29 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/03/30 15:34:11 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = minishell
 
 # Compilation
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror -g
+#CFLAGS = -g
 LDFLAGS= -lreadline -lncurses
 # Paths
 SRC_DIR = ./srcs

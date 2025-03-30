@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 16:35:22 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:25:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ char **append_cmd(char **cmd, char *newcmd)
 	i = 0;
 	if (!cmd)
 	{
-		cmd = malloc(sizeof(char *) * 2);
+		cmd = malloc(sizeof(char **) * 2);
 		cmd[0] =  ft_strdup(newcmd);
 		cmd[1] = NULL;
 		return (cmd);
 	}
 	while(cmd[i] != NULL)
 		i++;
-	result = malloc(sizeof(char *) * (i + 2));
+	result = malloc(sizeof(char **) * (i + 2));
 	i = 0;
 	while(cmd[i])
 	{
-		result[i] = ft_strdup(cmd[i]);
+		result[i] = cmd[i];
 		i++;
 	}
 	result[i++] = ft_strdup(newcmd);

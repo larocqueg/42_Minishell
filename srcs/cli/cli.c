@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 16:09:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:35:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	start_cli(t_shell *sh)
 {
 	t_token	*token;
 	char	*prompt;
-	int status;
 	t_cmd *cmd;
 
 	cmd = sh->cmd;

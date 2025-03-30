@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/28 10:36:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:38:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 	}
 }
 
-void	remove_quotes(t_token *token, bool in_single_quotes, bool in_quotes)
+void	remove_quotes(t_token *token)
 {
 	char	quote;
 	char	*result;
@@ -60,7 +60,6 @@ void	remove_quotes(t_token *token, bool in_single_quotes, bool in_quotes)
 
 char	*extract_variable(char *str, int i)
 {
-	char *variable;
 	int	j;
 	j = i;
 	while (ft_isalnum(str[j]) || str[j] == '_')
@@ -71,16 +70,15 @@ char	*extract_variable(char *str, int i)
 }
 char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 {
-	bool	expand;
 	char	*temp;
-	int		i;
+	size_t		i;
 	char	*exit_str;
 	char	*variable_name;
 
 	exit_str = ft_itoa(g_exit_code);
 
 	i = 0;
-	while (str[i])
+	while (str[i] && i < ft_strlen(str))
 	{
 		set_quotes(str[i], &in_single_quotes, &in_quotes);
 		if (str[i] == '$' && !in_single_quotes)
@@ -93,7 +91,7 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 				str = temp;
 				i += ft_strlen(exit_str);
 			}
-			else if (!ft_isdigit(str[i]) && ft_isalnum(str[i]) || str[i] == '_')
+			else if (!ft_isdigit(str[i]) && (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				variable_name = extract_variable(str, i);
 				temp = ft_insertstr(str, i--, getenv(variable_name));
@@ -123,7 +121,7 @@ void	expand_tokens(t_token *token)
 				//free all tokens
 			free(token->token);
 			token-> token = temp;
-			remove_quotes(token, false, false);
+			remove_quotes(token);
 		}
 		token = token -> next;
 	}

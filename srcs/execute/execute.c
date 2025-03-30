@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 16:43:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:40:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
+		(void)sh; //for the error
 		exit(0);
 	}
 	if (ft_strncmp(cmd->cmd[0], "print", 5) == 0)
@@ -153,7 +154,6 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 
 void	handle_child(t_shell *sh, t_cmd *cmd)
 {
-	int pid;
 	int outfd;
 	int infd;
 

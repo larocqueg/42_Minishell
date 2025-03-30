@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 16:16:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:35:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	sh;
 
 	sh.DEBUG = 0;
-	if (argc == 2)
+	if (argc == 2 && argv[1][0] == '1')
 		sh.DEBUG = 1;
 	sh.original_stdin = dup(STDIN_FILENO);
 	sh.original_stdout = dup(STDOUT_FILENO);

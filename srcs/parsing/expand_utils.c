@@ -6,18 +6,17 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:28:46 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 15:06:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:39:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_insertstr(char	*string, int index, char *substr)
+char	*ft_insertstr(char	*string, size_t index, char *substr)
 {
 	int		total_len;
 	char	*after_str;
 	char	*result;
-	int		substr_len;
 
 	total_len = ft_strlen(string) + ft_strlen(substr) + 1;
 	result = malloc(sizeof(char) * total_len);
