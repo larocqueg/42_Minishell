@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/24 16:52:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:04:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #define START_GIT BOLD GREEN"git:("RESET
 #define END_GIT BOLD GREEN") "RESET
 //#define PROGRAM_NAME GREEN"➜  "RESET BOLD
-#define PROGRAM_NAME BOLD RED" minihell ➜ "RESET BOLD //minihell
+#define PROGRAM_NAME BOLD RED" minihellv1 ➜ "RESET BOLD //minihell
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define WHITE "\033[37m"
