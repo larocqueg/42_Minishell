@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 15:39:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:22:44 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+
+
+//constants
+# define ARG_MAX 2097152
 
 typedef enum e_type
 {

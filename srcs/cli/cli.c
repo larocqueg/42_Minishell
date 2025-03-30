@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 15:35:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:22:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	start_cli(t_shell *sh)
 	token = NULL;
 	while (1)
 	{
+		dup2(sh->original_stdin, STDIN_FILENO);
+		dup2(sh->original_stdout, STDOUT_FILENO);
+		//dup2 will be inside cli_init();
 		get_cli_pwd(sh);
 		prompt = readline(sh->cli_text);
 		if (prompt)
@@ -32,8 +35,6 @@ int	start_cli(t_shell *sh)
 			create_cmds(sh, token);
 			execute(sh);
 			free(prompt);
-			dup2(sh->original_stdin, STDIN_FILENO);
-			dup2(sh->original_stdout, STDOUT_FILENO);
 			prompt = NULL;
 		}
 		free(sh->cli_text);

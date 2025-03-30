@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 14:25:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:23:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_token	*tokenize(char *prompt, t_shell *sh)
 
 	i = 0;
 	tokens = NULL;
-	while (prompt[i])
+	while (prompt[i] && i < ARG_MAX)
 	{
 		while (is_space(prompt[i]))
 			i++;
