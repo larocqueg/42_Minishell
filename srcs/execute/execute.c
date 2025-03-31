@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 15:40:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:25:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	{
 		fdin = cmd -> fd_in;
 	}
-	return(fdin);
+	return (fdin);
 }
 
 void	handle_child(t_shell *sh, t_cmd *cmd)
@@ -157,8 +157,8 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	dup2(infd, STDIN_FILENO);
 	if (cmd -> fd_out != -1)
 		close (cmd->fd_out);
-	//if (cmd -> fd_in != -1)
-		//close(cmd ->fd_in);
+	if (cmd -> fd_in != -1)
+		close(cmd ->fd_in);
 	if (ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
 	else

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/31 14:45:51 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:14:34 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ t_token	*tokenize(char *prompt, t_shell *sh)
 	}
 	if (!sh->DEBUG)
 	{
-		printf("heredoc_count = %d\n", sh->heredoc_count);
 		return tokens;
 	}
 	t_token *temp;

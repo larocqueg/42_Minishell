@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/29 20:25:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:33:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		else if ((*token) -> type == HERE_DOC)
 		{
 			(*token) = (*token) -> next -> next;
-			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][1];
+			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][0];
 			heredoc_count++;
 		}
 		else if ((*token) -> type == WORD || (*token)->type == VAR)
