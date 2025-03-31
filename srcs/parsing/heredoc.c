@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/03/31 20:51:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:52:48 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	ft_heredoc_init(t_shell *sh)
 static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i)
 {
 	char	*prompt;
-	char	*temp;
 
 	while (1)
 	{
@@ -45,9 +44,7 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i)
 		}
 		else
 		{
-			temp = expand(prompt, false, false);
-			free(prompt);
-			prompt = temp;
+			prompt = expand(prompt, false, false);
 			ft_putstr_fd(prompt, sh->heredoc_pipes[i][1]);
 			ft_putstr_fd("\n", sh->heredoc_pipes[i][1]);
 		}
