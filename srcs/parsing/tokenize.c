@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 17:23:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:45:51 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ static int	is_var(char *token)
 	return (0);
 }
 
-static t_type	get_token_type(char *token)
+static t_type	get_token_type(char *token, t_shell *sh)
 {
 	if (!token)
 		return (WORD);
 	if (ft_strncmp(token, "|", 1) == 0)
 		return (PIPE);
 	if (ft_strncmp(token, "<<", 2) == 0)
+	{
+		sh->heredoc_count++;
 		return (HERE_DOC);
+	}
 	if (ft_strncmp(token, ">>", 2) == 0)
 		return (APPEND);
 	if (ft_strncmp(token, "<", 1) == 0)
@@ -69,7 +72,7 @@ static int	extract_word(char *prompt, int i)
 	return (i);
 }
 
-int extract_token(char *prompt, int i, t_token **tokens)
+int extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
 {
 	int		start;
 	char	*token;
@@ -94,7 +97,7 @@ int extract_token(char *prompt, int i, t_token **tokens)
 			token = ft_strndupmod(prompt, start, i - 1);
 		}
 	}
-	new_token = ft_tokennew(token, get_token_type(token));
+	new_token = ft_tokennew(token, get_token_type(token, sh));
 	ft_token_addback(tokens, new_token);
 
 	free(token);
@@ -115,10 +118,13 @@ t_token	*tokenize(char *prompt, t_shell *sh)
 			i++;
 		if (!prompt[i])
 			break ;
-		i = extract_token(prompt, i, &tokens);
+		i = extract_token(prompt, i, &tokens, sh);
 	}
 	if (!sh->DEBUG)
+	{
+		printf("heredoc_count = %d\n", sh->heredoc_count);
 		return tokens;
+	}
 	t_token *temp;
 	temp = tokens;
 

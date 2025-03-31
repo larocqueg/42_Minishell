@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	sh.envp = envp;
 	sh.pipe_old = NULL;
 	sh.pipe_new = NULL;
+	sh.heredoc_count = 0;
 	start_cli(&sh);
 	return (0);
 }

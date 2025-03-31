@@ -157,8 +157,8 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	dup2(infd, STDIN_FILENO);
 	if (cmd -> fd_out != -1)
 		close (cmd->fd_out);
-	if (cmd -> fd_in != -1)
-		close(cmd ->fd_in);
+	//if (cmd -> fd_in != -1)
+		//close(cmd ->fd_in);
 	if (ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
 	else

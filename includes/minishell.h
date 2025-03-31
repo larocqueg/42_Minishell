@@ -68,6 +68,8 @@ typedef struct s_shell
 	int		original_stdout;
 	int		original_stdin;
 	int		DEBUG;
+	int		heredoc_count;
+	int		**heredoc_pipes;
 }	t_shell;
 
 typedef struct s_token
@@ -96,6 +98,7 @@ char	*ft_insertstr(char	*string, size_t index, char *substr);
 void	expand_tokens(t_token *token);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
+void	get_heredoc(t_shell *sh, t_token *token);
 
 //cli
 int		start_cli(t_shell *sh);

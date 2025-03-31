@@ -26,11 +26,13 @@ int	start_cli(t_shell *sh)
 		dup2(sh->original_stdout, STDOUT_FILENO);
 		//dup2 will be inside cli_init();
 		get_cli_pwd(sh);
+		sh->heredoc_count = 0;
 		prompt = readline(sh->cli_text);
 		if (prompt)
 		{
 			add_history(prompt);
 			token = tokenize(prompt, sh);
+			get_heredoc(sh, token);	
 			expand_tokens(token);
 			create_cmds(sh, token);
 			execute(sh);

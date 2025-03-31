@@ -58,7 +58,7 @@ char **append_cmd(char **cmd, char *newcmd)
 	return (result);
 }
 
-void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
+void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 {
 	t_cmd *newcmd = malloc(sizeof(t_cmd));
 	newcmd -> fd_out = -1;
@@ -67,6 +67,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 	newcmd -> cmd = NULL;
 	newcmd->to_pipe = false;
 	newcmd->from_pipe = false;
+	int heredoc_count = 0;
 	while (*token && (*token)->type != PIPE)
 	{
 		if (from_pipe)
@@ -88,7 +89,9 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 		}
 		else if ((*token) -> type == HERE_DOC)
 		{
-			//newcmd -> fd_out = sh->here_docs[here_doc_num][0];
+			(*token) = (*token) -> next -> next;
+			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][1];
+			heredoc_count++;
 		}
 		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
@@ -97,7 +100,8 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 			else if ((*token)->type == VAR && (*token)->next->type != WORD)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 		}
-		(*token) = (*token) -> next;
+		if (*token)
+			(*token) = (*token) -> next;
 	}
 	if ((*token) && (*token) -> type == PIPE)
 		newcmd -> to_pipe = true;
@@ -115,7 +119,7 @@ void	create_cmds(t_shell *sh, t_token *token)
 			from_pipe = true;
 			token = token -> next;
 		}
-		extract_cmd(&sh->cmd, &token, from_pipe);
+		extract_cmd(&sh->cmd, &token, from_pipe, sh);
 	}
 
 	if (!sh->DEBUG)

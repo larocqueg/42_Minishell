@@ -33,6 +33,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/execute.c \
+	$(SRC_DIR)/parsing/heredoc.c \
 
 
 # Objects
