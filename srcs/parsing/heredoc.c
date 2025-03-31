@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/03/31 20:52:48 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:59:30 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,17 @@ void	get_heredoc(t_shell *sh, t_token *token)
 {
 	int		i;
 	t_token	*temp;
-	//int		pid;
+
 	i = 0;
 	temp = token;
 	ft_heredoc_init(sh);
-	//pid = fork();
-	//if (pid != 0)
-	//{
-		//wait(NULL);
-		//return ;
-	//}
-	//if (pid == 0)
-	//{
-		while (temp)
+	while (temp)
+	{
+		if (temp->type == HERE_DOC)
 		{
-			if (temp->type == HERE_DOC)
-			{
-				ft_create_heredoc_pipes(sh, temp->next->token, i);
-				i++;
-			}
-			temp = temp->next;
+			ft_create_heredoc_pipes(sh, temp->next->token, i);
+			i++;
 		}
-		//exit(0);
+		temp = temp->next;
 	}
-	///i = 0;
-	//while(i < sh->heredoc_count)
-	//{
-		//close(sh->heredoc_pipes[i][1]);
-		//i++;
-	//}
-//}
+}
