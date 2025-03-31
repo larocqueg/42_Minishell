@@ -101,6 +101,7 @@ void	execute(t_shell *sh);
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
 
+//prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET
 //colors
 # define RESET "\033[0m"
@@ -110,5 +111,14 @@ void	get_cli_pwd(t_shell *sh);
 # define YELLOW "\033[33m"
 # define CYAN "\033[36m"
 # define MAGENTA "\033[35m"
+
+//error messages
+# define INFILE_ERROR "Error: No such file or directory \"infile\"\n"
+# define OUTFILE_ERROR "Error: No such file or directory \"outfile\"\n"
+# define AV_ERROR_1		"Error: Bad arguments!\n"
+# define AV_ERROR_2	"Usage: $> ./pipex \"file1\" \"cmd1\" \"cmd2\" \"file2\"\n"
+# define PID_ERROR	"Error while trying to create a fork!\n"
+# define PIPE_ERROR	"Error while trying to create a pipe!\n"
+# define PATH_ERROR	"Error: PATH not found!\n"
 
 #endif

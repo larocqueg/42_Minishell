@@ -12,14 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-# define INFILE_ERROR "Error: No such file or directory \"infile\"\n"
-# define OUTFILE_ERROR "Error: No such file or directory \"outfile\"\n"
-# define AV_ERROR_1		"Error: Bad arguments!\n"
-# define AV_ERROR_2	"Usage: $> ./pipex \"file1\" \"cmd1\" \"cmd2\" \"file2\"\n"
-# define PID_ERROR	"Error while trying to create a fork!\n"
-# define PIPE_ERROR	"Error while trying to create a pipe!\n"
-# define PATH_ERROR	"Error: PATH not found!\n"
-
 void	ft_error(char *str)
 {
 	if (str != NULL)
