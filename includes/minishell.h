@@ -99,6 +99,7 @@ void	expand_tokens(t_token *token);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
 void	get_heredoc(t_shell *sh, t_token *token);
+char	*expand(char *str, bool in_quotes, bool in_single_quotes);
 
 //cli
 int		start_cli(t_shell *sh);

@@ -44,6 +44,7 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i)
 		}
 		else
 		{
+			prompt = expand(prompt, false, false);
 			ft_putstr_fd(prompt, sh->heredoc_pipes[i][1]);
 			ft_putstr_fd("\n", sh->heredoc_pipes[i][1]);
 		}
