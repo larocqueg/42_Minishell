@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/03/31 18:31:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:57:11 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i)
 	while (1)
 	{
 		prompt = readline("> ");
-		if (!ft_strncmp(prompt, end, ft_strlen(prompt)))
+		if (!prompt)
+			printf("Error: EOF\n");
+
+		if (prompt && !ft_strncmp(prompt, end, ft_strlen(end) + 1))
 		{
 			close(sh->heredoc_pipes[i][1]);
 			free(prompt);
@@ -51,17 +54,33 @@ void	get_heredoc(t_shell *sh, t_token *token)
 {
 	int		i;
 	t_token	*temp;
-
+	//int		pid;
 	i = 0;
 	temp = token;
 	ft_heredoc_init(sh);
-	while(temp)
-	{
-		if (temp->type == HERE_DOC)
+	//pid = fork();
+	//if (pid != 0)
+	//{
+		//wait(NULL);
+		//return ;
+	//}
+	//if (pid == 0)
+	//{
+		while (temp)
 		{
-			ft_create_heredoc_pipes(sh, temp->next->token, i);
-			i++;
+			if (temp->type == HERE_DOC)
+			{
+				ft_create_heredoc_pipes(sh, temp->next->token, i);
+				i++;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
+		//exit(0);
 	}
-}
+	///i = 0;
+	//while(i < sh->heredoc_count)
+	//{
+		//close(sh->heredoc_pipes[i][1]);
+		//i++;
+	//}
+//}
