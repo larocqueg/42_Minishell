@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 14:45:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:25:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
 	temp->next = new_cmd;
 }
 
-
 char **append_cmd(char **cmd, char *newcmd)
 {
 	int	i;
@@ -38,18 +37,18 @@ char **append_cmd(char **cmd, char *newcmd)
 	i = 0;
 	if (!cmd)
 	{
-		cmd = malloc(sizeof(char *) * 2);
+		cmd = malloc(sizeof(char **) * 2);
 		cmd[0] =  ft_strdup(newcmd);
 		cmd[1] = NULL;
 		return (cmd);
 	}
 	while(cmd[i] != NULL)
 		i++;
-	result = malloc(sizeof(char *) * (i + 2));
+	result = malloc(sizeof(char **) * (i + 2));
 	i = 0;
 	while(cmd[i])
 	{
-		result[i] = ft_strdup(cmd[i]);
+		result[i] = cmd[i];
 		i++;
 	}
 	result[i++] = ft_strdup(newcmd);
@@ -88,11 +87,14 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe)
 		}
 		else if ((*token) -> type == HERE_DOC)
 		{
-			//newcmd -> fd_out = open(), O_RDWR | O_APPEND);
+			//newcmd -> fd_out = sh->here_docs[here_doc_num][0];
 		}
-		else if ((*token) -> type == WORD)
+		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
-			newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+			if ((*token)->type == WORD || ((*token)->type == VAR && !(*token)->next))
+				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+			else if ((*token)->type == VAR && (*token)->next->type != WORD)
+				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 		}
 		(*token) = (*token) -> next;
 	}
@@ -114,15 +116,20 @@ void	create_cmds(t_shell *sh, t_token *token)
 		}
 		extract_cmd(&sh->cmd, &token, from_pipe);
 	}
-	while(sh->cmd)
-	{
-		printf("-----------------------\n");
-		for(int i = 0; sh->cmd->cmd[i]; i++)
-			printf("%s ", sh->cmd->cmd[i]);
-		printf("\nfdin %d\n", sh->cmd->fd_in);
-		printf("fdout %d\n", sh->cmd->fd_out);
-		printf("topipe  "); sh->cmd->to_pipe ? printf("true\n") : printf("false\n");
-		printf("frompipe  "); sh->cmd->from_pipe ? printf("true\n") : printf("false\n");
-		sh->cmd = sh->cmd->next;
-	}
+
+	if (!sh->DEBUG)
+		return;
+	t_cmd *cmd = sh->cmd;
+	 while(cmd)
+	 {
+		printf("-------CMDS---------\n");
+	 	for(int i = 0; cmd->cmd[i]; i++)
+			printf("%s ", cmd->cmd[i]);
+		printf("\nfdin %d\n", cmd->fd_in);
+	 	printf("fdout %d\n", cmd->fd_out);
+	 	printf("topipe  "); cmd->to_pipe ? printf("true\n") : printf("false\n");
+	 	printf("frompipe  "); cmd->from_pipe ? printf("true\n") : printf("false\n");
+	 	cmd = cmd->next;
+	 }
+	printf("---------END CMDS--------\n");
 }

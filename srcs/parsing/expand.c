@@ -6,12 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/26 17:40:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:38:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 {
@@ -31,19 +30,21 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 	}
 }
 
-void	remove_quotes(t_token *token, bool in_single_quotes, bool in_quotes)
+void	remove_quotes(t_token *token)
 {
 	char	quote;
 	char	*result;
 	int		i;
 	int		j;
+
 	result = malloc(sizeof(char) * ft_strlen(token->token) + 1);
 	i = 0;
 	j = 0;
 	quote = '\0';
 	while (token->token[i])
 	{
-		if ((token->token[i] == '\'' || token->token[i] == '"') && quote == '\0')
+		if ((token->token[i] == '\'' || token->token[i] == '"')
+			&& quote == '\0')
 			quote = token->token[i++];
 		else if (token->token[i] == quote)
 		{
@@ -60,8 +61,8 @@ void	remove_quotes(t_token *token, bool in_single_quotes, bool in_quotes)
 
 char	*extract_variable(char *str, int i)
 {
-	char *variable;
 	int	j;
+
 	j = i;
 	while (ft_isalnum(str[j]) || str[j] == '_')
 		j++;
@@ -69,18 +70,17 @@ char	*extract_variable(char *str, int i)
 		return (ft_strndupmod(str, i, --j));
 	return (NULL);
 }
+
 char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 {
-	bool	expand;
+	size_t	i;
 	char	*temp;
-	int		i;
 	char	*exit_str;
 	char	*variable_name;
 
-	exit_str = ft_itoa(exit_code);
-
 	i = 0;
-	while (str[i])
+	exit_str = ft_itoa(g_exit_code);
+	while (str[i] && i < ft_strlen(str))
 	{
 		set_quotes(str[i], &in_single_quotes, &in_quotes);
 		if (str[i] == '$' && !in_single_quotes)
@@ -93,7 +93,8 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 				str = temp;
 				i += ft_strlen(exit_str);
 			}
-			else if (!ft_isdigit(str[i]) && ft_isalnum(str[i]) || str[i] == '_')
+			else if (!ft_isdigit(str[i])
+				&& (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				variable_name = extract_variable(str, i);
 				temp = ft_insertstr(str, i--, getenv(variable_name));
@@ -105,7 +106,6 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 		}
 		i++;
 	}
-
 	free(exit_str);
 	return (str);
 }
@@ -113,18 +113,20 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 void	expand_tokens(t_token *token)
 {
 	char	*temp;
-	temp = NULL;
 
+	temp = NULL;
 	while (token)
 	{
 		if (token->type == WORD)
 		{
 			temp = expand(token-> token, false, false);
 			if (!temp)
+			{
 				//free all tokens
+			}
 			free(token->token);
-			token-> token = temp;
-			remove_quotes(token, false, false);
+			token->token = temp;
+			remove_quotes(token);
 		}
 		token = token -> next;
 	}

@@ -6,11 +6,25 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/27 14:42:06 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:23:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	is_var(char *token)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(token[0]) && token[0] != '_')
+		return (0);
+	while (token[i] && (ft_isalnum(token[i]) || token[i] == '_'))
+		i++;
+	if (token[i] == '=')
+		return (1);
+	return (0);
+}
 
 static t_type	get_token_type(char *token)
 {
@@ -26,64 +40,90 @@ static t_type	get_token_type(char *token)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
+	if (is_var(token))
+		return (VAR);
 	return (WORD);
 }
 
-static int	extract_quotes(char *prompt, int i, char *token, int *j)
+static int	extract_quotes(char *prompt, int i)
 {
 	char	quote;
 
-	quote = prompt[i];
-	token[(*j)++] = prompt[i++];
+	quote = prompt[i++];
 	while (prompt[i] && prompt[i] != quote)
-		token[(*j)++] = prompt[i++];
+		i++;
 	if (prompt[i] == quote)
-		token[(*j)++] = prompt[i++];
+		i++;
 	return (i);
 }
 
-int	extract_token(char *prompt, int i, t_token **tokens)
+static int	extract_word(char *prompt, int i)
 {
-	int		j;
+	while (prompt[i] && !is_space(prompt[i]) && !is_operator(prompt[i]))
+	{
+		if ((prompt[i] == '\'' || prompt[i] == '"'))
+			i = extract_quotes(prompt, i);
+		else
+			i++;
+	}
+	return (i);
+}
+
+static int	extract_token(char *prompt, int i, int start, t_token **tokens)
+{
 	char	*token;
-	char	quote;
 	t_token	*new_token;
 
-	j = 0;
-	token = malloc(sizeof(char) * 4096);
-	if (is_operator(prompt[i]))
+	token = NULL;
+	while (prompt[i] && !token)
 	{
-		token[j++] = prompt[i++];
-		if (prompt[i] == token[j - 1])
-			token[j++] = prompt[i++];
+		if (!is_operator(prompt[i]))
+		{
+			start = i;
+			i = extract_word(prompt, i);
+			token = ft_strndupmod(prompt, start, i - 1);
+		}
+		else
+		{
+			start = i++;
+			if (prompt[i] == prompt[i - 1])
+				i++;
+			token = ft_strndupmod(prompt, start, i - 1);
+		}
 	}
-	else if (prompt[i] == '\'' || prompt[i] == '"')
-		i = extract_quotes(prompt, i, token, &j);
-	else
-		while (prompt[i] && !is_operator(prompt[i]) && !is_space(prompt[i])
-			&& prompt[i] != '\'' && prompt[i] != '"')
-			token[j++] = prompt[i++];
-	token[j] = '\0';
 	new_token = ft_tokennew(token, get_token_type(token));
 	ft_token_addback(tokens, new_token);
 	free(token);
+	token = NULL;
 	return (i);
 }
 
-t_token	*tokenize(char *prompt)
+t_token	*tokenize(char *prompt, t_shell *sh)
 {
 	int		i;
+	t_token	*temp;
 	t_token	*tokens;
 
 	i = 0;
 	tokens = NULL;
-	while (prompt[i])
+	while (prompt[i] && i < ARG_MAX)
 	{
 		while (is_space(prompt[i]))
 			i++;
 		if (!prompt[i])
 			break ;
-		i = extract_token(prompt, i, &tokens);
+		i = extract_token(prompt, i, 0, &tokens);
 	}
+	if (!sh->DEBUG)
+		return (tokens);
+	temp = tokens;
+	printf("-----TOKENS------------\n");
+	while (temp)
+	{
+		printf("token->token: '%s', token->type= %d\n",
+			temp->token, temp->type);
+		temp = temp -> next;
+	}
+	printf("-----ENDTOKENS---------\n");
 	return (tokens);
 }
