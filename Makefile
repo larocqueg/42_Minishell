@@ -34,6 +34,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/execute.c \
 	$(SRC_DIR)/parsing/heredoc.c \
+	$(SRC_DIR)/builtin/export.c \
+	$(SRC_DIR)/builtin/builtin_utils.c \
 
 
 # Objects

@@ -14,27 +14,6 @@
 
 int	g_exit_code;
 
-static char	**clone_envp(char **envp)
-{
-	int	i;
-	char **dest;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	dest = malloc(sizeof(char *) * (i + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		dest[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	dest[i] = NULL;
-	return (dest);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;

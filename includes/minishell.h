@@ -107,6 +107,7 @@ int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 
 //export.c
 void	print_export(t_shell *sh);
+char	**clone_envp(char **envp);
 
 //cli
 int		start_cli(t_shell *sh);
