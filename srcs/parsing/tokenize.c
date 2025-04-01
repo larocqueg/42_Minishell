@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:52:22 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/31 18:14:34 by rafaelfe         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/01 17:18:19 by rafaelfe         ###   ########.fr       */
+>>>>>>> 80b8e2d (added append myvar)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +25,8 @@ static int	is_var(char *token)
 		return (0);
 	while (token[i] && (ft_isalnum(token[i]) || token[i]=='_'))
 			i++;
+	if (token[i] == '+')
+		i++;
 	if (token[i] == '=')
 			return (1);
 	return (0);
