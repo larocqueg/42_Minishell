@@ -34,58 +34,6 @@ static char	**clone_envp(char **envp)
 	dest[i] = NULL;
 	return (dest);
 }
-/*
-static void	ft_swap(char **s1, char **s2)
-{
-	char *temp;
-
-	temp = *s1;
-	*s1 = *s2;
-	*s2 = temp;
-}
-
-static int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) || s1[i] != c || s2[i] != c)
-	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-static void	print_export(t_shell *sh)
-{
-	int i;
-	int	j;
-	char **temp2;
-
-	i = 0;
-	temp2 = clone_envp(sh->envp);
-	while (temp2[i])
-	{
-		j = i + 1;
-		while (temp2[j])
-		{
-			if (ft_strcmp_tochar(temp2[i], temp2[j], '=') > 0)
-				ft_swap(&temp2[i], &temp2[j]);
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	while (temp2[i])
-	{
-		printf("declare -x %s\n", temp2[i]);
-		free(temp2[i++]);
-	}
-	free(temp2);
-	exit (0);
-}*/
 
 int	main(int argc, char **argv, char **envp)
 {
