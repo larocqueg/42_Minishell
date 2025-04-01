@@ -11,3 +11,26 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_swap(char **s1, char **s2)
+{
+	char *temp;
+
+	temp = *s1;
+	*s1 = *s2;
+	*s2 = temp;
+}
+
+int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
+{
+	int	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]) || s1[i] != c || s2[i] != c)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
