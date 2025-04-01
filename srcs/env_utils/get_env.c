@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:26:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 20:06:42 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:21:48 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,29 @@ char	*ft_get_env(char *var_name, t_shell *sh)
 	char	**env;
 
 	env= sh->envp;
-
 	i = 0;
 	while(env[i])
 	{
 		if (ft_strcmp_tochar(var_name, env[i], '=') == -61)
 		{
-			return (env[i] + ft_strlen_tochar(env[i], '=' ));
+			return (env[i] + ft_strlen_tochar(env[i], '=' ) + 1);
 		}
 		i++;
 	}
 	return (NULL);
+}
+void	ft_change_var(char *var_name, char *content, t_shell *sh)
+{
+	int		i;
+	
+	i = 0;
+	while(sh->envp[i])
+	{
+		if (ft_strncmp(var_name, sh->envp[i], 4) == 0)
+		{
+			free(sh->envp[i]);
+			sh->envp[i] = ft_strjoin(var_name, content);
+		}
+		i++;
+	}
 }

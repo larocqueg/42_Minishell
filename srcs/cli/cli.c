@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 16:22:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:15:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	start_cli(t_shell *sh)
 		{
 			add_history(prompt);
 			token = tokenize(prompt, sh);
-			get_heredoc(sh, token);	
-			expand_tokens(token);
+			get_heredoc(sh, token);
+			expand_tokens(token, sh);
 			create_cmds(sh, token);
 			execute(sh);
 			free(prompt);

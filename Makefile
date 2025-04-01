@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/01 19:59:40 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/01 20:20:15 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,10 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/heredoc.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/execute.c \
-	$(SRC_DIR)/parsing/heredoc.c \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/builtin_utils.c \
 	$(SRC_DIR)/builtin/cd.c \
-	$(SRC_DIR)/builtin/builtin_utils.c \
-	$(SRC_DIR)/env_utils/get_env.c \
+	$(SRC_DIR)/env_utils/get_env.c
 
 
 # Objects

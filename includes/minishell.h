@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 19:58:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:15:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
-void	expand_tokens(t_token *token);
+void	expand_tokens(t_token *token, t_shell *sh);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
 void	get_heredoc(t_shell *sh, t_token *token);
-char	*expand(char *str, bool in_quotes, bool in_single_quotes);
+char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
 int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 char	**clone_envp(char **envp);
 void	free_envp(t_shell *sh);
-
+size_t	ft_strlen_tochar(char *str, char c);
 
 //export.c
 void	print_export(t_shell *sh);
@@ -120,6 +120,7 @@ int	exec_cd(char **cmd, t_shell *sh);
 
 //env cmds
 char	*ft_get_env(char *var_name, t_shell *sh);
+void	ft_change_var(char *var_name, char *content, t_shell *sh);
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET
