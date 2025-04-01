@@ -34,7 +34,7 @@ static char	**clone_envp(char **envp)
 	dest[i] = NULL;
 	return (dest);
 }
-
+/*
 static void	ft_swap(char **s1, char **s2)
 {
 	char *temp;
@@ -85,7 +85,7 @@ static void	print_export(t_shell *sh)
 	}
 	free(temp2);
 	exit (0);
-}
+}*/
 
 int	main(int argc, char **argv, char **envp)
 {
