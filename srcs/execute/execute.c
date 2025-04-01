@@ -102,7 +102,6 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 	{
 		print_export(sh);
-		exit(0);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
 		exit(0);
