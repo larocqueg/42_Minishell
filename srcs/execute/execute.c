@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/31 18:25:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:24:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ void	executecmd(char **cmds, char **env)
 
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
-	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
+	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 	{
 		printf("exit\n");
 		(void)sh; //for the error
 		exit(0);
 	}
-	if (ft_strncmp(cmd->cmd[0], "print", 5) == 0)
+	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 	{
-		printf("print\n");
+		exec_cd(cmd->cmd, sh);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
 		exit(0);
@@ -106,9 +106,9 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 
 int	ft_is_builtin(char **cmds)
 {
-	if (ft_strncmp(cmds[0], "exit", 4) == 0)
+	if (ft_strncmp(cmds[0], "exit", 5) == 0)
 		return (1);
-	if (ft_strncmp(cmds[0], "print", 5) == 0)
+	if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
 	return (0);
 }
