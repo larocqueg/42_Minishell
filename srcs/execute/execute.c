@@ -92,7 +92,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 	{
 		printf("exit\n");
-		(void)sh; //for the error
+		free_envp(sh);
 		exit(0);
 	}
 	if (ft_strncmp(cmd->cmd[0], "print", 6) == 0)

@@ -55,3 +55,13 @@ char	**clone_envp(char **envp)
 	dest[i] = NULL;
 	return (dest);
 }
+
+void	free_envp(t_shell *sh)
+{
+	int	i;
+
+	i = 0;
+	while (sh->envp[i])
+		free(sh->envp[i++]);
+	free(sh->envp);
+}
