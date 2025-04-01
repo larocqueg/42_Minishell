@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 19:21:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 20:00:24 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	exec_cd(char **cmd, t_shell *sh)
 {
-	(void)sh;
+	if (!ft_get_env("PWD", sh))
+		printf("invalid env!");
 	if (cmd[1] == NULL)
 	{
 		chdir(getenv("HOME")); // temos q fazer a get env!!!!!!!!!
