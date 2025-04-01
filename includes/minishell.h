@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 19:03:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:20:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ void	print_export(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
+
+//built ins!
+int	exec_cd(char **cmd, t_shell *sh);
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET

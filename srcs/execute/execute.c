@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/31 18:25:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:24:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		free_envp(sh);
 		exit(0);
 	}
-	if (ft_strncmp(cmd->cmd[0], "print", 6) == 0)
+	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 	{
-		printf("print\n");
+		exec_cd(cmd->cmd, sh);
 	}
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 	{
@@ -115,6 +115,8 @@ int	ft_is_builtin(char **cmds)
 	if (ft_strncmp(cmds[0], "print", 6) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "export", 7) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
 	return (0);
 }
