@@ -19,7 +19,7 @@ void	print_export(t_shell *sh)
 	char	**temp;
 
 	i = 0;
-	temp2 = clone_envp(sh->envp);
+	temp = clone_envp(sh->envp);
 	while (temp[i])
 	{
 		j = i + 1;
@@ -31,25 +31,12 @@ void	print_export(t_shell *sh)
 		}
 		i++;
 	}
-	if (sh->DEBUG)
+	i = 0;
+	while (temp[i])
 	{
-		i = 0;
-		while (temp[i])
-		{
-			printf("%s\n", temp[i]);
-			free(temp[i++]);
-		}
-		free(temp);
+		printf("declare -x %s\n", temp[i]);
+		free(temp[i++]);
 	}
-	else
-	{
-		i = 0;
-		while (temp[i])
-		{
-			printf("%s\n", temp[i]);
-			free(temp[i++]);
-		}
-		free(temp);
-		return ;
-	}
+	free(temp);
+	return ;
 }

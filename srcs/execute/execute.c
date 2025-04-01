@@ -92,12 +92,16 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 	{
 		printf("exit\n");
-		(void)sh; //for the error
+		free_envp(sh);
 		exit(0);
 	}
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 	{
 		exec_cd(cmd->cmd, sh);
+	}
+	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
+	{
+		print_export(sh);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
 		exit(0);
@@ -107,6 +111,10 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 int	ft_is_builtin(char **cmds)
 {
 	if (ft_strncmp(cmds[0], "exit", 5) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "print", 6) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
