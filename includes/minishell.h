@@ -61,7 +61,10 @@ typedef struct s_shell
 	int		from_fd;
 	int		to_fd;
 	char	*cli_text;
+	int		env_size;
 	char	**envp;
+	int		local_size;
+	char	**local_vars;
 	t_cmd	*cmd;
 	int		*pipe_old;
 	int		*pipe_new;
@@ -100,6 +103,7 @@ void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
 void	get_heredoc(t_shell *sh, t_token *token);
 char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh);
+int		is_var(char *token);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
@@ -117,6 +121,9 @@ void	get_cli_pwd(t_shell *sh);
 
 //built ins!
 int	exec_cd(char **cmd, t_shell *sh);
+
+//vars.c
+void	handle_vars(t_shell *sh, char *var);
 
 //env cmds
 char	*ft_get_env(char *var_name, t_shell *sh);

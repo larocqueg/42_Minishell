@@ -37,7 +37,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/builtin_utils.c \
 	$(SRC_DIR)/builtin/cd.c \
-	$(SRC_DIR)/env_utils/get_env.c
+	$(SRC_DIR)/env_utils/get_env.c \
+	$(SRC_DIR)/vars/vars.c
 
 
 # Objects

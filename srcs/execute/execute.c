@@ -103,6 +103,10 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	{
 		print_export(sh);
 	}
+	if (is_var(cmd->cmd[0]))
+	{
+		handle_vars(sh, cmd->cmd[0]);
+	}
 	if (cmd->to_pipe || cmd->from_pipe)
 		exit(0);
 }
@@ -117,6 +121,8 @@ int	ft_is_builtin(char **cmds)
 	if (ft_strncmp(cmds[0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "cd", 3) == 0)
+		return (1);
+	if (is_var(cmds[0]))
 		return (1);
 	return (0);
 }

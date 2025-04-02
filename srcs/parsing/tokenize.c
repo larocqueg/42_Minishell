@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static int	is_var(char *token)
+int	is_var(char *token)
 {
 	int	i;
 
