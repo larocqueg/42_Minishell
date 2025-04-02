@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/02 18:17:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:04:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	}
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 	{
-		print_export(sh);
+		exec_export(sh, cmd);
 	}
 	if (is_var(cmd->cmd[0]))
 	{

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/02 18:28:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:46:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,15 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	newcmd->from_pipe = false;
 	bool	hascmd = false;
 	int heredoc_count = 0;
+	bool export = false;
+	if (ft_strncmp("export", (*token)->token, 7) == 0)
+		export = true;
+
+	// when redirecting close the other fd;
 	while (*token && (*token)->type != PIPE)
 	{
+		if ((*token) -> type != WORD && (*token)-> type != VAR)
+			export = false;
 		if (from_pipe)
 			newcmd -> from_pipe = true;
 		if ((*token) -> type == TOFILE)
@@ -95,13 +102,13 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][0];
 			heredoc_count++;
 		}
-		else if (((*token) -> type == WORD || (*token)->type == VAR) && (*token)->token)
+		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
-			if ((*token)->type == WORD)
+			if ((*token)->type == WORD || export)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
-			else if ((*token) -> type == VAR)
+			else if ((*token) -> type == VAR || ((*token) -> type == WORD))
 			{
-				while(temp && (temp->type == VAR || temp->type == WORD))
+				while(temp && temp->type == VAR)
 				{
 					if (temp->type != VAR)
 					{

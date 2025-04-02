@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 21:15:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:04:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char	**append_cmd(char **cmd, char *newcmd);
 
 //export.c
 void	print_export(t_shell *sh);
+void	exec_export(t_shell *sh, t_cmd *cmd);
+
 
 //cli
 int		start_cli(t_shell *sh);
