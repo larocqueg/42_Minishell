@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 15:35:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:26:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	main(int argc, char **argv, char **envp)
 	sh.local_vars = NULL;
 	sh.envp = clone_envp(envp); // dar free em caso de exit ou ctrl + d
 	sh.env_size = get_env_size(sh.envp);
-	printf("env size = %d\n", sh.env_size);
+	if (sh.DEBUG)
+		printf("env size = %d\n", sh.env_size);
 	sh.pipe_old = NULL;
 	sh.pipe_new = NULL;
 	sh.heredoc_count = 0;

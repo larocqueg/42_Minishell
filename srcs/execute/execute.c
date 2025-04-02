@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 19:24:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:17:07 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		int	i = 0;
 		while (cmd->cmd[i])
 			handle_vars(sh, cmd->cmd[i++]);
+		if (!sh->DEBUG)
+			return;
 		i = 0;
 		while (sh->local_vars[i])
 			printf("%s\n", sh->local_vars[i++]);

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 21:14:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:39:01 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	remove_quotes(t_token *token)
 	char	*result;
 	int		i;
 	int		j;
+
+	if (!token->token)
+		return ;
 	result = malloc(sizeof(char) * ft_strlen(token->token) + 1);
 	i = 0;
 	j = 0;
@@ -104,6 +107,10 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh)
 		i++;
 	}
 	free(exit_str);
+	if (ft_strlen(str) == 0)
+	{
+		str = NULL;
+	}
 	return (str);
 }
 
@@ -117,9 +124,6 @@ void	expand_tokens(t_token *token, t_shell *sh)
 		if (token->type == WORD)
 		{
 			temp = expand(token-> token, false, false, sh);
-			if (!temp)
-				//free all tokens
-			free(token->token);
 			token-> token = temp;
 			remove_quotes(token);
 		}
