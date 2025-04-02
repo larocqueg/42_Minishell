@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:01:04 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/01 19:01:17 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/01 20:17:40 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
 		i++;
 	}
 	return (0);
+}
+
+size_t ft_strlen_tochar(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+
+	while(str[i] && str[i] != c)
+	{
+		i++;
+	}
+	return (i);
 }
 
 char	**clone_envp(char **envp)

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 19:03:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:15:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ typedef struct s_shell
 	int		from_fd;
 	int		to_fd;
 	char	*cli_text;
+	int		env_size;
 	char	**envp;
+	int		local_size;
+	char	**local_vars;
 	t_cmd	*cmd;
 	int		*pipe_old;
 	int		*pipe_new;
@@ -95,18 +98,20 @@ void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
-void	expand_tokens(t_token *token);
+void	expand_tokens(t_token *token, t_shell *sh);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
 void	get_heredoc(t_shell *sh, t_token *token);
-char	*expand(char *str, bool in_quotes, bool in_single_quotes);
+char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh);
+int		is_var(char *token);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
 int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 char	**clone_envp(char **envp);
 void	free_envp(t_shell *sh);
-
+size_t	ft_strlen_tochar(char *str, char c);
+char	**append_cmd(char **cmd, char *newcmd);
 
 //export.c
 void	print_export(t_shell *sh);
@@ -114,6 +119,16 @@ void	print_export(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
+
+//built ins!
+int	exec_cd(char **cmd, t_shell *sh);
+
+//vars.c
+void	handle_vars(t_shell *sh, char *var);
+
+//env cmds
+char	*ft_get_env(char *var_name, char **env);
+void	ft_change_var(char *var_name, char *content, char **env);
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET

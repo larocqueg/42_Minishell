@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/30 15:38:46 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:14:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*extract_variable(char *str, int i)
 		return (ft_strndupmod(str, i, --j));
 	return (NULL);
 }
-char	*expand(char *str, bool in_quotes, bool in_single_quotes)
+char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh)
 {
 	char	*temp;
 	size_t		i;
@@ -94,11 +94,11 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 			else if (!ft_isdigit(str[i]) && (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				variable_name = extract_variable(str, i);
-				temp = ft_insertstr(str, i--, getenv(variable_name));
+				temp = ft_insertstr(str, i--, ft_get_env(variable_name, sh->envp));
 				free(str);
 				str = temp;
-				if (getenv(variable_name))
-					i += (ft_strlen(getenv(variable_name)) - 1);
+				if (ft_get_env(variable_name, sh->envp))
+					i += (ft_strlen(ft_get_env(variable_name, sh->envp)) - 1);
 			}
 		}
 		i++;
@@ -107,7 +107,7 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes)
 	return (str);
 }
 
-void	expand_tokens(t_token *token)
+void	expand_tokens(t_token *token, t_shell *sh)
 {
 	char	*temp;
 	temp = NULL;
@@ -116,7 +116,7 @@ void	expand_tokens(t_token *token)
 	{
 		if (token->type == WORD)
 		{
-			temp = expand(token-> token, false, false);
+			temp = expand(token-> token, false, false, sh);
 			if (!temp)
 				//free all tokens
 			free(token->token);

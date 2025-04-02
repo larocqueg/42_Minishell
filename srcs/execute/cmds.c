@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/03/31 18:38:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:14:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ char **append_cmd(char **cmd, char *newcmd)
 void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 {
 	t_cmd *newcmd = malloc(sizeof(t_cmd));
+	t_token *temp = *token;
 	newcmd -> fd_out = -1;
 	newcmd -> fd_in = -1;
 	newcmd -> next = NULL;
 	newcmd -> cmd = NULL;
 	newcmd->to_pipe = false;
 	newcmd->from_pipe = false;
+	bool	hascmd = false;
 	int heredoc_count = 0;
 	while (*token && (*token)->type != PIPE)
 	{
@@ -95,14 +97,30 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		}
 		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
-			if ((*token)->type == WORD || ((*token)->type == VAR && !(*token)->next))
+			if ((*token)->type == WORD)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
-			else if ((*token)->type == VAR && (*token)->next->type != WORD)
+			else if ((*token) -> type == VAR)
+			{
+				while(temp && (temp->type == VAR || temp->type == WORD))
+				{
+					if (temp->type != VAR)
+					{
+						if (temp->type != WORD && temp->type != VAR)
+							break;
+						hascmd = true;
+						break;
+					}
+					temp = temp->next;
+				}
+			if ((*token)->type == VAR && !hascmd)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+			}
+
 		}
 		if (*token)
 			(*token) = (*token) -> next;
 	}
+	hascmd = false;
 	if ((*token) && (*token) -> type == PIPE)
 		newcmd -> to_pipe = true;
 	ft_cmd_addback(cmd, newcmd);
