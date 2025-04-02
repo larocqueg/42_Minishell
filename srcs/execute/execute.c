@@ -105,7 +105,12 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 	}
 	if (is_var(cmd->cmd[0]))
 	{
-		handle_vars(sh, cmd->cmd[0]);
+		int	i = 0;
+		while (cmd->cmd[i])
+			handle_vars(sh, cmd->cmd[i++]);
+		i = 0;
+		while (sh->local_vars[i])
+			printf("%s\n", sh->local_vars[i++]);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
 		exit(0);

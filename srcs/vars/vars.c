@@ -11,47 +11,64 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+/*
+static int	get_local_len(char **var)
+{
+	int	i;
 
-static void	clone_vars(t_shell *sh, char **old_env, char *new_var)
+	if (!var || !*var)
+		return (0);
+	i = 0;
+	while (var[i])
+		i++;
+	return (i);
+}
+
+static void	clone_vars(t_shell *sh, char *new_var)
+{
+	int	i;
+	char	**local_temp;
+
+	sh->local_vars = malloc(sizeof(char *) * (get_local_len(sh->local_vars) + 2));
+	sh->local_vars[i++] = ft_strdup(new_var);
+	sh->local_vars[i] = NULL;
+}*/
+/*
+static void	free_local(t_shell *sh)
 {
 	int	i;
 
 	i = 0;
-	sh->env_size = 0;
-	while (old_env[sh->env_size])
-		sh->env_size++;
-	sh->envp = malloc(sizeof(char *) * (sh->env_size + 2));
-	while (old_env[i])
-	{
-		sh->envp[i] = ft_strdup(old_env[i]);
-		i++;
-	}
-	sh->envp[i++] = ft_strdup(new_var);
-	sh->envp[i] = NULL;
-}
-
-static void	create_vars(t_shell *sh, char *var)
-{
-	char **old_env;
-
-	old_env = clone_envp(sh->envp);
-	free_envp(sh);
-	clone_vars(sh, old_env, var);
-}
+	while (sh->local_vars[i])
+		free(sh->local_vars[i++]);
+	free(sh->local_vars);
+}*/
 
 void	handle_vars(t_shell *sh, char *var)
 {
 	char	*var_name;
 	char	*no_equals;
-	//char	*expandedd_var;
+	char	*content;
+	char	*expanded_var;
 
+	content = ft_strdup(var + ft_strlen_tochar(var, '=') + 1);
 	var_name = ft_strndupmod(var, 0, ft_strlen_tochar(var, '='));
 	no_equals = ft_strndupmod(var, 0, ft_strlen_tochar(var, '=') - 1);
-	if (!ft_get_env(no_equals, sh))
+	expanded_var = expand(var, false, false, sh);
+	if (!ft_get_env(no_equals, sh->envp))
 	{
-		create_vars(sh, var);
+		if (ft_get_env(no_equals, sh->local_vars))
+			ft_change_var(var_name, expanded_var + ft_strlen_tochar(var, '=') + 1, sh->local_vars);
+		else
+		{	
+			sh->local_vars = append_cmd(sh->local_vars, expanded_var);
+			free(var_name);
+			free(no_equals);
+		}
 		return ;
 	}
 	else
-		ft_change_var(var_name, var + ft_strlen_tochar(var, '=') + 1, sh);
+	{
+		ft_change_var(var_name, expanded_var + ft_strlen_tochar(var, '=') + 1, sh->envp);
+	}
 }

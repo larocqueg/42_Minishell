@@ -12,13 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-char	*ft_get_env(char *var_name, t_shell *sh)
+char	*ft_get_env(char *var_name, char **env)
 {
 	int		i;
 //	char	*env_result;
-	char	**env;
-
-	env= sh->envp;
+	if (!env || !*env)
+		return (NULL);
 	i = 0;
 	while(env[i])
 	{
@@ -30,17 +29,17 @@ char	*ft_get_env(char *var_name, t_shell *sh)
 	}
 	return (NULL);
 }
-void	ft_change_var(char *var_name, char *content, t_shell *sh)
+void	ft_change_var(char *var_name, char *content, char **env)
 {
 	int		i;
 	
 	i = 0;
-	while(sh->envp[i])
+	while(env[i])
 	{
-		if (ft_strncmp(var_name, sh->envp[i], 4) == 0)
+		if (ft_strncmp(var_name, env[i], 4) == 0)
 		{
-			free(sh->envp[i]);
-			sh->envp[i] = ft_strjoin(var_name, content);
+			free(env[i]);
+			env[i] = ft_strjoin(var_name, content);
 		}
 		i++;
 	}

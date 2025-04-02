@@ -14,6 +14,8 @@
 
 int	g_exit_code;
 
+static int	get_env_size(char **envp);
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
@@ -24,7 +26,10 @@ int	main(int argc, char **argv, char **envp)
 	sh.original_stdin = dup(STDIN_FILENO);
 	sh.original_stdout = dup(STDOUT_FILENO);
 	g_exit_code = 2;
+	sh.local_vars = NULL;
 	sh.envp = clone_envp(envp); // dar free em caso de exit ou ctrl + d
+	sh.env_size = get_env_size(sh.envp);
+	printf("env size = %d\n", sh.env_size);
 	sh.pipe_old = NULL;
 	sh.pipe_new = NULL;
 	sh.heredoc_count = 0;
@@ -32,3 +37,12 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
+static int	get_env_size(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	return (i);
+}

@@ -111,6 +111,7 @@ int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 char	**clone_envp(char **envp);
 void	free_envp(t_shell *sh);
 size_t	ft_strlen_tochar(char *str, char c);
+char	**append_cmd(char **cmd, char *newcmd);
 
 //export.c
 void	print_export(t_shell *sh);
@@ -126,8 +127,8 @@ int	exec_cd(char **cmd, t_shell *sh);
 void	handle_vars(t_shell *sh, char *var);
 
 //env cmds
-char	*ft_get_env(char *var_name, t_shell *sh);
-void	ft_change_var(char *var_name, char *content, t_shell *sh);
+char	*ft_get_env(char *var_name, char **env);
+void	ft_change_var(char *var_name, char *content, char **env);
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET

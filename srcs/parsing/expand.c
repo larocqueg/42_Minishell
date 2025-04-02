@@ -94,11 +94,11 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh)
 			else if (!ft_isdigit(str[i]) && (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				variable_name = extract_variable(str, i);
-				temp = ft_insertstr(str, i--, ft_get_env(variable_name, sh));
+				temp = ft_insertstr(str, i--, ft_get_env(variable_name, sh->envp));
 				free(str);
 				str = temp;
-				if (ft_get_env(variable_name, sh))
-					i += (ft_strlen(ft_get_env(variable_name, sh)) - 1);
+				if (ft_get_env(variable_name, sh->envp))
+					i += (ft_strlen(ft_get_env(variable_name, sh->envp)) - 1);
 			}
 		}
 		i++;

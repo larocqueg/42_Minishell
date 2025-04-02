@@ -70,7 +70,7 @@ fclean: clean
 
 re: fclean
 	@make all
-	@echo "✅ minishell successfully rebuilt!"i
+	@echo "✅ minishell successfully rebuilt!"
 
 run: re
 	@./minishell

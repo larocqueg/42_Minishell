@@ -27,7 +27,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 	if (cmd[1] == NULL)
 	{
 
-		home = ft_get_env("HOME", sh);
+		home = ft_get_env("HOME", sh->envp);
 		if (!home)
 		{
 			ft_printf("minihell: cd: HOME not set"); //change exit code to 1
@@ -35,9 +35,9 @@ int	exec_cd(char **cmd, t_shell *sh)
 		}
 
 		path = getcwd(NULL, 0);
-		chdir(ft_get_env("HOME", sh)); // temos q fazer a get env!!!!!!!!!
-		ft_change_var("PWD=", path, sh);
-		ft_change_var("OLDPWD=", oldpwd, sh);
+		chdir(ft_get_env("HOME", sh->envp)); // temos q fazer a get env!!!!!!!!!
+		ft_change_var("PWD=", path, sh->envp);
+		ft_change_var("OLDPWD=", oldpwd, sh->envp);
 		free(path);
 		return (1);
 	}
@@ -47,8 +47,8 @@ int	exec_cd(char **cmd, t_shell *sh)
 		return (1);
 	}
 	path = getcwd(NULL, 0);
-	ft_change_var("PWD=", path, sh);
-	ft_change_var("OLDPWD=", oldpwd, sh);
+	ft_change_var("PWD=", path, sh->envp);
+	ft_change_var("OLDPWD=", oldpwd, sh->envp);
 	free(path);
 	return (1);
 }
