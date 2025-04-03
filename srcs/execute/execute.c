@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 21:30:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 22:19:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,11 +264,11 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	if (!cmd->perm_error && ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
 	else if (!cmd->perm_error)
-		executecmd(cmd->cmd, sh->envp);
+		executecmd(cmd->cmd, sh->envp );
 	if (cmd->perm_error)
 	{
 		write(2, "minishell: file: Permission denied!\n", 36);
-		if (cmd->to_pipe || cmd->from_pipe || ft_is_builtin(cmd->cmd))
+		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
 			exit(1);
 		sh->exit_code = 1;
 	}
