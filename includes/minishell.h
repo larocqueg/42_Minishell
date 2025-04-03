@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/02 19:04:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:21:25 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_cmd
 	bool			from_pipe;
 	int				fd_in;
 	int				fd_out;
-
+	bool			perm_error;
 }	t_cmd;
 
 typedef struct s_shell

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 21:15:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:29:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	start_cli(t_shell *sh)
 		//dup2 will be inside cli_init();
 		get_cli_pwd(sh);
 		sh->heredoc_count = 0;
-		prompt = readline(sh->cli_text);
+		//prompt = readline(sh->cli_text);
+		prompt = readline("minishell $< ");
 		if (prompt)
 		{
 			add_history(prompt);
