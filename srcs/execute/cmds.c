@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/02 19:46:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:23:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	newcmd->from_pipe = false;
 	bool	hascmd = false;
 	int heredoc_count = 0;
+	bool heredoc = false;
 	bool export = false;
 	if (ft_strncmp("export", (*token)->token, 7) == 0)
 		export = true;
@@ -84,23 +85,33 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		if ((*token) -> type == TOFILE)
 		{
 			(*token) = (*token) -> next;
+			if (newcmd -> fd_out != -1)
+				close(newcmd->fd_out);
 			newcmd -> fd_out = open((*token)->token, O_RDWR | O_TRUNC | O_CREAT, 0644);
 		}
 		else if ((*token) -> type == INFILE)
 		{
 			(*token) = (*token) -> next;
+			if (newcmd -> fd_in != -1 && !heredoc)
+				close(newcmd->fd_in);
 			newcmd -> fd_in = open((*token)->token, O_RDONLY);
+			heredoc = false;
 		}
 		else if ((*token) -> type == APPEND)
 		{
 			(*token) = (*token) -> next;
+			if (newcmd -> fd_out != -1)
+				close(newcmd->fd_out);
 			newcmd -> fd_out = open((*token)->token, O_RDWR | O_APPEND | O_CREAT, 0644);
 		}
 		else if ((*token) -> type == HERE_DOC)
 		{
 			(*token) = (*token) -> next;
+			if (newcmd -> fd_in != -1 && !heredoc)
+				close(newcmd->fd_in);
 			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][0];
 			heredoc_count++;
+			heredoc = true;
 		}
 		else if ((*token) -> type == WORD || (*token)->type == VAR)
 		{
