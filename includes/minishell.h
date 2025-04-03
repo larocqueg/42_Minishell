@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 18:21:25 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:38:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_shell
 	int		DEBUG;
 	int		heredoc_count;
 	int		**heredoc_pipes;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_token

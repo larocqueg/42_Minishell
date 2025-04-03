@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 18:27:15 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 21:40:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 			else if ((*token) -> type == VAR || ((*token) -> type == WORD))
 			{
-				while(temp && temp->type == VAR)
+				while(temp && temp->type == VAR || temp->type == WORD)
 				{
 					if (temp->type != VAR)
 					{
@@ -139,7 +139,6 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			if ((*token)->type == VAR && !hascmd)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 			}
-
 		}
 		if (*token)
 			(*token) = (*token) -> next;

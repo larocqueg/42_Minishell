@@ -6,13 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/02 18:26:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:06:58 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_exit_code;
 
 static int	get_env_size(char **envp);
 
@@ -25,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 		sh.DEBUG = 1;
 	sh.original_stdin = dup(STDIN_FILENO);
 	sh.original_stdout = dup(STDOUT_FILENO);
-	g_exit_code = 2;
+	sh.exit_code = 0;
 	sh.local_vars = NULL;
 	sh.envp = clone_envp(envp); // dar free em caso de exit ou ctrl + d
 	sh.env_size = get_env_size(sh.envp);

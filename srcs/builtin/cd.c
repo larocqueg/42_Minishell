@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 22:04:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:34:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	exec_cd(char **cmd, t_shell *sh)
 
 	if (cmd[2])
 	{
-		ft_printf("minihell: cd: too many arguments\n"); //change exit code to 1
+		ft_printf("minishell: cd: too many arguments\n"); //change exit code to 1
+		sh->exit_code = 1;
 		return 1 ;
 	}
 	oldpwd = getcwd(NULL, 0);
@@ -30,20 +31,23 @@ int	exec_cd(char **cmd, t_shell *sh)
 		home = ft_get_env("HOME", sh->envp);
 		if (!home)
 		{
-			ft_printf("minihell: cd: HOME not set"); //change exit code to 1
+			sh->exit_code = 1;
+			ft_printf("minishell: cd: HOME not set"); //change exit code to 1
 			return 1;
 		}
 
 		path = getcwd(NULL, 0);
-		chdir(ft_get_env("HOME", sh->envp)); // temos q fazer a get env!!!!!!!!!
+		chdir(ft_get_env("HOME", sh->envp));
 		ft_change_var("PWD=", path, sh->envp);
 		ft_change_var("OLDPWD=", oldpwd, sh->envp);
+		sh->exit_code = 0;
 		free(path);
 		return (1);
 	}
 	else if (chdir(cmd[1]) == -1)
 	{
-		printf("minihell: cd: %s: No such file or directory\n", cmd[1]);
+		printf("minishell: cd: %s: No such file or directory\n", cmd[1]);
+		sh->exit_code = 1;
 		return (1);
 	}
 	path = getcwd(NULL, 0);
