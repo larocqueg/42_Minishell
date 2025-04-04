@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 14:55:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:46:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ void	ft_free(char **str)
 	free(str);
 }
 
+
+int is_character_device(const char *path)
+{
+	struct stat st;
+	if (stat(path, &st) == 0)
+	{
+		printf("is_character_device\n");
+		return S_ISCHR(st.st_mode);
+	}
+	return 0;
+}
+
 int is_folder(char *path)
 {
 	struct stat path_stat;
@@ -48,14 +60,14 @@ int is_file(char *path)
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
 
-	if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
+	if ((access(path, F_OK) == 0 && access(path, X_OK) != 0) || is_character_device(path))
 	{
-		ft_putstr_fd("minishell: cannot execute command \"", 2);
+		ft_putstr_fd("minishell: permission denied: \"", 2);
 		*exit_code = 126;
 	}
 	else if (!is_folder(path) && !is_file(path) && (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0)) //ft_is_Absolute || ft_is_relative
 		ft_putstr_fd("minishell: no such file or directory \"", 2);
-	else if (is_folder(path))
+	else if (is_folder(path) &&  (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0))
 	{
 		ft_putstr_fd("minishell: prompt is a directory! \"", 2);
 		*exit_code = 126;
