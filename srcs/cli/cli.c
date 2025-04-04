@@ -6,14 +6,14 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 14:41:26 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 21:45:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 
-int	check_quotes(char *prompt, t_shell *sh)
+int	check_quotes(char *prompt)
 {
 	int	quote;
 	int	i;
@@ -34,13 +34,13 @@ int	check_quotes(char *prompt, t_shell *sh)
 	if (quote != '\0')
 	{
 		write(2, "minishell: syntax error: unclosed quotes\n", 41);
-		sh -> exit_code = 2;
+		ft_exit_status(2, true, false);
 		return (0);
 	}
 	return (1);
 }
 
-int	check_tokens(t_token *token, t_shell *sh)
+int	check_tokens(t_token *token)
 {
 	int	token_count;
 	t_token *temp;
@@ -54,7 +54,7 @@ int	check_tokens(t_token *token, t_shell *sh)
 		if (token_count == 0 && token->type == PIPE)
 		{
 			ft_putstr_fd("minishell: syntax error: unexpected token '|'\n", 2);
-			sh->exit_code = 2;
+			ft_exit_status(2, true, false);
 			return (0);
 		}
 		if (temp->type != VAR && temp->type != WORD)
@@ -66,14 +66,14 @@ int	check_tokens(t_token *token, t_shell *sh)
 			if (!temp)
 			{
 				ft_putstr_fd("minishell: syntax error: unexpected token '\\n'\n", 2);
-				sh->exit_code = 2;
+				ft_exit_status(2, true, false);
 				return (0);
 			}
 			else if ((temp->type == PIPE && pipe) || (temp->type != VAR && temp->type != WORD && !pipe))
 			{
 				ft_putstr_fd("minishell: syntax error: unexpected token ", 2);
 				ft_printf("%s\n", temp->token);
-				sh->exit_code = 2;
+				ft_exit_status(2, true, false);
 				return (0);
 			}
 		}
@@ -84,14 +84,14 @@ int	check_tokens(t_token *token, t_shell *sh)
 	return (1);
 }
 
-int	check_syntax(t_token **token, char **prompt, t_shell *sh)
+int	check_syntax(t_token **token, char **prompt)
 {
 	char *temp;
 	///t_token *temp;
 	temp = *prompt;
-	if (!check_quotes(temp, sh))
+	if (!check_quotes(temp))
 		return 0;
-	if (!check_tokens(*token, sh))
+	if (!check_tokens(*token))
 		return (0);
 	return (1);
 }
@@ -113,19 +113,21 @@ int	start_cli(t_shell *sh)
 		sh->heredoc_count = 0;
 		//prompt = readline(sh->cli_text);
 		prompt = readline("minishell $< ");
-		if (prompt)
+		if (!prompt)
 		{
-			add_history(prompt);
-			token = tokenize(prompt, sh);
-			if (!check_syntax(&token, &prompt, sh))
-				continue;
-			get_heredoc(sh, token);
-			expand_tokens(token, sh);
-			create_cmds(sh, token);
-			execute(sh);
-			free(prompt);
-			prompt = NULL;
+			printf("exit\n");
+			ft_exit_status(0, true, true);
 		}
+		add_history(prompt);
+		token = tokenize(prompt, sh);
+		if (!check_syntax(&token, &prompt))
+			continue;
+		get_heredoc(sh, token);
+		expand_tokens(token, sh);
+		create_cmds(sh, token);
+		execute(sh);
+		free(prompt);
+		prompt = NULL;
 		free(sh->cli_text);
 	}
 	close(sh->original_stdin);

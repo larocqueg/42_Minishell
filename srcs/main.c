@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 19:06:58 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 21:18:57 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,24 @@
 
 static int	get_env_size(char **envp);
 
+void signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		ft_exit_status(130, true, false);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
+
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 
 	sh.DEBUG = 0;
 	if (argc == 2 && argv[1][0] == '1')

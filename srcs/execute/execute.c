@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 17:17:57 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:47:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,8 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 
 int	ft_is_builtin(char **cmds)
 {
+	if (!cmds || !*cmds)
+		return (0);
 	if (ft_strncmp(cmds[0], "exit", 5) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "print", 6) == 0)
@@ -279,9 +281,9 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	if (cmd->perm_error)
 	{
 		write(2, "minishell: file: Permission denied!\n", 36);
-		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
-			exit(1);
-		sh->exit_code = 1;
+		if (cmd->to_pipe || cmd->from_pipe )
+			ft_exit_status(0, true, true);
+		ft_exit_status(1, true, true);
 	}
 	close(outfd);
 	close(infd);
@@ -375,6 +377,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			pids[i] = 0;
 		if (pids[i] == 0)
 		{
+			signal(SIGINT, child_signal_handler);
+			signal(SIGQUIT, child_signal_handler);
 			handle_child(sh, cmd);
 		}
 		if (cmd->from_pipe)
@@ -399,10 +403,12 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	}
 	if (WIFEXITED(status))
 	{
-		sh->exit_code = WEXITSTATUS(status);
+		ft_exit_status(WEXITSTATUS(status), true, false);
 	}
-	else
-
+	else if (WIFSIGNALED(status))
+	{
+		ft_exit_status(WTERMSIG(status) + 128, true, false);
+	}
 	free(pids);
 	t_cmd *temp = sh->cmd;
 	while(temp)

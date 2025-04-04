@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 18:48:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:26:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ void	handle_vars(t_shell *sh, char *var);
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
 
+//signals
+int		ft_exit_status(int	exit_code, bool set, bool close);
+void	child_signal_handler(int sig);
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET

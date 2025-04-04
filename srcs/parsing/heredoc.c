@@ -6,12 +6,12 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/04 18:48:01 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 21:45:06 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+t_shell shell;
 static void	ft_heredoc_init(t_shell *sh)
 {
 	int		i;
@@ -35,8 +35,12 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 		prompt = readline("> ");
 		if (!prompt)
 		{
+			ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file wanted: ", 2);
+			ft_putstr_fd(end ,2);
+			write(2, "\n", 1);
 			close(sh->heredoc_pipes[i][1]);
-			break ;
+			printf("fechou saporra!\n");
+			exit(0);
 		}
 
 		if (prompt && !ft_strncmp(prompt, end, ft_strlen(end) + 1))
@@ -66,23 +70,63 @@ int has_quotes(char *str)
 	}
 	return (0);
 }
+void heredoc_signal_handler(int sig)
+{
+	if (sig)
+	{
+		write(1, "\n", 1);
+		close(STDIN_FILENO);
+		ft_exit_status(130, true, true);
+	}
+}
+
 void	get_heredoc(t_shell *sh, t_token *token)
 {
 	int		i;
 	t_token	*temp;
 	char	*end;
+	int		pid;
+	int status;
 
-	i = 0;
-	temp = token;
-	ft_heredoc_init(sh);
-	while (temp)
+	pid = 0;
+	status = 0;
+	pid = fork();
+
+
+	if (pid == 0)
 	{
-		if (temp->type == HERE_DOC)
+		signal(SIGPIPE, SIG_IGN);
+		signal(SIGINT, heredoc_signal_handler);
+		i = 0;
+		temp = token;
+		ft_heredoc_init(sh);
+		shell = *sh;
+		while (temp)
 		{
-			end = remove_quotes(temp->next->token);
-			ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
-			i++;
+			if (temp->type == HERE_DOC)
+			{
+				end = remove_quotes(temp->next->token);
+				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
+				i++;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
+		exit (0);
 	}
+	if (pid != 0)
+	{
+		waitpid(pid, &status, 0);
+	}
+	if (WIFEXITED(status))
+	{
+		ft_exit_status(WEXITSTATUS(status), true, false);
+	}
+	// if (ft_exit_status(0, false, false) == 130)
+	// {
+	// 	for(int i = 0; i <= sh->heredoc_count; i++)
+	// 	{
+	// 		close(sh->heredoc_pipes[i][0]);
+	// 		close(sh->heredoc_pipes[i][1]);
+	// 	}
+	// }
 }

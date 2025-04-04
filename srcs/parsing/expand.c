@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 18:47:49 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:18:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool
 	char	*exit_str;
 	char	*variable_name;
 
-	exit_str = ft_itoa(sh->exit_code);
+	exit_str = ft_itoa(ft_exit_status(0, false, false));
 
 	i = 0;
 	while (str[i] && i < ft_strlen(str))
