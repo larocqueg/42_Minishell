@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 15:46:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:17:57 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ void	ft_free(char **str)
 	free(str);
 }
 
-
 int is_character_device(const char *path)
 {
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
-		printf("is_character_device\n");
 		return S_ISCHR(st.st_mode);
 	}
 	return 0;
@@ -149,7 +147,7 @@ char	*local_path_finder(char *cmd)
 	}
 	else
 		path = cmd;
-	if (access(path, F_OK) == 0 && (is_file(path) || is_folder(path)))
+	if (access(path, F_OK) == 0 && (is_file(path) || is_folder(path) || is_character_device(path)))
 		return (path);
 	if (is_relative)
 		free(path);
@@ -170,7 +168,7 @@ void	executecmd(char **cmds, char **env)
 		path = path_finder(cmds[0], env);
 	else
 		path = cmds[0];
-	if (!path || access(path, X_OK) != 0 || is_folder(path))
+	if (!path || access(path, X_OK) != 0 || is_folder(path) || is_character_device(path))
 	{
 		ft_command_error(cmds, path, &exit_code);
 		ft_error(NULL);
