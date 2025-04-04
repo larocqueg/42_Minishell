@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 22:19:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:55:11 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ int is_file(char *path)
 
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
-	if (!is_folder(path) && !is_file(path))
-		ft_putstr_fd("minishell: no such file or directory \"", 2);
-	else if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
+
+	if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
 	{
 		ft_putstr_fd("minishell: cannot execute command \"", 2);
 		*exit_code = 126;
 	}
+	else if (!is_folder(path) && !is_file(path) && (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0)) //ft_is_Absolute || ft_is_relative
+		ft_putstr_fd("minishell: no such file or directory \"", 2);
 	else if (is_folder(path))
 	{
 		ft_putstr_fd("minishell: prompt is a directory! \"", 2);
@@ -91,7 +92,7 @@ char	*path_finder(char *cmds, char **env)
 	}
 	free(path);
 	ft_free(paths);
-	return (0);
+	return (NULL);
 }
 
 
@@ -151,13 +152,13 @@ void	executecmd(char **cmds, char **env)
 
 	path = NULL;
 
-	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0)
+	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
 		path = local_path_finder(cmds[0]);
 	else if (!is_folder(cmds[0]))
 		path = path_finder(cmds[0], env);
 	else
 		path = cmds[0];
-			if (!path || access(path, X_OK) != 0 || is_folder(path))
+	if (!path || access(path, X_OK) != 0 || is_folder(path))
 	{
 		ft_command_error(cmds, path, &exit_code);
 		ft_error(NULL);

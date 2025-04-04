@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 22:08:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:41:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ int	check_tokens(t_token *token, t_shell *sh)
 {
 	int	token_count;
 	t_token *temp;
-
+	bool	pipe;
 	temp = token;
 	token_count = 0;
 
 	while (temp)
 	{
+		pipe = false;
 		if (token_count == 0 && token->type == PIPE)
 		{
 			ft_putstr_fd("minishell: syntax error: unexpected token '|'\n", 2);
@@ -58,6 +59,8 @@ int	check_tokens(t_token *token, t_shell *sh)
 		}
 		if (temp->type != VAR && temp->type != WORD)
 		{
+			if (temp->type == PIPE)
+				pipe = true;
 			temp = temp -> next;
 			token_count++;
 			if (!temp)
@@ -66,7 +69,7 @@ int	check_tokens(t_token *token, t_shell *sh)
 				sh->exit_code = 2;
 				return (0);
 			}
-			else if (temp->type != VAR && temp->type != WORD)
+			else if ((temp->type == PIPE && pipe) || (temp->type != VAR && temp->type != WORD && !pipe))
 			{
 				ft_putstr_fd("minishell: syntax error: unexpected token ", 2);
 				ft_printf("%s\n", temp->token);
