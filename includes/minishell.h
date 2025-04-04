@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 20:26:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 22:11:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ typedef struct s_fd
 	int	fd_in;
 	int	fd_out;
 }	t_fd;
-
-extern int	g_exit_code;
 
 //tokens
 t_token	*tokenize(char *str, t_shell *sh);

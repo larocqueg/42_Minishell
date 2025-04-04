@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/04 21:45:06 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 22:08:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,48 +85,18 @@ void	get_heredoc(t_shell *sh, t_token *token)
 	int		i;
 	t_token	*temp;
 	char	*end;
-	int		pid;
-	int status;
-
-	pid = 0;
-	status = 0;
-	pid = fork();
-
-
-	if (pid == 0)
+	i = 0;
+	temp = token;
+	ft_heredoc_init(sh);
+	shell = *sh;
+	while (temp)
 	{
-		signal(SIGPIPE, SIG_IGN);
-		signal(SIGINT, heredoc_signal_handler);
-		i = 0;
-		temp = token;
-		ft_heredoc_init(sh);
-		shell = *sh;
-		while (temp)
+		if (temp->type == HERE_DOC)
 		{
-			if (temp->type == HERE_DOC)
-			{
-				end = remove_quotes(temp->next->token);
-				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
-				i++;
-			}
-			temp = temp->next;
+			end = remove_quotes(temp->next->token);
+			ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
+			i++;
 		}
-		exit (0);
+		temp = temp->next;
 	}
-	if (pid != 0)
-	{
-		waitpid(pid, &status, 0);
-	}
-	if (WIFEXITED(status))
-	{
-		ft_exit_status(WEXITSTATUS(status), true, false);
-	}
-	// if (ft_exit_status(0, false, false) == 130)
-	// {
-	// 	for(int i = 0; i <= sh->heredoc_count; i++)
-	// 	{
-	// 		close(sh->heredoc_pipes[i][0]);
-	// 		close(sh->heredoc_pipes[i][1]);
-	// 	}
-	// }
 }
