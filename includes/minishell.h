@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 18:38:37 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:48:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	expand_tokens(t_token *token, t_shell *sh);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
 void	get_heredoc(t_shell *sh, t_token *token);
-char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh);
+char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc);
 int		is_var(char *token);
 
 //builtin_utils.c
@@ -117,6 +117,7 @@ char	**append_cmd(char **cmd, char *newcmd);
 //export.c
 void	print_export(t_shell *sh);
 void	exec_export(t_shell *sh, t_cmd *cmd);
+char	*remove_quotes(char *str);
 
 
 //cli
@@ -132,6 +133,7 @@ void	handle_vars(t_shell *sh, char *var);
 //env cmds
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
+
 
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET
