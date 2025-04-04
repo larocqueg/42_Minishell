@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/01 21:14:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:34:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i)
 			ft_putstr_fd(prompt, sh->heredoc_pipes[i][1]);
 			ft_putstr_fd("\n", sh->heredoc_pipes[i][1]);
 		}
-		free(prompt);
+		if (prompt)
+			free(prompt);
 	}
 }
 void	get_heredoc(t_shell *sh, t_token *token)

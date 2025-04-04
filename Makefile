@@ -15,8 +15,8 @@ NAME = minishell
 
 # Compilation
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-#CFLAGS = -g
+#CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g
 LDFLAGS= -lreadline -lncurses
 # Paths
 SRC_DIR = ./srcs

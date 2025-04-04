@@ -6,11 +6,92 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 21:15:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 22:08:33 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
+int	check_quotes(char *prompt, t_shell *sh)
+{
+	int	quote;
+	int	i;
+
+	quote = '\0';
+	i = 0;
+	while (prompt[i])
+	{
+		if ((prompt[i] == '\"'|| prompt[i] == '\''))
+		{
+			if (!quote)
+				quote = prompt[i];
+			else if (prompt[i] == quote)
+				quote = '\0';
+		}
+		i++;
+	}
+	if (quote != '\0')
+	{
+		write(2, "minishell: syntax error: unclosed quotes\n", 41);
+		sh -> exit_code = 2;
+		return (0);
+	}
+	return (1);
+}
+
+int	check_tokens(t_token *token, t_shell *sh)
+{
+	int	token_count;
+	t_token *temp;
+
+	temp = token;
+	token_count = 0;
+
+	while (temp)
+	{
+		if (token_count == 0 && token->type == PIPE)
+		{
+			ft_putstr_fd("minishell: syntax error: unexpected token '|'\n", 2);
+			sh->exit_code = 2;
+			return (0);
+		}
+		if (temp->type != VAR && temp->type != WORD)
+		{
+			temp = temp -> next;
+			token_count++;
+			if (!temp)
+			{
+				ft_putstr_fd("minishell: syntax error: unexpected token '\\n'\n", 2);
+				sh->exit_code = 2;
+				return (0);
+			}
+			else if (temp->type != VAR && temp->type != WORD)
+			{
+				ft_putstr_fd("minishell: syntax error: unexpected token ", 2);
+				ft_printf("%s\n", temp->token);
+				sh->exit_code = 2;
+				return (0);
+			}
+		}
+		temp = temp -> next;
+		token_count++;
+	}
+
+	return (1);
+}
+
+int	check_syntax(t_token **token, char **prompt, t_shell *sh)
+{
+	char *temp;
+	///t_token *temp;
+	temp = *prompt;
+	if (!check_quotes(temp, sh))
+		return 0;
+	if (!check_tokens(*token, sh))
+		return (0);
+	return (1);
+}
 
 int	start_cli(t_shell *sh)
 {
@@ -27,11 +108,14 @@ int	start_cli(t_shell *sh)
 		//dup2 will be inside cli_init();
 		get_cli_pwd(sh);
 		sh->heredoc_count = 0;
-		prompt = readline(sh->cli_text);
+		//prompt = readline(sh->cli_text);
+		prompt = readline("minishell $< ");
 		if (prompt)
 		{
 			add_history(prompt);
 			token = tokenize(prompt, sh);
+			if (!check_syntax(&token, &prompt, sh))
+				continue;
 			get_heredoc(sh, token);
 			expand_tokens(token, sh);
 			create_cmds(sh, token);

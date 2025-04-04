@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 21:15:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:38:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_cmd
 	bool			from_pipe;
 	int				fd_in;
 	int				fd_out;
-
+	bool			perm_error;
 }	t_cmd;
 
 typedef struct s_shell
@@ -73,6 +73,7 @@ typedef struct s_shell
 	int		DEBUG;
 	int		heredoc_count;
 	int		**heredoc_pipes;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_token
@@ -115,6 +116,8 @@ char	**append_cmd(char **cmd, char *newcmd);
 
 //export.c
 void	print_export(t_shell *sh);
+void	exec_export(t_shell *sh, t_cmd *cmd);
+
 
 //cli
 int		start_cli(t_shell *sh);
