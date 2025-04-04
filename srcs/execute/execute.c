@@ -170,32 +170,47 @@ void	executecmd(char **cmds, char **env)
 
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
+	int	i;
+
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 	{
 		printf("exit\n");
 		free_envp(sh);
 		exit(0);
 	}
-	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
+	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 	{
 		exec_cd(cmd->cmd, sh);
 	}
-	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
+	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 	{
 		exec_export(sh, cmd);
 	}
-	if (is_var(cmd->cmd[0]))
+	else if (is_var(cmd->cmd[0]) || ft_strncmp(cmd->cmd[0], "env", 4) == 0)
 	{
-		int	i = 0;
-		while (cmd->cmd[i])
-			handle_vars(sh, cmd->cmd[i++]);
-		if (!sh->DEBUG)
-			return;
 		i = 0;
-		while (sh->local_vars[i])
-			printf("%s\n", sh->local_vars[i++]);
+		if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
+		{
+			i = 0;
+			while (sh->envp[i])
+			{
+				if (is_var(sh->envp[i]))
+					printf("%s\n", sh->envp[i]);
+				i++;
+			}
+		}
+		else
+		{
+			while (cmd->cmd[i])
+				handle_vars(sh, cmd->cmd[i++]);
+			if (!sh->DEBUG)
+				return;
+			i = 0;
+			while (sh->local_vars[i])
+				printf("%s\n", sh->local_vars[i++]);
+		}
 	}
-	if (cmd->to_pipe || cmd->from_pipe)
+	else if (cmd->to_pipe || cmd->from_pipe)
 		exit(sh->exit_code);
 }
 
@@ -204,13 +219,15 @@ int	ft_is_builtin(char **cmds)
 {
 	if (ft_strncmp(cmds[0], "exit", 5) == 0)
 		return (1);
-	if (ft_strncmp(cmds[0], "print", 6) == 0)
+	else if (ft_strncmp(cmds[0], "print", 6) == 0)
 		return (1);
-	if (ft_strncmp(cmds[0], "export", 7) == 0)
+	else if (ft_strncmp(cmds[0], "export", 7) == 0)
 		return (1);
-	if (ft_strncmp(cmds[0], "cd", 3) == 0)
+	else if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
-	if (is_var(cmds[0]))
+	else if (is_var(cmds[0]))
+		return (1);
+	else if (ft_strncmp(cmds[0], "env", 4) == 0)
 		return (1);
 	return (0);
 }
