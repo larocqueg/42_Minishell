@@ -210,7 +210,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 				printf("%s\n", sh->local_vars[i++]);
 		}
 	}
-	else if (cmd->to_pipe || cmd->from_pipe)
+	if (cmd->to_pipe || cmd->from_pipe)
 		exit(sh->exit_code);
 }
 
