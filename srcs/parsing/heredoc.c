@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/04 22:08:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:40:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 		prompt = readline("> ");
 		if (!prompt)
 		{
-			ft_putstr_fd("warning: here-document at line 1 delimited by end-of-file wanted: ", 2);
-			ft_putstr_fd(end ,2);
-			write(2, "\n", 1);
+			ft_fprintf(2, "warning: here-document at line 1 delimited by end-of-file ");
+			ft_fprintf(2, "(wanted '%s')\n", end);
 			close(sh->heredoc_pipes[i][1]);
-			printf("fechou saporra!\n");
-			exit(0);
+			break; //exit(0); only if fork!
 		}
 
 		if (prompt && !ft_strncmp(prompt, end, ft_strlen(end) + 1))

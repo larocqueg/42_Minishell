@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/05 12:21:25 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:00:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,9 +281,8 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	if (cmd->perm_error)
 	{
 		write(2, "minishell: file: Permission denied!\n", 36);
-		if ((cmd->to_pipe || cmd->from_pipe))
+		if ((cmd->to_pipe || cmd->from_pipe) && cmd->cmd && !cmd->cmd[0])
 		{
-			ft_fprintf(2, "'%s\n", cmd->cmd[0]);
 			ft_exit_status(0, true, true);
 		}
 		ft_exit_status(1, true, true);

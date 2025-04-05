@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 22:05:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:31:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	check_tokens(t_token *token)
 			}
 			else if ((temp->type == PIPE && pipe) || (temp->type != VAR && temp->type != WORD && !pipe))
 			{
-				ft_putstr_fd("minishell: syntax error: unexpected token ", 2);
-				ft_printf("%s\n", temp->token);
+				ft_fprintf(2, "minishell: syntax error: unexpected token '%s'\n", token->token);
 				ft_exit_status(2, true, false);
 				return (0);
 			}
@@ -96,6 +95,18 @@ int	check_syntax(t_token **token, char **prompt)
 	return (1);
 }
 
+void signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		ft_exit_status(130, true, false);
+	}
+}
+
 int	start_cli(t_shell *sh)
 {
 	t_token	*token;
@@ -106,6 +117,8 @@ int	start_cli(t_shell *sh)
 	token = NULL;
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, signal_handler); // re register signals
 		dup2(sh->original_stdin, STDIN_FILENO);
 		dup2(sh->original_stdout, STDOUT_FILENO);
 		//dup2 will be inside cli_init();
