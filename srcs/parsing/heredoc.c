@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/05 22:45:51 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 22:51:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	get_heredoc(t_shell *sh, t_token *token)
 	else
 	{
 		for (int i = 0; i < sh->heredoc_count; i++)
-			close(sh->heredoc_pipes[0][1]);
+			close(sh->heredoc_pipes[i][1]);
 		ft_fprintf(2, "exit code is: %d\n", WEXITSTATUS(status));
 		return (1);
 
