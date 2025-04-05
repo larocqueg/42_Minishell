@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 22:11:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 21:59:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*ft_insertstr(char	*string, size_t index, char *substr);
 void	expand_tokens(t_token *token, t_shell *sh);
 void	create_cmds(t_shell *sh, t_token *token);
 void	execute(t_shell *sh);
-void	get_heredoc(t_shell *sh, t_token *token);
+int	get_heredoc(t_shell *sh, t_token *token);
 char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc);
 int		is_var(char *token);
 
@@ -135,7 +135,7 @@ void	ft_change_var(char *var_name, char *content, char **env);
 //signals
 int		ft_exit_status(int	exit_code, bool set, bool close);
 void	child_signal_handler(int sig);
-
+void	signal_default(void);
 //prompt name
 # define PROGRAM_NAME RED"minihellv3 "RESET
 //colors

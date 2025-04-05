@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/05 13:30:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 21:54:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ void	child_signal_handler(int sig)
 	{
 		//nao sei oq tem q fazer aqui;
 	}
+}
+
+void	signal_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGPIPE, SIG_DFL);
 }

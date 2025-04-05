@@ -6,12 +6,12 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/05 12:40:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 22:23:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-t_shell shell;
+
 static void	ft_heredoc_init(t_shell *sh)
 {
 	int		i;
@@ -29,7 +29,6 @@ static void	ft_heredoc_init(t_shell *sh)
 static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 {
 	char	*prompt;
-
 	while (1)
 	{
 		prompt = readline("> ");
@@ -78,15 +77,27 @@ void heredoc_signal_handler(int sig)
 	}
 }
 
-void	get_heredoc(t_shell *sh, t_token *token)
+int	get_heredoc(t_shell *sh, t_token *token)
 {
 	int		i;
 	t_token	*temp;
 	char	*end;
+	int		pid;
+	int		status;
+	pid = 0;
+	status = 0;
 	i = 0;
 	temp = token;
 	ft_heredoc_init(sh);
-	shell = *sh;
+	pid = fork();
+	if (pid == 0)
+	{
+		signal_default();
+		signal(SIGINT, heredoc_signal_handler);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGPIPE, SIG_IGN);
+
+
 	while (temp)
 	{
 		if (temp->type == HERE_DOC)
@@ -96,5 +107,21 @@ void	get_heredoc(t_shell *sh, t_token *token)
 			i++;
 		}
 		temp = temp->next;
+	}
+		ft_exit_status(0, 1, 1);
+	}
+	else
+		waitpid(pid, &status, 0);
+
+	if (WEXITSTATUS(status) == 130)
+	{
+
+		return (0);
+	}
+	else
+	{
+		ft_fprintf(2, "exit code is: %d\n", WEXITSTATUS(status));
+		return (1);
+
 	}
 }
