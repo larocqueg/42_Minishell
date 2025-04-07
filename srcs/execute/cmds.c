@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:02:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:23:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		if (*token)
 			(*token) = (*token) -> next;
 	}
-	hascmd = false;
 	if ((*token) && (*token) -> type == PIPE)
 		newcmd -> to_pipe = true;
 	ft_cmd_addback(cmd, newcmd);

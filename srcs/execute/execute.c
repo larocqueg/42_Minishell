@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:54:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:22:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	executecmd(char **cmds, char **env)
 
 	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
 		path = local_path_finder(cmds[0]);
-	else if (!is_folder(cmds[0]))
+	else if (cmds && !is_folder(cmds[0]))
 		path = path_finder(cmds[0], env);
 	else
 		path = cmds[0];

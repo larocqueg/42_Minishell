@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:09:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:42:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,10 @@ int	start_cli(t_shell *sh)
 	cmd = sh->cmd;
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, signal_handler); // re register signals
-		dup2(sh->original_stdin, STDIN_FILENO);
-		dup2(sh->original_stdout, STDOUT_FILENO);
+
 		//dup2 will be inside cli_init();
-		get_cli_pwd(sh);
-		sh->heredoc_count = 0;
+		//get_cli_pwd(sh);
+
 		//prompt = readline(sh->cli_text);
 		sh->prompt = readline("minishell $< ");
 		if (!sh->prompt)
@@ -136,11 +133,16 @@ int	start_cli(t_shell *sh)
 		sh->heredoc_count = 0;
 		create_cmds(sh);
 		execute(sh);
-		free(sh->prompt);
-		sh->prompt = NULL;
-		free(sh->cli_text);
+		free(sh->prompt); //reset_cli()
+		sh->prompt = NULL; //reset_cli()
+		//free(sh->cli_text);
+		dup2(sh->original_stdin, STDIN_FILENO); //reset_cli()
+		dup2(sh->original_stdout, STDOUT_FILENO); //reset_cli()
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, signal_handler); // //reset_cli()
+		sh->heredoc_count = 0;
 	}
-	close(sh->original_stdin);
+	close(sh->original_stdin); 
 	close(sh->original_stdout);
 	rl_clear_history();
 
