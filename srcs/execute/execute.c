@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/05 13:00:02 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:10:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,31 +105,6 @@ char	*path_finder(char *cmds, char **env)
 	return (NULL);
 }
 
-
-/*char	*path_finder(char *cmds, char **env)
-{
-	char	**paths;
-	char	*path;
-	int		i;
-	char	*part_path;
-
-	i = 0;
-	paths = ft_split(env[i] + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmds);
-		free(part_path);
-		if (access(path, F_OK) == 0)
-			return (path); // clone path and them free all?
-
-		i++;
-	}
-	free(path);
-	ft_free(paths);
-	return (0);
-}*/
 char	*local_path_finder(char *cmd)
 {
 	char	*path;
@@ -291,58 +266,6 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	close(infd);
 }
 
-
-/*
-void	exec_cmd(t_shell *sh, t_cmd *cmd)
-{
-	int pid;
-
-	pid = 0;
-	while (cmd)
-	{
-		if (cmd -> from_pipe)
-		{
-			if (sh->pipe_old)
-			{
-				close(sh->pipe_old[0]);
-				free(sh->pipe_old);
-				sh->pipe_old = NULL;
-			}
-			sh->pipe_old = sh->pipe_new;
-			close(sh->pipe_old[1]);
-		}
-		if ((cmd) -> to_pipe)
-		{
-			sh -> pipe_new = malloc(sizeof(int) * 2);
-			pipe(sh -> pipe_new);
-
-			pid = fork();
-			if (pid != 0)
-			{
-				waitpid(pid, NULL, 0);
-				if (sh->DEBUG)
-					printf("---------end child!-------------\n");
-			}
-			else
-				handle_child(sh, (cmd));
-		}
-		else
-		{
-			if (cmd->from_pipe || !ft_is_builtin(cmd->cmd)) // if not export, exit and unset and myvar FORK
-				pid = fork();
-			if (pid != 0)
-			{
-				waitpid(pid, NULL, 0);
-				if (sh->DEBUG)
-					printf("---------end parent!-------------\n");
-			}
-			else if (pid == 0)
-				handle_parent(sh, (cmd));
-		}
-		(cmd) = (cmd)->next;
-	}
-}*/
-
 static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
 	int		*pids;
@@ -379,8 +302,7 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			pids[i] = 0;
 		if (pids[i] == 0)
 		{
-			signal(SIGINT, child_signal_handler);
-			signal(SIGQUIT, child_signal_handler);
+			signal_default();
 			handle_child(sh, cmd);
 		}
 		if (cmd->from_pipe)
@@ -400,6 +322,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	i = 0;
 	while (i < pid_count)
 	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		waitpid(pids[i], &status, 0);
 		i++;
 	}
@@ -411,6 +335,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	{
 		ft_exit_status(WTERMSIG(status) + 128, true, false);
 	}
+	if (ft_exit_status(0, 0, 0) == 131)
+		ft_fprintf(2, "Quit (core dumped)\n");
 	free(pids);
 	t_cmd *temp = sh->cmd;
 	while(temp)

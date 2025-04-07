@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/05 13:31:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:06:48 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static int	get_env_size(char **envp);
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
-
-
 
 	sh.DEBUG = 0;
 	if (argc == 2 && argv[1][0] == '1')

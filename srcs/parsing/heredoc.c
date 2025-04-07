@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/05 22:51:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:04:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,34 +97,33 @@ int	get_heredoc(t_shell *sh, t_token *token)
 		signal_default();
 		signal(SIGINT, heredoc_signal_handler);
 		signal(SIGQUIT, SIG_IGN);
-		signal(SIGPIPE, SIG_IGN);
-
-
-	while (temp)
-	{
-		if (temp->type == HERE_DOC)
+		//signal(SIGPIPE, SIG_IGN);
+		while (temp)
 		{
-			end = remove_quotes(temp->next->token);
-			ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
-			i++;
+			if (temp->type == HERE_DOC)
+			{
+				end = remove_quotes(temp->next->token);
+				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
+				i++;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
-	}
-		ft_exit_status(0, 1, 1);
+			ft_exit_status(0, 1, 1);
 	}
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-
+	}
 	if (WEXITSTATUS(status) == 130)
 	{
-
+		ft_exit_status(130, true, false);
 		return (0);
 	}
 	else
 	{
 		for (int i = 0; i < sh->heredoc_count; i++)
 			close(sh->heredoc_pipes[i][1]);
-		ft_fprintf(2, "exit code is: %d\n", WEXITSTATUS(status));
 		return (1);
 
 	}
