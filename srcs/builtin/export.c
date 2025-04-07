@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/03 21:36:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:16:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 	if (cmds[1] == NULL)
 	{
 		print_export(sh);
-		sh->exit_code = 0;
+		ft_exit_status(0, 1, 0);
 	}
 	else
 	{
@@ -115,8 +115,8 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
-			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
-			sh->exit_code = 1;
+			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
+			ft_exit_status(1, 1, 0);
 		}
 	}
 }

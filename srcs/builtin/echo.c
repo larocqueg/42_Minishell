@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:48:28 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 22:05:38 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:13:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	exec_echo(t_cmd *cmds)
 	while (cmd[i])
 	{
 		ft_printf("%s", cmd[i]);
+		if (cmd[i + 1])
+			ft_printf(" ");
 		i++;
 	}
 	if (!flag)
