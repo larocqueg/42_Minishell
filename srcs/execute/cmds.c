@@ -70,7 +70,6 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	newcmd->from_pipe = false;
 	newcmd->perm_error = false;
 	bool	hascmd = false;
-	int heredoc_count = 0;
 	bool heredoc = false;
 	bool export = false;
 	if (ft_strncmp("export", (*token)->token, 7) == 0)
@@ -115,8 +114,8 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !heredoc)
 				close(newcmd->fd_in);
-			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][0];
-			heredoc_count++;
+			newcmd -> fd_in = sh->heredoc_pipes[sh->heredoc_count][0];
+			sh->heredoc_count++;
 			heredoc = true;
 		}
 		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->perm_error)

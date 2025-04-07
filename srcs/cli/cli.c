@@ -138,6 +138,7 @@ int	start_cli(t_shell *sh)
 		if (!get_heredoc(sh, token))
 			continue;
 		expand_tokens(token, sh);
+		sh->heredoc_count = 0;
 		create_cmds(sh, token);
 		execute(sh);
 		free(prompt);
