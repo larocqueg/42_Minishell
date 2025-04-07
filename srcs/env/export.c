@@ -64,6 +64,7 @@ void	print_export(t_shell *sh)
 	free(temp);
 	return ;
 }
+
 static int	is_valid_var(char *str)
 {
 	int	i;
@@ -80,6 +81,7 @@ static int	is_valid_var(char *str)
 	else
 		return (0);
 }
+
 void	create_export(char *str, t_shell *sh)
 {
 	char *var_name;

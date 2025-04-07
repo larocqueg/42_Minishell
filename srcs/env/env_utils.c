@@ -15,7 +15,7 @@
 char	*ft_get_env(char *var_name, char **env)
 {
 	int		i;
-//	char	*env_result;
+	
 	if (!env || !*env)
 		return (NULL);
 	i = 0;
@@ -43,4 +43,25 @@ void	ft_change_var(char *var_name, char *content, char **env)
 		}
 		i++;
 	}
+}
+
+char	**clone_envp(char **envp)
+{
+	int	i;
+	char **dest;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	dest = malloc(sizeof(char *) * (i + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		dest[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	dest[i] = NULL;
+	return (dest);
 }
