@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:26:47 by larocqueg         #+#    #+#             */
-/*   Updated: 2025/03/21 11:17:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:18:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stddef.h>
 # include "./ft_printf/ft_printf.h"
+# include "./ft_fprintf/ft_fprintf.h"
 # include "./get_next_line/get_next_line.h"
 
 typedef struct s_list

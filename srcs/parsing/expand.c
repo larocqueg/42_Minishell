@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 19:07:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:12:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,33 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 	}
 }
 
-void	remove_quotes(t_token *token)
+char	*remove_quotes(char *str)
 {
 	char	quote;
 	char	*result;
 	int		i;
 	int		j;
 
-	if (!token->token)
-		return ;
-	result = malloc(sizeof(char) * ft_strlen(token->token) + 1);
+	if (!str)
+		return (NULL);
+	result = malloc(sizeof(char) * ft_strlen(str) + 1);
 	i = 0;
 	j = 0;
 	quote = '\0';
-	while (token->token[i])
+	while (str[i])
 	{
-		if ((token->token[i] == '\'' || token->token[i] == '"') && quote == '\0')
-			quote = token->token[i++];
-		else if (token->token[i] == quote)
+		if ((str[i] == '\'' || str[i] == '"') && quote == '\0')
+			quote = str[i++];
+		else if (str[i] == quote)
 		{
 			i++;
 			quote = '\0';
 		}
 		else
-			result[j++] = token->token[i++];
+			result[j++] = str[i++];
 	}
 	result[j] = '\0';
-	free(token->token);
-	token->token = result;
+	return (result);
 }
 
 char	*extract_variable(char *str, int i)
@@ -71,20 +70,20 @@ char	*extract_variable(char *str, int i)
 		return (ft_strndupmod(str, i, --j));
 	return (NULL);
 }
-char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh)
+char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc)
 {
 	char	*temp;
 	size_t		i;
 	char	*exit_str;
 	char	*variable_name;
 
-	exit_str = ft_itoa(sh->exit_code);
+	exit_str = ft_itoa(ft_exit_status(0, false, false));
 
 	i = 0;
 	while (str[i] && i < ft_strlen(str))
 	{
 		set_quotes(str[i], &in_single_quotes, &in_quotes);
-		if (str[i] == '$' && !in_single_quotes)
+		if (str[i] == '$' && (!in_single_quotes || heredoc))
 		{
 			i++;
 			if (str[i] == '?')
@@ -114,18 +113,19 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh)
 	return (str);
 }
 
-void	expand_tokens(t_token *token, t_shell *sh)
+void	expand_tokens(t_shell *sh)
 {
 	char	*temp;
+	t_token *token;
 	temp = NULL;
 
+	token = sh->token;
 	while (token)
 	{
 		if (token->type == WORD)
 		{
-			temp = expand(token-> token, false, false, sh);
-			token-> token = temp;
-			remove_quotes(token);
+			temp = expand(token-> token, false, false, sh, false);
+			token-> token = remove_quotes(temp);
 		}
 		token = token -> next;
 	}

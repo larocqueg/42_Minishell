@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 21:50:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:23:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	newcmd->from_pipe = false;
 	newcmd->perm_error = false;
 	bool	hascmd = false;
-	int heredoc_count = 0;
 	bool heredoc = false;
 	bool export = false;
 	if (ft_strncmp("export", (*token)->token, 7) == 0)
@@ -115,8 +114,8 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !heredoc)
 				close(newcmd->fd_in);
-			newcmd -> fd_in = sh->heredoc_pipes[heredoc_count][0];
-			heredoc_count++;
+			newcmd -> fd_in = sh->heredoc_pipes[sh->heredoc_count][0];
+			sh->heredoc_count++;
 			heredoc = true;
 		}
 		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->perm_error)
@@ -143,14 +142,16 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		if (*token)
 			(*token) = (*token) -> next;
 	}
-	hascmd = false;
 	if ((*token) && (*token) -> type == PIPE)
 		newcmd -> to_pipe = true;
 	ft_cmd_addback(cmd, newcmd);
 }
 
-void	create_cmds(t_shell *sh, t_token *token)
+void	create_cmds(t_shell *sh)
 {
+	t_token *token;
+
+	token = sh->token;
 	bool from_pipe = false;
 	sh->cmd = NULL;
 	while (token)

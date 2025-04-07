@@ -6,13 +6,14 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/03 19:06:58 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:06:48 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static int	get_env_size(char **envp);
+
 
 int	main(int argc, char **argv, char **envp)
 {
