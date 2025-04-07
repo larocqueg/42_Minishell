@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 19:51:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:09:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,33 @@ int	check_tokens(t_token *token)
 	return (1);
 }
 
-int	check_syntax(t_token **token, char **prompt)
+int	check_syntax(t_shell *sh)
 {
-	char *temp;
-	///t_token *temp;
-	temp = *prompt;
+	char	*temp;
+	t_token	*token;
+
+	token = sh->token;
+	temp = sh->prompt;
+
 	if (!check_quotes(temp))
+	{
+		free_tokens(sh);
+		free(sh->prompt);
 		return 0;
-	if (!check_tokens(*token))
+	}
+	if (!check_tokens(token))
+	{
+		free_tokens(sh);
+		free(sh->prompt);
 		return (0);
+	}
 	return (1);
 }
 
 int	start_cli(t_shell *sh)
 {
-	t_token	*token;
-	char	*prompt;
 	t_cmd *cmd;
-
 	cmd = sh->cmd;
-	token = NULL;
 	while (1)
 	{
 		signal(SIGQUIT, SIG_IGN);
@@ -113,24 +120,24 @@ int	start_cli(t_shell *sh)
 		get_cli_pwd(sh);
 		sh->heredoc_count = 0;
 		//prompt = readline(sh->cli_text);
-		prompt = readline("minishell $< ");
-		if (!prompt)
+		sh->prompt = readline("minishell $< ");
+		if (!sh->prompt)
 		{
 			printf("exit\n");
 			ft_exit_status(0, true, true);
 		}
-		add_history(prompt);
-		token = tokenize(prompt, sh);
-		if (!check_syntax(&token, &prompt))
+		add_history(sh->prompt);
+		tokenize(sh->prompt, sh);
+		if (!check_syntax(sh))
 			continue;
-		if (!get_heredoc(sh, token))
+		if (!get_heredoc(sh))
 			continue;
-		expand_tokens(token, sh);
+		expand_tokens(sh);
 		sh->heredoc_count = 0;
-		create_cmds(sh, token);
+		create_cmds(sh);
 		execute(sh);
-		free(prompt);
-		prompt = NULL;
+		free(sh->prompt);
+		sh->prompt = NULL;
 		free(sh->cli_text);
 	}
 	close(sh->original_stdin);

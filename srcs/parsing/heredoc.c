@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/07 18:04:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:10:06 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void heredoc_signal_handler(int sig)
 	}
 }
 
-int	get_heredoc(t_shell *sh, t_token *token)
+int	get_heredoc(t_shell *sh)
 {
 	int		i;
 	t_token	*temp;
@@ -89,7 +89,7 @@ int	get_heredoc(t_shell *sh, t_token *token)
 	i = 0;
 	if (sh->heredoc_count < 1)
 		return (1);
-	temp = token;
+	temp = sh->token;
 	ft_heredoc_init(sh);
 	pid = fork();
 	if (pid == 0)
@@ -118,6 +118,9 @@ int	get_heredoc(t_shell *sh, t_token *token)
 	if (WEXITSTATUS(status) == 130)
 	{
 		ft_exit_status(130, true, false);
+		free(sh->prompt);
+		free_tokens(sh);
+		//free heredocpipes
 		return (0);
 	}
 	else

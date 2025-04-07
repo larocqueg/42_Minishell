@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/01 17:20:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:56:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
 	return (i);
 }
 
-t_token	*tokenize(char *prompt, t_shell *sh)
+void	tokenize(char *prompt, t_shell *sh)
 {
 	int		i;
 	t_token	*tokens;
@@ -122,10 +122,10 @@ t_token	*tokenize(char *prompt, t_shell *sh)
 			break ;
 		i = extract_token(prompt, i, &tokens, sh);
 	}
+	sh->token = tokens;
 	if (!sh->DEBUG)
-	{
-		return tokens;
-	}
+		return ;
+
 	t_token *temp;
 	temp = tokens;
 
@@ -135,8 +135,5 @@ t_token	*tokenize(char *prompt, t_shell *sh)
 		printf("token->token: '%s', token->type= %d\n", temp->token, temp->type);
 		temp = temp -> next;
 	}
-
 	printf("-----ENDTOKENS---------\n");
-
-	return (tokens);
 }

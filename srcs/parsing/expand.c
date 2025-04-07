@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/04 21:51:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:12:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,13 @@ char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool
 	return (str);
 }
 
-void	expand_tokens(t_token *token, t_shell *sh)
+void	expand_tokens(t_shell *sh)
 {
 	char	*temp;
+	t_token *token;
 	temp = NULL;
 
+	token = sh->token;
 	while (token)
 	{
 		if (token->type == WORD)

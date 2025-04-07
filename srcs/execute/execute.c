@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:10:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:54:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@ void	ft_error(char *str)
 	return ;
 }
 
-void	ft_free(char **str)
-{
-	int	i;
-
-	if (!str)
-		return ;
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
-}
 
 int is_character_device(const char *path)
 {
@@ -157,19 +146,13 @@ void	executecmd(char **cmds, char **env)
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
-	{
-		printf("exit\n");
-		free_envp(sh);
-		exit(0);
-	}
+		exec_exit(sh, cmd);
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-	{
 		exec_cd(cmd->cmd, sh);
-	}
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
-	{
 		exec_export(sh, cmd);
-	}
+	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
+		exec_pwd(cmd);
 	if (is_var(cmd->cmd[0]))
 	{
 		int	i = 0;
@@ -182,7 +165,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 			printf("%s\n", sh->local_vars[i++]);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
-		exit(sh->exit_code);
+		exit(ft_exit_status(0, 0, 0));
 }
 
 
@@ -192,11 +175,11 @@ int	ft_is_builtin(char **cmds)
 		return (0);
 	if (ft_strncmp(cmds[0], "exit", 5) == 0)
 		return (1);
-	if (ft_strncmp(cmds[0], "print", 6) == 0)
-		return (1);
 	if (ft_strncmp(cmds[0], "export", 7) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "cd", 3) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "pwd", 4) == 0)
 		return (1);
 	if (is_var(cmds[0]))
 		return (1);
@@ -338,20 +321,14 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	if (ft_exit_status(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
 	free(pids);
-	t_cmd *temp = sh->cmd;
-	while(temp)
-	{
-		tmp = temp;
-		ft_free(tmp->cmd);
-		temp = temp->next;
-		free(tmp);
-	}
 }
 
 void execute(t_shell *sh)
 {
 	t_cmd *cmd;
+
 	cmd = sh->cmd;
 	exec_cmd(sh, cmd);
+	free_cmds(sh);
 
 }
