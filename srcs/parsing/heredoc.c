@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/07 21:10:06 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:17:10 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 			ft_fprintf(2, "warning: here-document at line 1 delimited by end-of-file ");
 			ft_fprintf(2, "(wanted '%s')\n", end);
 			close(sh->heredoc_pipes[i][1]);
-			break; //exit(0); only if fork!
+			break;
 		}
 
 		if (prompt && !ft_strncmp(prompt, end, ft_strlen(end) + 1))
@@ -108,7 +108,7 @@ int	get_heredoc(t_shell *sh)
 			}
 			temp = temp->next;
 		}
-			ft_exit_status(0, 1, 1);
+		ft_exit_status(0, 1, 1);
 	}
 	else
 	{
