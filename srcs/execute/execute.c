@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:22:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:07:09 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		exec_export(sh, cmd);
 	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
 		exec_pwd(cmd);
+	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
+		exec_echo(cmd);
 	if (is_var(cmd->cmd[0]))
 	{
 		int	i = 0;
@@ -165,7 +167,7 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 			printf("%s\n", sh->local_vars[i++]);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
-		exit(ft_exit_status(0, 0, 0));
+		ft_exit_status(0, 0, 1);
 }
 
 
@@ -180,6 +182,8 @@ int	ft_is_builtin(char **cmds)
 	if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
 	if (ft_strncmp(cmds[0], "pwd", 4) == 0)
+		return (1);
+	if (ft_strncmp(cmds[0], "echo", 5) == 0)
 		return (1);
 	if (is_var(cmds[0]))
 		return (1);

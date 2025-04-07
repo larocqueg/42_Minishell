@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/07 21:11:45 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/07 22:01:47 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/cd.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/exit.c \
+	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/env_utils/get_env.c \
 	$(SRC_DIR)/vars/vars.c \
 	$(SRC_DIR)/signals/exit_status.c \

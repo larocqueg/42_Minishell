@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:12:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:02:07 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ typedef struct s_shell
 	int		exit_code;
 }	t_shell;
 
-
-
 typedef struct s_fd
 {
 	int	fd_in;
@@ -124,6 +122,7 @@ void	exec_pwd(t_cmd *cmd);
 void	exec_export(t_shell *sh, t_cmd *cmd);
 int		exec_cd(char **cmd, t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
+void	exec_echo(t_cmd *cmds);
 
 //cli
 int		start_cli(t_shell *sh);
