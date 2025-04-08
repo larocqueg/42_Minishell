@@ -82,39 +82,6 @@ static int	is_valid_var(char *str)
 		return (0);
 }
 
-static int	ft_strcmp_var(char *env_var, char *new_var)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env_var[i])
-	{
-		if (env_var[i] == new_var[i])
-			i++;
-		else if ((env_var[i] == '=' && !new_var[i]) || (!env_var[i] && !new_var[i]))
-			return(1);
-		else
-			return (0);
-	}
-	return (0);
-}
-
-static int		ft_find_var(char *new_var, char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strcmp_var(envp[i], new_var))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	create_export(char *str, t_shell *sh)
 {
 	char *var_name;

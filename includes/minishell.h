@@ -105,6 +105,8 @@ void	execute(t_shell *sh);
 int		get_heredoc(t_shell *sh);
 char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc);
 int		is_var(char *token);
+int		ft_strcmp_Var(char *env_var, char *new_var);
+int		ft_find_var(char *new_var, char **envp);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
