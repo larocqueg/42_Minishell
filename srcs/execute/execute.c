@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 22:07:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:03:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,18 +236,19 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		close (cmd->fd_out);
 	if (cmd -> fd_in != -1)
 		close(cmd ->fd_in);
-	if (!cmd->perm_error && ft_is_builtin(cmd->cmd))
+	if (!cmd->infile_error && !cmd->tofile_error && ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
-	else if (!cmd->perm_error)
+	else if (!cmd->infile_error && !cmd->tofile_error)
 		executecmd(cmd->cmd, sh->envp );
-	if (cmd->perm_error)
+	if (cmd->infile_error || cmd->tofile_error)
 	{
 		write(2, "minishell: file: Permission denied!\n", 36);
-		if ((cmd->to_pipe || cmd->from_pipe) && cmd->cmd && !cmd->cmd[0])
-		{
+		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
 			ft_exit_status(0, true, true);
-		}
-		ft_exit_status(1, true, true);
+
+		ft_exit_status(1, true, false);
+		if (!cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+			ft_exit_status(0, 0, 1);
 	}
 	close(outfd);
 	close(infd);

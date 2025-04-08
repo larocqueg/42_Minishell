@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:23:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:46:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	newcmd -> cmd = NULL;
 	newcmd->to_pipe = false;
 	newcmd->from_pipe = false;
-	newcmd->perm_error = false;
+	newcmd->infile_error = false;
+	newcmd->tofile_error = false;
 	bool	hascmd = false;
 	bool heredoc = false;
 	bool export = false;
@@ -77,39 +78,39 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	// when redirecting close the other fd;
 	while (*token && (*token)->type != PIPE)
 	{
-		if ((*token) -> type != WORD && (*token)-> type != VAR && !newcmd->perm_error)
+		if ((*token) -> type != WORD && (*token)-> type != VAR && !newcmd->infile_error && !newcmd->tofile_error )
 			export = false;
 		if (from_pipe)
 			newcmd -> from_pipe = true;
-		if ((*token) -> type == TOFILE && !newcmd->perm_error)
+		if ((*token) -> type == TOFILE && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_out != -1)
 				close(newcmd->fd_out);
 			newcmd -> fd_out = open((*token)->token, O_RDWR | O_TRUNC | O_CREAT, 0644);
 			if (newcmd -> fd_out == -1)
-				newcmd->perm_error = true;
+				newcmd->tofile_error = true;
 		}
-		else if ((*token) -> type == INFILE && !newcmd->perm_error)
+		else if ((*token) -> type == INFILE && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !heredoc)
 				close(newcmd->fd_in);
 			newcmd -> fd_in = open((*token)->token, O_RDONLY);
 			if (newcmd -> fd_in == -1)
-				newcmd->perm_error = true;
+				newcmd->infile_error = true;
 			heredoc = false;
 		}
-		else if ((*token) -> type == APPEND && !newcmd->perm_error)
+		else if ((*token) -> type == APPEND && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_out != -1)
 				close(newcmd->fd_out);
 			newcmd -> fd_out = open((*token)->token, O_RDWR | O_APPEND | O_CREAT, 0644);
 			if (newcmd -> fd_out == -1)
-				newcmd->perm_error = true;
+				newcmd->tofile_error = true;
 		}
-		else if ((*token) -> type == HERE_DOC && !newcmd->perm_error)
+		else if ((*token) -> type == HERE_DOC && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !heredoc)
@@ -118,7 +119,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			sh->heredoc_count++;
 			heredoc = true;
 		}
-		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->perm_error)
+		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			if ((*token)->type == WORD || export)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
