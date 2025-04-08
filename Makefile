@@ -81,5 +81,7 @@ re: fclean
 
 run: re
 	@./minishell
+debug: re
+	@./minishell 1
 
 .PHONY: all clean fclean re
