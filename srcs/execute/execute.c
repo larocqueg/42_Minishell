@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 16:03:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:06:12 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 			ft_exit_status(0, true, true);
 
 		ft_exit_status(1, true, false);
-		if (!cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
 			ft_exit_status(0, 0, 1);
 	}
 	close(outfd);
