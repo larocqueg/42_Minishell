@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/07 22:17:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:39:11 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ static void	ft_heredoc_init(t_shell *sh)
 	int		i;
 
 	i = 0;
-	sh->heredoc_pipes = malloc(sizeof(int **) * (sh->heredoc_count));
+	sh->heredoc_pipes = malloc(sizeof(int **) * ((sh->heredoc_count) + 1));
 	while (i < sh->heredoc_count)
 	{
 		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
 		pipe(sh->heredoc_pipes[i]);
 		i++;
 	}
+	sh->heredoc_pipes[i] = NULL;
 }
 
 static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
@@ -104,6 +105,7 @@ int	get_heredoc(t_shell *sh)
 			{
 				end = remove_quotes(temp->next->token);
 				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
+				free(end);
 				i++;
 			}
 			temp = temp->next;

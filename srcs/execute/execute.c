@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 16:06:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:28:00 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int is_character_device(const char *path)
 
 int is_folder(char *path)
 {
+	if (!path)
+		return (0);
 	struct stat path_stat;
 	stat(path, &path_stat);
 	return S_ISDIR(path_stat.st_mode);
@@ -125,10 +127,11 @@ void	executecmd(char **cmds, char **env)
 	int		exit_code = 127;
 
 	path = NULL;
+	x = 0;
 
 	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
 		path = local_path_finder(cmds[0]);
-	else if (cmds && !is_folder(cmds[0]))
+	else if (cmds && cmds[0] && !is_folder(cmds[0]))
 		path = path_finder(cmds[0], env);
 	else
 		path = cmds[0];
@@ -256,23 +259,20 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 
 static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
-	int		*pids;
-	int		i;
+	int		pid;
 	int		pid_count;
 	t_cmd	*tmp;
 	int		status;
 
 	pid_count = 0;
+	pid = -1;
+	status = 0;
 	tmp = cmd;
 	while (tmp)
 	{
 		pid_count++;
 		tmp = tmp->next;
 	}
-	pids = malloc(sizeof(int) * pid_count);
-	if (!pids)
-		return ;
-	i = 0;
 	while (cmd)
 	{
 		if (cmd->to_pipe)
@@ -284,11 +284,11 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			if (sh->DEBUG)
 				printf("forked!!!!\n");
-			pids[i] = fork();
+			pid = fork();
 		}
 		else
-			pids[i] = 0;
-		if (pids[i] == 0)
+			pid = 0;
+		if (pid == 0)
 		{
 			signal_default();
 			handle_child(sh, cmd);
@@ -305,16 +305,19 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			close(sh->pipe_old[1]);
 		}
 		cmd = cmd->next;
-		i++;
+		//pid = 0;
 	}
-	i = 0;
-	while (i < pid_count)
+	//i = 0;
+	//while (i < pid_count)
+	if (pid != 0)
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		waitpid(pids[i], &status, 0);
-		i++;
+		waitpid(pid, &status, 0);
 	}
+		//i++;
+	//}
+	//free(pid);
 	if (WIFEXITED(status))
 	{
 		ft_exit_status(WEXITSTATUS(status), true, false);
@@ -325,7 +328,6 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	}
 	if (ft_exit_status(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
-	free(pids);
 }
 
 void execute(t_shell *sh)
@@ -333,6 +335,7 @@ void execute(t_shell *sh)
 	t_cmd *cmd;
 
 	cmd = sh->cmd;
+	free_tokens(sh);
 	exec_cmd(sh, cmd);
 	free_cmds(sh);
 

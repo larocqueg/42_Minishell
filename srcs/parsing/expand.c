@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:12:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:08:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,10 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (token->type == WORD)
 		{
-			temp = expand(token-> token, false, false, sh, false);
-			token-> token = remove_quotes(temp);
+			temp = expand(token->token, false, false, sh, false);
+			//free(token->token);
+			token->token = remove_quotes(temp);
+			free(temp);
 		}
 		token = token -> next;
 	}
