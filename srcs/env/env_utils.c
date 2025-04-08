@@ -36,7 +36,7 @@ void	ft_change_var(char *var_name, char *content, char **env)
 	i = 0;
 	while(env[i])
 	{
-		if (ft_strncmp(var_name, env[i], 4) == 0)
+		if (ft_strncmp(var_name, env[i], ft_strlen(var_name)) == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin(var_name, content);
