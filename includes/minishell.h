@@ -93,7 +93,7 @@ typedef struct s_fd
 }	t_fd;
 
 //tokens
-void tokenize(char *str, t_shell *sh);
+int		tokenize(char *str, t_shell *sh);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
@@ -134,7 +134,7 @@ void	get_cli_pwd(t_shell *sh);
 //free_utils
 void	ft_free(char **str);
 void	free_cmds(t_shell *sh);
-void	free_tokens(t_shell *sh);
+void	free_tokens(t_token *tokens);
 void	free_envp(t_shell *sh);
 
 //vars.c

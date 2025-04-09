@@ -29,6 +29,7 @@ static void	ft_heredoc_init(t_shell *sh)
 static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 {
 	char	*prompt;
+
 	while (1)
 	{
 		prompt = readline("> ");

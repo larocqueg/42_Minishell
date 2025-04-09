@@ -12,12 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-void	free_tokens(t_shell *sh)
+void	free_tokens(t_token	*token)
 {
-	t_token *token;
 	t_token *temp;
 
-	token = sh->token;
 	temp = token;
 	while (token)
 	{	temp = token -> next;
@@ -25,4 +23,5 @@ void	free_tokens(t_shell *sh)
 		free(token);
 		token = temp;
 	}
+	token = NULL;
 }

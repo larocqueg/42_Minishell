@@ -124,11 +124,12 @@ int	start_cli(t_shell *sh)
 			ft_exit_status(0, true, true);
 		}
 		add_history(sh->prompt);
-		tokenize(sh->prompt, sh);
+		if (!tokenize(sh->prompt, sh))
+			continue ;
 		if (!check_syntax(sh))
-			continue;
+			continue ;
 		if (!get_heredoc(sh))
-			continue;
+			continue ;
 		expand_tokens(sh);
 		sh->heredoc_count = 0;
 		create_cmds(sh);

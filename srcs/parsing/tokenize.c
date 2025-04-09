@@ -12,24 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-int	is_var(char *token)
-{
-	int	i;
-
-	if (!token || !*token)
-		return (0);
-	i = 1;
-	if (!ft_isalpha(token[0]) && token[0] != '_')
-		return (0);
-	while (token[i] && (ft_isalnum(token[i]) || token[i]=='_'))
-			i++;
-	if (token[i] == '+')
-		i++;
-	if (token[i] == '=')
-			return (1);
-	return (0);
-}
-
 static t_type	get_token_type(char *token, t_shell *sh)
 {
 	if (!token)
@@ -57,11 +39,11 @@ static int	extract_quotes(char *prompt, int i)
 	char	quote;
 
 	quote = prompt[i++];
-	while(prompt[i] && prompt[i] != quote)
+	while (prompt[i] && prompt[i] != quote)
 		i++;
 	if (prompt[i] == quote)
 		i++;
-	return(i);
+	return (i);
 }
 
 static int	extract_word(char *prompt, int i)
@@ -76,7 +58,7 @@ static int	extract_word(char *prompt, int i)
 	return (i);
 }
 
-int extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
+int	extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
 {
 	int		start;
 	char	*token;
@@ -90,26 +72,24 @@ int extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
 		{
 			start = i;
 			i = extract_word(prompt, i);
-			token = ft_strndupmod(prompt, start, i - 1);
+			token = ft_strndupmod(prompt, start, i - 1); // malloc
 		}
 		else
 		{
-			start = i;
-			i++;
+			start = i++;
 			if (prompt[i] == prompt[i - 1])
 				i++;
-			token = ft_strndupmod(prompt, start, i - 1);
+			token = ft_strndupmod(prompt, start, i - 1); // malloc
 		}
+		if (!token)
+			return (-1);
 	}
-	new_token = ft_tokennew(token, get_token_type(token, sh));
-	ft_token_addback(tokens, new_token);
-
-	free(token);
-	token = NULL;
-	return (i);
+	new_token = ft_tokennew(token, get_token_type(token, sh)); //malloc
+	ft_token_addback(tokens, new_token); //malloc
+	return (free(token), i);
 }
 
-void	tokenize(char *prompt, t_shell *sh)
+int	tokenize(char *prompt, t_shell *sh)
 {
 	int		i;
 	t_token	*tokens;
@@ -123,19 +103,13 @@ void	tokenize(char *prompt, t_shell *sh)
 		if (!prompt[i])
 			break ;
 		i = extract_token(prompt, i, &tokens, sh);
+		if (i == -1)
+		{
+			free_tokens(tokens);
+			free(sh->prompt);
+			return (0);
+		}
 	}
 	sh->token = tokens;
-	if (!sh->DEBUG)
-		return ;
-
-	t_token *temp;
-	temp = tokens;
-
-	printf("-----TOKENS------------\n");
-	while (temp)
-	{
-		printf("token->token: '%s', token->type= %d\n", temp->token, temp->type);
-		temp = temp -> next;
-	}
-	printf("-----ENDTOKENS---------\n");
+	return (1);
 }
