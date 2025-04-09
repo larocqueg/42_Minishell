@@ -14,13 +14,14 @@
 
 void	free_tokens(t_token	*token)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	if (!token)
 		return ;
 	temp = token;
 	while (token)
-	{	temp = token -> next;
+	{
+		temp = token -> next;
 		free(token->token);
 		free(token);
 		token = temp;

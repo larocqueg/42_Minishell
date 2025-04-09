@@ -14,13 +14,14 @@
 
 void	free_cmds(t_shell *sh)
 {
-	t_cmd *cmd;
-	t_cmd *temp;
+	t_cmd	*cmd;
+	t_cmd	*temp;
 
 	cmd = sh->cmd;
 	temp = cmd;
 	while (cmd)
-	{	temp = cmd -> next;
+	{
+		temp = cmd -> next;
 		ft_free(cmd->cmd);
 		free(cmd);
 		cmd = temp;
