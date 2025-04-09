@@ -167,5 +167,6 @@ void	signal_default(void);
 # define PID_ERROR	"Error while trying to create a fork!\n"
 # define PIPE_ERROR	"Error while trying to create a pipe!\n"
 # define PATH_ERROR	"Error: PATH not found!\n"
+# define EOF_ERROR	"Warning: here-document at line 1 delimited by end-of-file wanted"
 
 #endif

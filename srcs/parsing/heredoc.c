@@ -35,8 +35,7 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 		prompt = readline("> ");
 		if (!prompt)
 		{
-			ft_fprintf(2, "warning: here-document at line 1 delimited by end-of-file ");
-			ft_fprintf(2, "(wanted '%s')\n", end);
+			ft_fprintf(2, "%s (%s)\n", EOF_ERROR, end);
 			close(sh->heredoc_pipes[i][1]);
 			break; //exit(0); only if fork!
 		}
