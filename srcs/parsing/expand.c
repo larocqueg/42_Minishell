@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 21:18:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:50:25 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ char	*ft_expand_string(char *str, size_t *i, t_shell *sh)
 	temp = NULL;
 	variable_name = extract_variable(str, *i);
 	if (!variable_name)
-		return (NULL);
+		return (free(str), NULL);
 	content = ft_get_env(variable_name, sh->envp);
 	free(variable_name);
 	if (!content && ft_is_all_var(str))
-		return (NULL);
+		return (free(str), NULL);
 	temp = ft_insertstr(str, (*i)--, content);
 	free(str);
 	str = temp;
@@ -122,7 +122,10 @@ char	*ft_expand_exit(char	*str, size_t *i)
 
 	exit_code = ft_itoa(ft_exit_status(0, 0, 0));
 	if (!exit_code)
+	{
+		free(str);
 		return (NULL);
+	}
 	temp = ft_insertstr(str, (*i)--, exit_code);
 	(*i) += ft_strlen(exit_code);
 	free(exit_code);
@@ -155,7 +158,7 @@ char	*expand(char *str, t_shell *sh, bool heredoc)
 	while (result[i])
 	{
 		set_quotes(result[i], &in_single_quotes, &in_quotes);
-		if ( result[i] == '$' && (!in_single_quotes || heredoc))
+		if (result[i] == '$' && (!in_single_quotes || heredoc))
 		{
 			i++;
 			if (result[i] == '?' || ft_isalpha(result[i]) || result[i] == '_' )
@@ -168,7 +171,7 @@ char	*expand(char *str, t_shell *sh, bool heredoc)
 	return (result);
 }
 
-int	expand_tokens(t_shell *sh)
+void	expand_tokens(t_shell *sh)
 {
 	char	*temp;
 	t_token	*token;
@@ -186,5 +189,4 @@ int	expand_tokens(t_shell *sh)
 		}
 		token = token -> next;
 	}
-	return (1);
 }

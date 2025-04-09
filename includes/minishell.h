@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 19:55:46 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:26:25 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
-int		expand_tokens(t_shell *sh);
+void	expand_tokens(t_shell *sh);
 void	create_cmds(t_shell *sh);
 void	execute(t_shell *sh);
 int		get_heredoc(t_shell *sh);

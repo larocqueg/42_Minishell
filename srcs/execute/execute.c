@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 17:50:49 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:41:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ft_error(char *str)
 
 int is_character_device(const char *path)
 {
+	if (!path)
+		return (0);
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
@@ -30,22 +32,29 @@ int is_character_device(const char *path)
 	return 0;
 }
 
-int is_folder(char *path)
+int	is_folder(char *path)
 {
 	if (!path)
 		return (0);
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISDIR(path_stat.st_mode);
+	struct stat st;
+	if (stat(path, &st) == 0)
+	{
+		return S_ISDIR(st.st_mode);
+	}
+	return 0;
 }
 
 int is_file(char *path)
 {
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISREG(path_stat.st_mode);
+	if (!path)
+		return (0);
+	struct stat st;
+	if (stat(path, &st) == 0)
+	{
+		return S_ISREG(st.st_mode);
+	}
+	return 0;
 }
-
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
 
@@ -126,12 +135,12 @@ void	executecmd(char **cmds, char **env)
 	char	*path;
 	int		exit_code = 127;
 
+	if (!cmds || !*cmds)
+		ft_exit_status(0, 1, 1);
 	path = NULL;
-	x = 0;
-
 	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
 		path = local_path_finder(cmds[0]);
-	else if (cmds && cmds[0] && !is_folder(cmds[0]))
+	else if (cmds[0] && !is_folder(cmds[0]))
 		path = path_finder(cmds[0], env);
 	else
 		path = cmds[0];
@@ -148,6 +157,13 @@ void	executecmd(char **cmds, char **env)
 
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
+	if (!cmd->cmd || !*cmd->cmd)
+	{
+		if (cmd->to_pipe || cmd->from_pipe)
+			ft_exit_status(0, 0, 1);
+		return ;
+	}
+
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 		exec_exit(sh, cmd);
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)

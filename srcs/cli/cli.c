@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 17:59:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:26:33 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	start_cli(t_shell *sh)
 			continue;
 		if (!get_heredoc(sh))
 			continue;
-		if (!expand_tokens(sh))
-			continue;
+		expand_tokens(sh);
 		create_cmds(sh);
 		execute(sh);
 		reset_cli(sh);
