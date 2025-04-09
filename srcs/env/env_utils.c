@@ -36,7 +36,7 @@ void	ft_change_var(char *var_name, char *content, char **env)
 	i = 0;
 	while(env[i])
 	{
-		if (ft_strncmp(var_name, env[i], 4) == 0)
+		if (ft_strncmp(var_name, env[i], ft_strlen(var_name)) == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin(var_name, content);
@@ -64,4 +64,37 @@ char	**clone_envp(char **envp)
 	}
 	dest[i] = NULL;
 	return (dest);
+}
+
+int	ft_strcmp_var(char *env_var, char *new_var)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (env_var[i])
+	{
+		if (env_var[i] == new_var[i])
+			i++;
+		else if ((env_var[i] == '=' && !new_var[i]) || (!env_var[i] && !new_var[i]))
+			return(1);
+		else
+			return (0);
+	}
+	return (0);
+}
+
+int		ft_find_var(char *new_var, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strcmp_var(envp[i], new_var))
+			return (1);
+		i++;
+	}
+	return (0);
 }

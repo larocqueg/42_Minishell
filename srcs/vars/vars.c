@@ -57,7 +57,8 @@ void	handle_vars(t_shell *sh, char *var)
 	expanded_var = expand(var, false, false, sh, false);
 	if (!ft_get_env(no_equals, sh->envp))
 	{
-		if (ft_get_env(no_equals, sh->local_vars))
+		if (ft_get_env(no_equals, sh->local_vars)
+				|| (sh->local_vars && ft_find_var(no_equals, sh->local_vars)))
 			ft_change_var(var_name, expanded_var + ft_strlen_tochar(var, '=') + 1, sh->local_vars);
 		else
 		{
