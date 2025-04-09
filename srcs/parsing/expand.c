@@ -6,12 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:08:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 20:30:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 {
@@ -31,6 +30,12 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 	}
 }
 
+char	ft_ischar(int *i)
+{
+	(*i)++;
+	return ('\0');
+}
+
 char	*remove_quotes(char *str)
 {
 	char	quote;
@@ -41,6 +46,8 @@ char	*remove_quotes(char *str)
 	if (!str)
 		return (NULL);
 	result = malloc(sizeof(char) * ft_strlen(str) + 1);
+	if (!result)
+		return (NULL);
 	i = 0;
 	j = 0;
 	quote = '\0';
@@ -49,10 +56,7 @@ char	*remove_quotes(char *str)
 		if ((str[i] == '\'' || str[i] == '"') && quote == '\0')
 			quote = str[i++];
 		else if (str[i] == quote)
-		{
-			i++;
-			quote = '\0';
-		}
+			quote = ft_ischar(&i);
 		else
 			result[j++] = str[i++];
 	}
@@ -63,6 +67,7 @@ char	*remove_quotes(char *str)
 char	*extract_variable(char *str, int i)
 {
 	int	j;
+
 	j = i;
 	while (ft_isalnum(str[j]) || str[j] == '_')
 		j++;
@@ -70,62 +75,114 @@ char	*extract_variable(char *str, int i)
 		return (ft_strndupmod(str, i, --j));
 	return (NULL);
 }
-char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc)
+
+int	ft_is_all_var(char	*str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] != '$')
+		return (0);
+	while (ft_isalnum(str[i]) || str[i] == '_')
+		i++;
+	if (!str[i])
+		return (1);
+	else
+		return (0);
+}
+
+char	*ft_expand_string(char *str, size_t *i, t_shell *sh)
+{
+	char	*variable_name;
+	char	*temp;
+	char	*content;
+
+	temp = NULL;
+	variable_name = extract_variable(str, *i);
+	if (!variable_name)
+		return (NULL);
+	content = ft_get_env(variable_name, sh->envp);
+	free(variable_name);
+	if (!content && ft_is_all_var(str))
+		return (NULL);
+	temp = ft_insertstr(str, (*i)--, content);
+	free(str);
+	str = temp;
+	if (content)
+	{
+		(*i) += ft_strlen(content) - 1;
+	}
+	return (str);
+}
+
+char	*ft_expand_exit(char	*str, size_t *i)
 {
 	char	*temp;
-	size_t		i;
-	char	*exit_str;
-	char	*variable_name;
+	char	*exit_code;
 
-	exit_str = ft_itoa(ft_exit_status(0, false, false));
+	exit_code = ft_itoa(ft_exit_status(0, 0, 0));
+	if (!exit_code)
+		return (NULL);
+	temp = ft_insertstr(str, (*i)--, exit_code);
+	(*i) += ft_strlen(exit_code);
+	free(exit_code);
+	free(str);
+	return (temp);
+}
 
+char	*ft_expand_vars(char *str, size_t *i, t_shell *sh)
+{
+	if (str[*i] && str[*i] == '?')
+		str = ft_expand_exit(str, i);
+	else if (ft_isalnum(str[*i]) || str[*i] == '_')
+		str = ft_expand_string(str, i, sh);
+	return (str);
+}
+
+char	*expand(char *str, t_shell *sh, bool heredoc)
+{
+	size_t	i;
+	char	*result;
+	bool	in_quotes;
+	bool	in_single_quotes;
+
+	in_single_quotes = false;
+	in_quotes = false;
+	result = ft_strdup(str);
+	if (!result)
+		return (NULL);
 	i = 0;
-	while (str[i] && i < ft_strlen(str))
+	while (result[i])
 	{
-		set_quotes(str[i], &in_single_quotes, &in_quotes);
-		if (str[i] == '$' && (!in_single_quotes || heredoc))
+		set_quotes(result[i], &in_single_quotes, &in_quotes);
+		if (result[i] == '$' && (!in_single_quotes || heredoc))
 		{
 			i++;
-			if (str[i] == '?')
+			if (result[i] == '?' || ft_isalpha(result[i]) || result[i] == '_' )
 			{
-				temp = ft_insertstr(str, i--, exit_str);
-				free(str);
-				str = temp;
-				i += ft_strlen(exit_str);
-			}
-			else if (!ft_isdigit(str[i]) && (ft_isalnum(str[i]) || str[i] == '_'))
-			{
-				variable_name = extract_variable(str, i);
-				temp = ft_insertstr(str, i--, ft_get_env(variable_name, sh->envp));
-				free(str);
-				str = temp;
-				if (ft_get_env(variable_name, sh->envp))
-					i += (ft_strlen(ft_get_env(variable_name, sh->envp)) - 1);
+				result = ft_expand_vars(result, &i, sh);
+				if (!result)
+					return (NULL);
 			}
 		}
 		i++;
 	}
-	free(exit_str);
-	if (ft_strlen(str) == 0)
-	{
-		str = NULL;
-	}
-	return (str);
+	return (result);
 }
 
 int	expand_tokens(t_shell *sh)
 {
 	char	*temp;
-	t_token *token;
-	temp = NULL;
+	t_token	*token;
 
+	temp = NULL;
 	token = sh->token;
 	while (token)
 	{
 		if (token->type == WORD)
 		{
-			temp = expand(token->token, false, false, sh, false);
-			//free(token->token);
+			temp = expand(token->token, sh, false);
+			free(token->token);
 			token->token = remove_quotes(temp);
 			free(temp);
 		}

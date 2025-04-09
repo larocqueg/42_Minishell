@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:43:52 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/04 18:48:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 20:00:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	handle_vars(t_shell *sh, char *var)
 	content = ft_strdup(var + ft_strlen_tochar(var, '=') + 1);
 	var_name = ft_strndupmod(var, 0, ft_strlen_tochar(var, '='));
 	no_equals = ft_strndupmod(var, 0, ft_strlen_tochar(var, '=') - 1);
-	expanded_var = expand(var, false, false, sh, false);
+	expanded_var = expand(var, sh, false);
 	if (!ft_get_env(no_equals, sh->envp))
 	{
 		if (ft_get_env(no_equals, sh->local_vars))

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:11:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:55:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_fd
 }	t_fd;
 
 //tokens
-int tokenize(char *str, t_shell *sh);
+int		tokenize(char *str, t_shell *sh);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
@@ -102,7 +102,7 @@ int		expand_tokens(t_shell *sh);
 void	create_cmds(t_shell *sh);
 void	execute(t_shell *sh);
 int		get_heredoc(t_shell *sh);
-char	*expand(char *str, bool in_quotes, bool in_single_quotes, t_shell *sh, bool heredoc);
+char	*expand(char *str, t_shell *sh, bool heredoc);
 int		is_var(char *token);
 
 //builtin_utils.c
