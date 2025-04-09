@@ -14,7 +14,7 @@
 
 void	ft_swap(char **s1, char **s2)
 {
-	char *temp;
+	char	*temp;
 
 	temp = *s1;
 	*s1 = *s2;
@@ -35,13 +35,12 @@ int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
 	return (0);
 }
 
-size_t ft_strlen_tochar(char *str, char c)
+size_t	ft_strlen_tochar(char *str, char c)
 {
 	int	i;
 
 	i = 0;
-
-	while(str[i] && str[i] != c)
+	while (str[i] && str[i] != c)
 	{
 		i++;
 	}
