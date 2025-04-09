@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_exit_status(int	exit_code, bool set, bool close)
+int	ft_exit_status(int exit_code, bool set, bool close)
 {
-	static int exit_status;
+	static int	exit_status;
 
 	if (set)
 		exit_status = exit_code;
