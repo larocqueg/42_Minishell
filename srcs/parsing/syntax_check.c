@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:23:53 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:55:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ int	check_syntax(t_shell *sh)
 		ft_exit_status(2, true, false);
 		return (0);
 	}
+	free(sh->prompt);
 	return (1);
 }

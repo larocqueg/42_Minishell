@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 15:53:52 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:50:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,8 +304,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			sh->pipe_old = sh->pipe_new;
 			close(sh->pipe_old[1]);
 		}
-		else
-			free(sh->pipe_old);
+		//else
+			//free(sh->pipe_old);
 		cmd = cmd->next;
 		//pid = 0;
 	}

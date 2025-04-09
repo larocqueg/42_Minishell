@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:30:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:52:57 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int	start_cli(t_shell *sh)
 			continue;
 		create_cmds(sh);
 		execute(sh);
+
 	}
 }

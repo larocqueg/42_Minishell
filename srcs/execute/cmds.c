@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:00:55 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:56:23 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 		}
 		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->infile_error && !newcmd->tofile_error)
 		{
-			if ((*token)->type == WORD || export)
+			if (((*token)->type == WORD || export))
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 			else if ((*token) -> type == VAR || ((*token) -> type == WORD))
 			{
@@ -136,7 +136,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 					}
 					temp = temp->next;
 				}
-			if ((*token)->type == VAR && !hascmd)
+			if ((*token)->type == VAR && !hascmd )
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
 			}
 		}
