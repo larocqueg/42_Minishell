@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 20:30:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:18:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,15 +155,13 @@ char	*expand(char *str, t_shell *sh, bool heredoc)
 	while (result[i])
 	{
 		set_quotes(result[i], &in_single_quotes, &in_quotes);
-		if (result[i] == '$' && (!in_single_quotes || heredoc))
+		if ( result[i] == '$' && (!in_single_quotes || heredoc))
 		{
 			i++;
 			if (result[i] == '?' || ft_isalpha(result[i]) || result[i] == '_' )
-			{
 				result = ft_expand_vars(result, &i, sh);
-				if (!result)
-					return (NULL);
-			}
+			if (!result)
+				return (NULL);
 		}
 		i++;
 	}
