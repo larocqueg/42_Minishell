@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/08 18:39:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:54:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	get_heredoc(t_shell *sh)
 	{
 		ft_exit_status(130, true, false);
 		free(sh->prompt);
-		free_tokens(sh);
+		free_tokens(sh->token);
 		//free heredocpipes
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 19:28:00 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:53:52 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		executecmd(cmd->cmd, sh->envp );
 	if (cmd->infile_error || cmd->tofile_error)
 	{
-		write(2, "minishell: file: Permission denied!\n", 36);
+		ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
 		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
 			ft_exit_status(0, true, true);
 
@@ -304,6 +304,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			sh->pipe_old = sh->pipe_new;
 			close(sh->pipe_old[1]);
 		}
+		else
+			free(sh->pipe_old);
 		cmd = cmd->next;
 		//pid = 0;
 	}
@@ -335,7 +337,7 @@ void execute(t_shell *sh)
 	t_cmd *cmd;
 
 	cmd = sh->cmd;
-	free_tokens(sh);
+	free_tokens(sh->token);
 	exec_cmd(sh, cmd);
 	free_cmds(sh);
 

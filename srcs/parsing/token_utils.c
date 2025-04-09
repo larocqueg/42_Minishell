@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:00:51 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 18:41:15 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:25:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ t_token	*ft_tokennew(char *str, int type)
 {
 	t_token	*n_token;
 
+	if (!str)
+		return (NULL);
 	n_token = (t_token *)malloc(sizeof(t_token));
 	if (!n_token)
 		return (NULL);
-	if (!str)
-		return (free(n_token), NULL);
 	n_token->token = ft_strdup(str);
+	if (!n_token->token)
+	{
+		free(n_token);
+		return (NULL);
+	}
 	n_token->type = type;
 	n_token->next = NULL;
 	return (n_token);

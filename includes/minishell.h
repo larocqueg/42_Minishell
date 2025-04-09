@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 15:46:34 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:11:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ typedef struct s_fd
 }	t_fd;
 
 //tokens
-void tokenize(char *str, t_shell *sh);
+int tokenize(char *str, t_shell *sh);
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
-void	expand_tokens(t_shell *sh);
+int		expand_tokens(t_shell *sh);
 void	create_cmds(t_shell *sh);
 void	execute(t_shell *sh);
 int		get_heredoc(t_shell *sh);
@@ -115,7 +115,6 @@ char	**append_cmd(char **cmd, char *newcmd);
 
 //export.c
 void	print_export(t_shell *sh);
-
 char	*remove_quotes(char *str);
 
 //built ins!
@@ -125,6 +124,10 @@ int		exec_cd(char **cmd, t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 void	exec_echo(t_cmd *cmds);
 
+//error handling
+int	check_quotes(char *prompt);
+int	check_tokens(t_token *token);
+int	check_syntax(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
@@ -132,7 +135,7 @@ void	get_cli_pwd(t_shell *sh);
 //free_utils
 void	ft_free(char **str);
 void	free_cmds(t_shell *sh);
-void	free_tokens(t_shell *sh);
+void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 
 //vars.c
@@ -165,5 +168,6 @@ void	signal_default(void);
 # define PID_ERROR	"Error while trying to create a fork!\n"
 # define PIPE_ERROR	"Error while trying to create a pipe!\n"
 # define PATH_ERROR	"Error: PATH not found!\n"
+# define UNEXPECTED_T "minishell: syntax error: unexpected token"
 
 #endif

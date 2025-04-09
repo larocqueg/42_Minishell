@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/08 19:06:57 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:00:55 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void	create_cmds(t_shell *sh)
 {
 	t_token *token;
 
+	sh->heredoc_count = 0;
 	token = sh->token;
 	bool from_pipe = false;
 	sh->cmd = NULL;
@@ -164,20 +165,4 @@ void	create_cmds(t_shell *sh)
 		}
 		extract_cmd(&sh->cmd, &token, from_pipe, sh);
 	}
-
-	if (!sh->DEBUG)
-		return;
-	t_cmd *cmd = sh->cmd;
-	 while(cmd)
-	 {
-		printf("-------CMDS---------\n");
-	 	for(int i = 0; cmd->cmd[i]; i++)
-			printf("%s ", cmd->cmd[i]);
-		printf("\nfdin %d\n", cmd->fd_in);
-	 	printf("fdout %d\n", cmd->fd_out);
-	 	printf("topipe  "); cmd->to_pipe ? printf("true\n") : printf("false\n");
-	 	printf("frompipe  "); cmd->from_pipe ? printf("true\n") : printf("false\n");
-	 	cmd = cmd->next;
-	 }
-	printf("---------END CMDS--------\n");
 }
