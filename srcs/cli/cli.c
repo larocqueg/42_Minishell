@@ -93,13 +93,13 @@ int	check_syntax(t_shell *sh)
 
 	if (!check_quotes(temp))
 	{
-		free_tokens(sh);
+		free_tokens(sh->token);
 		free(sh->prompt);
 		return 0;
 	}
 	if (!check_tokens(token))
 	{
-		free_tokens(sh);
+		free_tokens(sh->token);
 		free(sh->prompt);
 		return (0);
 	}

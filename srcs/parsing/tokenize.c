@@ -58,35 +58,31 @@ static int	extract_word(char *prompt, int i)
 	return (i);
 }
 
-int	extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
+static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 {
-	int		start;
 	char	*token;
 	t_token	*new_token;
 
-	start = 0;
-	token = NULL;
-	while (prompt[i] && !token)
+	if (!is_operator(sh->prompt[i]))
 	{
-		if (!is_operator(prompt[i]))
-		{
-			start = i;
-			i = extract_word(prompt, i);
-			token = ft_strndupmod(prompt, start, i - 1); // malloc
-		}
-		else
-		{
-			start = i++;
-			if (prompt[i] == prompt[i - 1])
-				i++;
-			token = ft_strndupmod(prompt, start, i - 1); // malloc
-		}
-		if (!token)
-			return (-1);
+		start = i;
+		i = extract_word(sh->prompt, i);
+		token = ft_strndupmod(sh->prompt, start, i - 1);
 	}
-	new_token = ft_tokennew(token, get_token_type(token, sh)); //malloc
-	ft_token_addback(tokens, new_token); //malloc
-	return (free(token), i);
+	else
+	{
+		start = i++;
+		if (sh->prompt[i] == sh->prompt[i - 1])
+			i++;
+		token = ft_strndupmod(sh->prompt, start, i - 1);
+	}
+	if (!token)
+		return (-1);
+	new_token = ft_tokennew(token, get_token_type(token, sh));
+	if (!new_token)
+		return (-1);
+	ft_token_addback(tokens, new_token);
+	return (i);
 }
 
 int	tokenize(char *prompt, t_shell *sh)
@@ -102,7 +98,7 @@ int	tokenize(char *prompt, t_shell *sh)
 			i++;
 		if (!prompt[i])
 			break ;
-		i = extract_token(prompt, i, &tokens, sh);
+		i = extract_token(-1, i, &tokens, sh);
 		if (i == -1)
 		{
 			free_tokens(tokens);
