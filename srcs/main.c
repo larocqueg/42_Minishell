@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 17:06:48 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 21:06:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,33 @@
 
 static int	get_env_size(char **envp);
 
+void	ft_sh_init(t_shell *sh, char **envp)
+{
+	sh->DEBUG = 0;
+	sh->original_stdin = dup(STDIN_FILENO);
+	sh->original_stdout = dup(STDOUT_FILENO);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
+	sh->local_vars = NULL;
+	sh->envp = clone_envp(envp);
+	sh->env_size = get_env_size(sh->envp);
+	sh->pipe_old = NULL;
+	sh->pipe_new = NULL;
+	sh->heredoc_pipes = NULL;
+	sh->heredoc_count = 0;
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
-
-	sh.DEBUG = 0;
-	if (argc == 2 && argv[1][0] == '1')
+	(void)argv;
+	//if (argc > 1)
+		//return ;
+	ft_sh_init(&sh, envp);
+	if (argc == 2)
 		sh.DEBUG = 1;
-	sh.original_stdin = dup(STDIN_FILENO);
-	sh.original_stdout = dup(STDOUT_FILENO);
-	sh.exit_code = 0;
-	sh.local_vars = NULL;
-	sh.envp = clone_envp(envp); // dar free em caso de exit ou ctrl + d
-	sh.env_size = get_env_size(sh.envp);
-	if (sh.DEBUG)
-		printf("env size = %d\n", sh.env_size);
-	sh.pipe_old = NULL;
-	sh.pipe_new = NULL;
-	sh.heredoc_count = 0;
 	start_cli(&sh);
+	free_envp(&sh);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/07 21:11:45 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/10 21:13:36 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/expand.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
 	$(SRC_DIR)/parsing/heredoc.c \
+	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/execute.c \
 	$(SRC_DIR)/env/export.c \
@@ -39,13 +40,13 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/cd.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/exit.c \
+	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/env/env_utils.c \
-	$(SRC_DIR)/vars/vars.c \
 	$(SRC_DIR)/signals/exit_status.c \
 	$(SRC_DIR)/signals/signal_handler.c \
 	$(SRC_DIR)/free_utils/free_array.c \
 	$(SRC_DIR)/free_utils/free_cmds.c \
-	$(SRC_DIR)/free_utils/free_tokens.c
+	$(SRC_DIR)/free_utils/free_tokens.c \
 
 
 # Objects

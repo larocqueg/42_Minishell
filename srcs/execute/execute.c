@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:22:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 21:14:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ft_error(char *str)
 
 int is_character_device(const char *path)
 {
+	if (!path)
+		return (0);
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
@@ -30,24 +32,33 @@ int is_character_device(const char *path)
 	return 0;
 }
 
-int is_folder(char *path)
+int	is_folder(char *path)
 {
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISDIR(path_stat.st_mode);
+	if (!path)
+		return (0);
+	struct stat st;
+	if (stat(path, &st) == 0)
+	{
+		return S_ISDIR(st.st_mode);
+	}
+	return 0;
 }
 
 int is_file(char *path)
 {
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISREG(path_stat.st_mode);
+	if (!path)
+		return (0);
+	struct stat st;
+	if (stat(path, &st) == 0)
+	{
+		return S_ISREG(st.st_mode);
+	}
+	return 0;
 }
-
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
 
-	if ((access(path, F_OK) == 0 && access(path, X_OK) != 0) || is_character_device(path))
+	if (path && ((access(path, F_OK) == 0 && access(path, X_OK) != 0) || is_character_device(path)))
 	{
 		ft_putstr_fd("minishell: permission denied: \"", 2);
 		*exit_code = 126;
@@ -60,11 +71,14 @@ void	ft_command_error(char **cmds, char *path, int *exit_code)
 		*exit_code = 126;
 	}
 	else
+	{
 		ft_putstr_fd("minishell: command not found \"", 2);
+	}
 	if (cmds[0])
 		ft_putstr_fd(cmds[0], 2);
 	ft_putstr_fd("\"\n", 2);
-	ft_free(cmds);
+	if (path)
+		free(path);
 }
 
 char	*path_finder(char *cmds, char **env)
@@ -86,10 +100,9 @@ char	*path_finder(char *cmds, char **env)
 		free(part_path);
 		if (access(path, F_OK) == 0)
 			return (path);
-
+		free(path);
 		i++;
 	}
-	free(path);
 	ft_free(paths);
 	return (NULL);
 }
@@ -108,6 +121,7 @@ char	*local_path_finder(char *cmd)
 		temp = ft_strjoin(path, "/");
 		free(path);
 		path = ft_strjoin(temp, cmd + 2);
+		free(temp);
 	}
 	else
 		path = cmd;
@@ -118,96 +132,101 @@ char	*local_path_finder(char *cmd)
 	return (NULL);
 }
 
-void	executecmd(char **cmds, char **env)
+void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 {
-	int		x;
 	char	*path;
 	int		exit_code = 127;
 
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+	if (!cmds->cmd || !*cmds->cmd)
+	{
+		free_cmds(sh);
+		free_envp(sh);
+		ft_exit_status(0, 1, 1);
+	}
 	path = NULL;
-
-	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
-		path = local_path_finder(cmds[0]);
-	else if (cmds && !is_folder(cmds[0]))
-		path = path_finder(cmds[0], env);
+	if (ft_strncmp("./", cmds->cmd[0], 2) == 0 || ft_strncmp("/", cmds->cmd[0], 1) == 0) // ft_is_absolute || ft_is_relative
+		path = local_path_finder(cmds->cmd[0]);
+	else if (cmds->cmd[0] && !is_folder(cmds->cmd[0]))
+		path = path_finder(cmds->cmd[0], env);
 	else
-		path = cmds[0];
+		path = cmds->cmd[0];
 	if (!path || access(path, X_OK) != 0 || is_folder(path) || is_character_device(path))
 	{
-		ft_command_error(cmds, path, &exit_code);
-		ft_error(NULL);
+		ft_command_error(cmds->cmd, path, &exit_code);
+		free_envp(sh);
+		if (cmds->to_pipe)
+			free(sh->pipe_new);
+		if (cmds->from_pipe)
+			free(sh->pipe_old);
+		free_cmds(sh);
 		exit(exit_code);
 	}
-	x = execve(path, cmds, env);
-	if (x == -1)
-		ft_error(NULL);
+	execve(path, cmds->cmd, env);
+	ft_fprintf(2, "cannot execute '%s'\n", path);
+	free_cmds(sh);
+	free_envp(sh);
+	free(path);
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+	ft_exit_status(8, 1, 1);
 }
 
-void execute_builtin(t_cmd *cmd, t_shell *sh)
+
+void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
-	int	i;
+	if (!cmd->cmd || !*cmd->cmd)
+	{
+		if (cmd->to_pipe || cmd->from_pipe)
+			ft_exit_status(0, 0, 1);
+		return ;
+	}
 
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
-	{
-		printf("exit\n");
-		free_envp(sh);
-		exit(0);
-	}
-	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-	{
+		exec_exit(sh, cmd);
+	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		exec_cd(cmd->cmd, sh);
-	}
-	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
-	{
+	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		exec_export(sh, cmd);
-	}
-	else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-	{
+	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
 		exec_pwd(cmd);
-	}
-	else if (is_var(cmd->cmd[0]) || ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-	{
-		i = 0;
-		if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-		{
-			while (sh->envp[i])
-			{
-				if (is_var(sh->envp[i]))
-					printf("%s\n", sh->envp[i]);
-				i++;
-			}
-		}
-		else
-		{
-			while (cmd->cmd[i])
-				handle_vars(sh, cmd->cmd[i++]);
-			if (!sh->DEBUG)
-				return;
-			i = 0;
-			while (sh->local_vars[i])
-				printf("%s\n", sh->local_vars[i++]);
-		}
-	}
-
+	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
+		exec_echo(cmd);
 	if (cmd->to_pipe || cmd->from_pipe)
-		exit(ft_exit_status(0, 0, 0));
+	{
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		free_envp(sh);
+		if (cmd->to_pipe)
+			free(sh->pipe_new);
+		free_cmds(sh);
+		ft_exit_status(0, 0, 1);
+	}
+	if (cmd->fd_in != -1)
+	{
+		dup2(sh->original_stdin, STDIN_FILENO);
+	}
+	if (cmd->fd_out != -1)
+		dup2(sh->original_stdout, STDOUT_FILENO);
 }
 
-int ft_is_builtin(char **cmds)
+
+int	ft_is_builtin(char **cmds)
 {
 	if (!cmds || !*cmds)
 		return (0);
 	if (ft_strncmp(cmds[0], "exit", 5) == 0)
 		return (1);
-	else if (ft_strncmp(cmds[0], "cd", 3) == 0)
+	if (ft_strncmp(cmds[0], "export", 7) == 0)
 		return (1);
-	else if (ft_strncmp(cmds[0], "export", 7) == 0)
+	if (ft_strncmp(cmds[0], "cd", 3) == 0)
 		return (1);
-	else if (ft_strncmp(cmds[0], "pwd", 4) == 0)
+	if (ft_strncmp(cmds[0], "pwd", 4) == 0)
 		return (1);
-	else if (ft_strncmp(cmds[0], "env", 4) == 0)
+	if (ft_strncmp(cmds[0], "echo", 5) == 0)
 		return (1);
-	else if (is_var(cmds[0]))
+	if (is_var(cmds[0]))
 		return (1);
 	return (0);
 }
@@ -216,13 +235,19 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 {
 	int outfd;
 
-	outfd = 1;
+	outfd = STDOUT_FILENO;
 	if (cmd -> to_pipe && cmd ->fd_out == -1)
 	{
+		close(sh->pipe_new[0]);
 		outfd = sh->pipe_new[1];
 	}
-	else if (cmd -> fd_out != -1)
+	else if (cmd -> fd_out != -1 )
 	{
+		if (cmd->to_pipe)
+		{
+			close(sh->pipe_new[0]);
+			close(sh->pipe_new[1]);
+		}
 		outfd = cmd -> fd_out;
 	}
 	return (outfd);
@@ -230,7 +255,7 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 
 int	get_fdin(t_cmd *cmd, t_shell *sh)
 {
-	int fdin = 0;
+	int fdin = STDIN_FILENO;
 
 	if (cmd -> from_pipe && fdin != -1)
 	{
@@ -238,6 +263,8 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	}
 	if (cmd -> fd_in != -1)
 	{
+		if (cmd->from_pipe)
+			close(sh->pipe_old[0]);
 		fdin = cmd -> fd_in;
 	}
 	return (fdin);
@@ -252,24 +279,28 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		printf("---------------executing child!-------------\n");
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
-	dup2(outfd, STDOUT_FILENO);
-	dup2(infd, STDIN_FILENO);
-	if (cmd -> fd_out != -1)
-		close (cmd->fd_out);
-	if (cmd -> fd_in != -1)
-		close(cmd ->fd_in);
-	if (!cmd->perm_error && ft_is_builtin(cmd->cmd))
-		execute_builtin(cmd, sh);
-	else if (!cmd->perm_error)
-		executecmd(cmd->cmd, sh->envp );
-	if (cmd->perm_error)
+	if (outfd != STDOUT_FILENO)
 	{
-		write(2, "minishell: file: Permission denied!\n", 36);
-		if ((cmd->to_pipe || cmd->from_pipe) && cmd->cmd && !cmd->cmd[0])
-		{
+		dup2(outfd, STDOUT_FILENO);
+		close(outfd);
+	}
+	if (infd != STDIN_FILENO)
+	{
+		dup2(infd, STDIN_FILENO);
+		close(infd);
+	}
+	if (!cmd->infile_error && !cmd->tofile_error && ft_is_builtin(cmd->cmd))
+		execute_builtin(cmd, sh);
+	else if (!cmd->infile_error && !cmd->tofile_error)
+		executecmd(cmd, sh->envp, sh);
+	if (cmd->infile_error || cmd->tofile_error)
+	{
+		ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
+		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
 			ft_exit_status(0, true, true);
-		}
-		ft_exit_status(1, true, true);
+		ft_exit_status(1, true, false);
+		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+			ft_exit_status(0, 0, 1);
 	}
 	close(outfd);
 	close(infd);
@@ -277,23 +308,20 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 
 static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 {
-	int		*pids;
-	int		i;
+	int		pid;
 	int		pid_count;
 	t_cmd	*tmp;
 	int		status;
 
 	pid_count = 0;
+	pid = -1;
+	status = 0;
 	tmp = cmd;
 	while (tmp)
 	{
 		pid_count++;
 		tmp = tmp->next;
 	}
-	pids = malloc(sizeof(int) * pid_count);
-	if (!pids)
-		return ;
-	i = 0;
 	while (cmd)
 	{
 		if (cmd->to_pipe)
@@ -305,11 +333,11 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			if (sh->DEBUG)
 				printf("forked!!!!\n");
-			pids[i] = fork();
+			pid = fork();
 		}
 		else
-			pids[i] = 0;
-		if (pids[i] == 0)
+			pid = 0;
+		if (pid == 0)
 		{
 			signal_default();
 			handle_child(sh, cmd);
@@ -322,19 +350,17 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		}
 		if (cmd->to_pipe)
 		{
+			close(sh->pipe_new[1]);
 			sh->pipe_old = sh->pipe_new;
-			close(sh->pipe_old[1]);
+			sh->pipe_new = NULL;
 		}
 		cmd = cmd->next;
-		i++;
 	}
-	i = 0;
-	while (i < pid_count)
+	if (pid != 0)
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		waitpid(pids[i], &status, 0);
-		i++;
+		waitpid(pid, &status, 0);
 	}
 	if (WIFEXITED(status))
 	{
@@ -346,15 +372,31 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 	}
 	if (ft_exit_status(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
-	free(pids);
 }
 
+void	free_pipes(t_shell *sh)
+{
+	int	i;
+
+	i = 0;
+	while (sh->heredoc_pipes && sh->heredoc_pipes[i])
+	{
+		close(sh->heredoc_pipes[i][0]);
+		free(sh->heredoc_pipes[i]);
+		i++;
+	}
+	free(sh->heredoc_pipes);
+	sh->heredoc_pipes = NULL;
+
+}
 void execute(t_shell *sh)
 {
 	t_cmd *cmd;
 
 	cmd = sh->cmd;
+	free_tokens(sh->token);
 	exec_cmd(sh, cmd);
 	free_cmds(sh);
+	free_pipes(sh);
 
 }

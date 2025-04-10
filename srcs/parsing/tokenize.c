@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:56:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 21:04:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static t_type	get_token_type(char *token, t_shell *sh)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
-	if (is_var(token))
-		return (VAR);
 	return (WORD);
 }
 
