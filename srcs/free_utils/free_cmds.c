@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:48:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:53:25 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:13:08 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_cmds(t_shell *sh)
 	t_cmd *temp;
 
 	cmd = sh->cmd;
+	if (!cmd)
+		return ;
 	temp = cmd;
 	while (cmd)
 	{	temp = cmd -> next;

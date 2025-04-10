@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/09 20:20:06 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:55:56 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_heredoc_init(t_shell *sh)
 	int		i;
 
 	i = 0;
-	sh->heredoc_pipes = malloc(sizeof(int **) * ((sh->heredoc_count) + 1));
+	sh->heredoc_pipes = malloc(sizeof(int *) * ((sh->heredoc_count) + 1));
 	while (i < sh->heredoc_count)
 	{
 		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
@@ -97,6 +97,72 @@ int	get_heredoc(t_shell *sh)
 		return (1);
 	temp = sh->token;
 	ft_heredoc_init(sh);
+	while (temp)
+	{
+		if (temp->type == HERE_DOC)
+		{
+			end = remove_quotes(temp->next->token);
+			pid = fork();
+			if (pid == 0)
+			{
+				signal_default();
+				signal(SIGINT, heredoc_signal_handler);
+				signal(SIGQUIT, SIG_IGN);
+				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
+				close(sh->original_stdin);
+				close(sh->original_stdout);
+				ft_exit_status(0, 1, 1);
+			}
+			else
+			{
+				signal(SIGINT, SIG_IGN);
+				waitpid(pid, &status, 0);
+			}
+			if (WEXITSTATUS(status) == 130)
+			{
+				ft_exit_status(130, true, false);
+				free(sh->prompt);
+				free_tokens(sh->token);
+				perror("chegou aqui!1");
+				for (int i = 0; i < sh->heredoc_count; i++)
+				{
+					//close(sh->heredoc_pipes[i][1]);
+					//close(sh->heredoc_pipes[i][0]);
+					free(sh->heredoc_pipes[i]);
+					perror("chegou aqui!2");
+					perror("chegou aqui3!");
+				}
+				free(sh->heredoc_pipes);
+				free(end);
+				perror("chegou aqui!4");
+				return (0);
+			}
+			else
+			{
+				close(sh->heredoc_pipes[i][1]);
+			}
+			free(end);
+			i++;
+		}
+		temp = temp->next;
+	}
+	return (1);
+}
+/*
+int	get_heredoc(t_shell *sh)
+{
+	int		i;
+	t_token	*temp;
+	char	*end;
+	int		pid;
+	int		status;
+	pid = 0;
+	status = 0;
+	i = 0;
+	if (sh->heredoc_count < 1)
+		return (1);
+	temp = sh->token;
+	ft_heredoc_init(sh);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -127,7 +193,13 @@ int	get_heredoc(t_shell *sh)
 		ft_exit_status(130, true, false);
 		free(sh->prompt);
 		free_tokens(sh->token);
-		//free heredocpipes
+		for (int i = 0; i < sh->heredoc_count; i++)
+		{
+			close(sh->heredoc_pipes[i][1]);
+			close(sh->heredoc_pipes[i][0]);
+			free(sh->heredoc_pipes[i]);
+		}
+		free(sh->heredoc_pipes);
 		return (0);
 	}
 	else
@@ -138,3 +210,4 @@ int	get_heredoc(t_shell *sh)
 
 	}
 }
+*/
