@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 15:03:34 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:49:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ void	executecmd(char **cmds, char **env, t_shell *sh)
 	char	*path;
 	int		exit_code = 127;
 
+	close(sh->original_stdin);
+	close(sh->original_stdout);
 	if (!cmds || !*cmds)
 	{
 		free_cmds(sh);
@@ -154,8 +156,6 @@ void	executecmd(char **cmds, char **env, t_shell *sh)
 		ft_command_error(cmds, path, &exit_code);
 		free_cmds(sh);
 		free_envp(sh);
-		close(sh->original_stdin);
-		close(sh->original_stdout);
 		exit(exit_code);
 	}
 	execve(path, cmds, env);
@@ -198,7 +198,19 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 			printf("%s\n", sh->local_vars[i++]);
 	}
 	if (cmd->to_pipe || cmd->from_pipe)
+	{
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		free_envp(sh);
+		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
+	}
+	if (cmd->fd_in != -1)
+	{
+		dup2(sh->original_stdin, STDIN_FILENO);
+	}
+	if (cmd->fd_out != -1)
+		dup2(sh->original_stdout, STDOUT_FILENO);
 }
 
 
@@ -225,7 +237,7 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 {
 	int outfd;
 
-	outfd = 1;
+	outfd = STDOUT_FILENO;
 	if (cmd -> to_pipe && cmd ->fd_out == -1)
 	{
 		outfd = sh->pipe_new[1];
@@ -239,7 +251,7 @@ int	get_fdout(t_cmd *cmd, t_shell *sh)
 
 int	get_fdin(t_cmd *cmd, t_shell *sh)
 {
-	int fdin = 0;
+	int fdin = STDIN_FILENO;
 
 	if (cmd -> from_pipe && fdin != -1)
 	{
@@ -261,8 +273,10 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		printf("---------------executing child!-------------\n");
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
-	dup2(outfd, STDOUT_FILENO);
-	dup2(infd, STDIN_FILENO);
+	if (outfd != STDOUT_FILENO)
+		dup2(outfd, STDOUT_FILENO);
+	if (infd != STDIN_FILENO)
+		dup2(infd, STDIN_FILENO);
 	if (cmd -> fd_out != -1)
 		close (cmd->fd_out);
 	if (cmd -> fd_in != -1)
@@ -307,6 +321,7 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			sh->pipe_new = malloc(sizeof(int) * 2);
 			pipe(sh->pipe_new);
+			ft_fprintf(2, "%i, %i \n", sh->pipe_new[0], sh->pipe_new[1]);
 		}
 		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 		{
@@ -329,8 +344,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		}
 		if (cmd->to_pipe)
 		{
+			close(sh->pipe_new[1]);
 			sh->pipe_old = sh->pipe_new;
-			close(sh->pipe_old[1]);
 		}
 		cmd = cmd->next;
 	}

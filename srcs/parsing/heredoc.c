@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/10 15:55:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:04:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,11 @@ int	get_heredoc(t_shell *sh)
 				{
 					//close(sh->heredoc_pipes[i][1]);
 					//close(sh->heredoc_pipes[i][0]);
-					free(sh->heredoc_pipes[i]);
+				//ak	free(sh->heredoc_pipes[i]);
 					perror("chegou aqui!2");
 					perror("chegou aqui3!");
 				}
-				free(sh->heredoc_pipes);
+				//free(sh->heredoc_pipes);
 				free(end);
 				perror("chegou aqui!4");
 				return (0);
