@@ -265,7 +265,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	}
 	if (cmd -> fd_in != -1)
 	{
-		//if (cmd->from_pipe)
+		if (cmd->from_pipe)
 			close(sh->pipe_old[0]);
 		fdin = cmd -> fd_in;
 	}
