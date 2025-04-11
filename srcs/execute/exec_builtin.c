@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:26:58 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:29:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_builtin(t_cmd *cmd, t_shell *sh)
 		free_envp(sh);
 		if (cmd->to_pipe)
 			free(sh->pipe_new);
+		if (cmd->from_pipe)
+			free(sh->pipe_old);
 		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
 	}
