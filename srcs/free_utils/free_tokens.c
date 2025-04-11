@@ -12,10 +12,19 @@
 
 #include "../../includes/minishell.h"
 
+<<<<<<< HEAD
 void	free_tokens(t_token *token)
 {
 	t_token	*temp;
 
+=======
+void	free_tokens(t_token	*token)
+{
+	t_token	*temp;
+
+	if (!token)
+		return ;
+>>>>>>> master
 	temp = token;
 	while (token)
 	{
@@ -24,4 +33,5 @@ void	free_tokens(t_token *token)
 		free(token);
 		token = temp;
 	}
+	token = NULL;
 }

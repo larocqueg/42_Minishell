@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
+<<<<<<< HEAD:srcs/builtin/export.c
 /*   Updated: 2025/04/07 22:16:26 by rafaelfe         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 21:12:05 by rafaelfe         ###   ########.fr       */
+>>>>>>> master:srcs/env/export.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +68,7 @@ void	print_export(t_shell *sh)
 	free(temp);
 	return ;
 }
+
 static int	is_valid_var(char *str)
 {
 	int	i;
@@ -80,21 +85,26 @@ static int	is_valid_var(char *str)
 	else
 		return (0);
 }
+
 void	create_export(char *str, t_shell *sh)
 {
 	char *var_name;
 	char *no_equal;
+	char *no_quotes;
 
+	no_quotes = remove_quotes(str);
+	free(str);
+	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));
 
-	if (ft_get_env(no_equal, sh->envp))
+	if (ft_get_env(no_equal, sh->envp) || ft_find_var(no_equal, sh->envp))
 	{
 		ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
 	}
 	else
 		sh-> envp = append_cmd(sh->envp, str);
-	sh->exit_code = 0;
+	ft_exit_status(0, 1, 0);
 }
 
 void	exec_export(t_shell *sh, t_cmd *cmd)
@@ -115,7 +125,11 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
+<<<<<<< HEAD:srcs/builtin/export.c
 			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
+=======
+			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
+>>>>>>> master:srcs/env/export.c
 			ft_exit_status(1, 1, 0);
 		}
 	}

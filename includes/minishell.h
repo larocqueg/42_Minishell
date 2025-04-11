@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/09 21:26:25 by rafaelfe         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 21:17:39 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +46,6 @@ typedef enum e_type
 	APPEND,
 	INFILE,
 	TOFILE,
-	VAR,
 }	t_type;
 
 typedef struct s_cmd
@@ -116,6 +119,7 @@ char	**append_cmd(char **cmd, char *newcmd);
 //export.c
 void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
+int		ft_find_var(char *new_var, char **envp);
 
 //built ins!
 void	exec_pwd(t_cmd *cmd);
@@ -123,6 +127,14 @@ void	exec_export(t_shell *sh, t_cmd *cmd);
 int		exec_cd(char **cmd, t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 void	exec_echo(t_cmd *cmds);
+<<<<<<< HEAD
+=======
+
+//error handling
+int		check_quotes(char *prompt);
+int		check_tokens(t_token *token);
+int		check_syntax(t_shell *sh);
+>>>>>>> master
 
 //error handling
 int	check_quotes(char *prompt);
@@ -138,9 +150,6 @@ void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 
-//vars.c
-void	handle_vars(t_shell *sh, char *var);
-
 //env cmds
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
@@ -149,7 +158,9 @@ void	ft_change_var(char *var_name, char *content, char **env);
 int		ft_exit_status(int	exit_code, bool set, bool close);
 void	signal_handler(int sig);
 void	signal_default(void);
+
 //prompt name
+
 # define PROGRAM_NAME RED"minihellv3 "RESET
 //colors
 # define RESET "\033[0m"
@@ -161,12 +172,6 @@ void	signal_default(void);
 # define MAGENTA "\033[35m"
 
 //error messages
-# define INFILE_ERROR "Error: No such file or directory \"infile\"\n"
-# define OUTFILE_ERROR "Error: No such file or directory \"outfile\"\n"
-# define AV_ERROR_1		"Error: Bad arguments!\n"
-# define AV_ERROR_2	"Usage: $> ./pipex \"file1\" \"cmd1\" \"cmd2\" \"file2\"\n"
-# define PID_ERROR	"Error while trying to create a fork!\n"
-# define PIPE_ERROR	"Error while trying to create a pipe!\n"
 # define PATH_ERROR	"Error: PATH not found!\n"
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 

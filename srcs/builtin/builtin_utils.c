@@ -14,7 +14,7 @@
 
 void	ft_swap(char **s1, char **s2)
 {
-	char *temp;
+	char	*temp;
 
 	temp = *s1;
 	*s1 = *s2;
@@ -35,38 +35,16 @@ int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
 	return (0);
 }
 
-size_t ft_strlen_tochar(char *str, char c)
+size_t	ft_strlen_tochar(char *str, char c)
 {
 	int	i;
 
 	i = 0;
-
-	while(str[i] && str[i] != c)
+	while (str[i] && str[i] != c)
 	{
 		i++;
 	}
 	return (i);
-}
-
-char	**clone_envp(char **envp)
-{
-	int	i;
-	char **dest;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	dest = malloc(sizeof(char *) * (i + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		dest[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	dest[i] = NULL;
-	return (dest);
 }
 
 void	free_envp(t_shell *sh)

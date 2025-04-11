@@ -62,3 +62,21 @@ int	is_space(char prompt)
 		return (1);
 	return (0);
 }
+
+int	is_var(char *token)
+{
+	int	i;
+
+	if (!token || !*token)
+		return (0);
+	i = 1;
+	if (!ft_isalpha(token[0]) && token[0] != '_')
+		return (0);
+	while (token[i] && (ft_isalnum(token[i]) || token[i] == '_'))
+		i++;
+	if (token[i] == '+')
+		i++;
+	if (token[i] == '=')
+		return (1);
+	return (0);
+}

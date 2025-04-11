@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:16:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:25:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:52:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	exec_pwd(t_cmd *cmd)
 	else
 	{
 		ft_printf("%s\n", current_pwd);
+		free(current_pwd);
 		ft_exit_status(0, 1, 0);
 	}
 }

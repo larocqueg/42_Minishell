@@ -6,27 +6,15 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/09 19:12:56 by rafaelfe         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 21:04:31 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_var(char *token)
-{
-	int	i;
-
-	i = 1;
-	if (!ft_isalpha(token[0]) && token[0] != '_')
-		return (0);
-	while (token[i] && (ft_isalnum(token[i]) || token[i]=='_'))
-			i++;
-	if (token[i] == '+')
-		i++;
-	if (token[i] == '=')
-			return (1);
-	return (0);
-}
 
 static t_type	get_token_type(char *token, t_shell *sh)
 {
@@ -45,8 +33,6 @@ static t_type	get_token_type(char *token, t_shell *sh)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
-	if (is_var(token))
-		return (VAR);
 	return (WORD);
 }
 
@@ -55,11 +41,11 @@ static int	extract_quotes(char *prompt, int i)
 	char	quote;
 
 	quote = prompt[i++];
-	while(prompt[i] && prompt[i] != quote)
+	while (prompt[i] && prompt[i] != quote)
 		i++;
 	if (prompt[i] == quote)
 		i++;
-	return(i);
+	return (i);
 }
 
 static int	extract_word(char *prompt, int i)
@@ -74,36 +60,30 @@ static int	extract_word(char *prompt, int i)
 	return (i);
 }
 
-int extract_token(char *prompt, int i, t_token **tokens, t_shell *sh)
+static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 {
-	int		start;
 	char	*token;
 	t_token	*new_token;
 
-	start = 0;
-	token = NULL;
-	while (prompt[i] && !token)
+	if (!is_operator(sh->prompt[i]))
 	{
-		if (!is_operator(prompt[i]))
-		{
-			start = i;
-			i = extract_word(prompt, i);
-			token = ft_strndupmod(prompt, start, i - 1);
-		}
-		else
-		{
-			start = i;
-			i++;
-			if (prompt[i] == prompt[i - 1])
-				i++;
-			token = ft_strndupmod(prompt, start, i - 1);
-		}
+		start = i;
+		i = extract_word(sh->prompt, i);
+		token = ft_strndupmod(sh->prompt, start, i - 1);
 	}
+	else
+	{
+		start = i++;
+		if (sh->prompt[i] == sh->prompt[i - 1])
+			i++;
+		token = ft_strndupmod(sh->prompt, start, i - 1);
+	}
+	if (!token)
+		return (-1);
 	new_token = ft_tokennew(token, get_token_type(token, sh));
+	if (!new_token)
+		return (-1);
 	ft_token_addback(tokens, new_token);
-
-	free(token);
-	token = NULL;
 	return (i);
 }
 
@@ -120,9 +100,16 @@ int	tokenize(char *prompt, t_shell *sh)
 		i++;
 		if (!prompt[i])
 			break ;
-		i = extract_token(prompt, i, &tokens, sh);
+		i = extract_token(-1, i, &tokens, sh);
+		if (i == -1)
+		{
+			free_tokens(tokens);
+			free(sh->prompt);
+			return (0);
+		}
 	}
 	sh->token = tokens;
+<<<<<<< HEAD
 	if (!sh->DEBUG)
 		return 1;
 
@@ -136,5 +123,7 @@ int	tokenize(char *prompt, t_shell *sh)
 		temp = temp -> next;
 	}
 	printf("-----ENDTOKENS---------\n");
+=======
+>>>>>>> master
 	return (1);
 }

@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/10 16:29:54 by rafaelfe         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 21:14:05 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,10 @@ void	ft_eof_close(t_shell *sh)
 	ft_fprintf(1, "exit\n");
 	close(sh->original_stdin);
 	close(sh->original_stdout);
+<<<<<<< HEAD
+=======
+	free_envp(sh);
+>>>>>>> master
 	rl_clear_history();
 	ft_exit_status(0, false, true);
 }
@@ -24,6 +32,10 @@ void	reset_cli(t_shell *sh)
 {
 	dup2(sh->original_stdin, STDIN_FILENO);
 	dup2(sh->original_stdout, STDOUT_FILENO);
+<<<<<<< HEAD
+=======
+	signal_default();
+>>>>>>> master
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	sh->heredoc_count = 0;
@@ -47,6 +59,10 @@ int	start_cli(t_shell *sh)
 		expand_tokens(sh);
 		create_cmds(sh);
 		execute(sh);
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		reset_cli(sh);
 	}
 }
