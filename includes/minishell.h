@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:14:28 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:25:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	exec_export(t_shell *sh, t_cmd *cmd);
 int		exec_cd(char **cmd, t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 void	exec_echo(t_cmd *cmds);
+void	exec_unset(t_shell *sh, char **cmd);
 void	free_builtin(t_cmd *cmd, t_shell *sh);
 void	exec_builtin(t_cmd *cmd, t_shell *sh);
 int		ft_is_builtin(char **cmds);
