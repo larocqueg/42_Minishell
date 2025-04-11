@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:07:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:49:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	perm_error(t_cmd *cmd)
 		return (0);
 }
 
-void	ft_freenaporratoda(void)
+void	ft_free_until_cmds(t_shell *sh)
 {
-	return ;
+	free_tokens(sh->token);
+	free_cmds(sh);
 }

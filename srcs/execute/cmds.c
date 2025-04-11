@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:39:27 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:32:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:49:00 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ t_cmd	*cmd_init(bool from_pipe)
 	return (newcmd);
 }
 
-void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
+int	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 {
 	t_cmd	*newcmd;
 
 	newcmd = cmd_init(from_pipe);
 	if (!newcmd)
-		return (ft_freenaporratoda());
+		return (0);
 	while (*token && (*token)->type != PIPE)
 	{
 		if ((*token)-> type == TOFILE && !perm_error(newcmd))
@@ -101,9 +101,10 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	if ((*token) && (*token)-> type == PIPE)
 		newcmd -> to_pipe = true;
 	ft_cmd_addback(cmd, newcmd);
+	return (1);
 }
 
-void	create_cmds(t_shell *sh)
+int	create_cmds(t_shell *sh)
 {
 	t_token	*token;
 	bool	from_pipe;
@@ -119,6 +120,11 @@ void	create_cmds(t_shell *sh)
 			from_pipe = true;
 			token = token -> next;
 		}
-		extract_cmd(&sh->cmd, &token, from_pipe, sh);
+		if (!extract_cmd(&sh->cmd, &token, from_pipe, sh))
+		{
+			ft_free_until_cmds(sh);
+			return (0);
+		}
 	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:25:17 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:51:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,14 +143,14 @@ void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
 
 //cmds
-void	create_cmds(t_shell *sh);
+int		create_cmds(t_shell *sh);
 t_token	*getfd_tofile(t_token *token, t_cmd *newcmd);
 t_token	*getfd_infile(t_token *token, t_cmd *newcmd);
 t_token	*getfd_append(t_token *token, t_cmd *newcmd);
 t_token	*getfd_heredoc(t_token *token, t_cmd *newcmd, t_shell *sh);
 t_token	*get_command(t_token *token, t_cmd *newcmd);
 int		perm_error(t_cmd *cmd);
-void	ft_freenaporratoda(void);
+void	ft_free_until_cmds(t_shell *sh);
 
 //execute
 void	execute(t_shell *sh);
