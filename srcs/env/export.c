@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/10 21:12:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:07:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	put_export(char *str)
 	equal = false;
 	i = 0;
 	ft_printf("declare -x ");
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '=' && !equal)
 		{
@@ -49,7 +49,7 @@ void	print_export(t_shell *sh)
 		j = i + 1;
 		while (temp[j])
 		{
-			if (ft_strcmp_tochar(temp[i], temp[j], '=') > 0 )
+			if (ft_strcmp_tochar(temp[i], temp[j], '=') > 0)
 				ft_swap(&temp[i], &temp[j]);
 			j++;
 		}
@@ -71,12 +71,12 @@ static int	is_valid_var(char *str)
 
 	i = 0;
 	if (ft_isdigit(str[0]))
-		return 0;
+		return (0);
 	while (ft_isalnum(str[i]) || str[i] == '_')
 	{
 		i++;
 	}
-	if (!str[i] || (str[i] &&  str[i] == '='))
+	if (!str[i] || (str[i] && str[i] == '='))
 		return (1);
 	else
 		return (0);
@@ -84,29 +84,27 @@ static int	is_valid_var(char *str)
 
 void	create_export(char *str, t_shell *sh)
 {
-	char *var_name;
-	char *no_equal;
-	char *no_quotes;
+	char	*var_name;
+	char	*no_equal;
+	char	*no_quotes;
 
 	no_quotes = remove_quotes(str);
-	//free(str);
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));
-
 	if (ft_get_env(no_equal, sh->envp) || ft_find_var(no_equal, sh->envp))
 	{
 		ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
 	}
 	else
-		sh-> envp = append_cmd(sh->envp, str);
+		sh->envp = append_cmd(sh->envp, str);
 	ft_exit_status(0, 1, 0);
 }
 
 void	exec_export(t_shell *sh, t_cmd *cmd)
 {
-	char **cmds;
-	int	i;
+	char	**cmds;
+	int		i;
 
 	i = 1;
 	cmds = cmd->cmd;

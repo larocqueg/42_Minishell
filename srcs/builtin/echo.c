@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:48:28 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 17:41:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:07:32 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_is_flag(char *cmd)
 		return (0);
 	if (cmd[0] != '-')
 		return (0);
-	while(cmd[i] == 'n')
+	while (cmd[i] == 'n')
 	{
 		i++;
 	}

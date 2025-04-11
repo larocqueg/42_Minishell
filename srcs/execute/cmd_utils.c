@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_cmds.c                                        :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 20:48:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 17:59:55 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/11 17:52:22 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/11 18:07:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_cmds(t_shell *sh)
+int	perm_error(t_cmd *cmd)
 {
-	t_cmd	*cmd;
-	t_cmd	*temp;
+	if (cmd->infile_error || cmd->tofile_error)
+		return (1);
+	else
+		return (0);
+}
 
-	cmd = sh->cmd;
-	if (!cmd)
-		return ;
-	temp = cmd;
-	while (cmd)
-	{
-		temp = cmd -> next;
-		ft_free(cmd->cmd);
-		free(cmd);
-		cmd = temp;
-	}
+void	ft_freenaporratoda(void)
+{
+	return ;
 }

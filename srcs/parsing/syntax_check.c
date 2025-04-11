@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 21:09:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:59:24 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	check_valid_operators(t_token **temp)
 			return (0);
 		}
 		else if (((*temp)->type == PIPE && pipe)
-				|| ((*temp)->type != WORD && !pipe))
+			|| ((*temp)->type != WORD && !pipe))
 		{
 			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->token);
 			return (0);

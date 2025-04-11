@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 17:19:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:04:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,9 +329,7 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		if (cmd->to_pipe)
 		{
 			sh->pipe_new = malloc(sizeof(int) * 2);
-			pipe(sh->pipe_new);
-			ft_fprintf(2, "%i, %i \n", sh->pipe_new[0], sh->pipe_new[1]);
-		}
+			pipe(sh->pipe_new);		}
 		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 		{
 			if (sh->DEBUG)
@@ -356,16 +354,6 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			close(sh->pipe_new[1]);
 			sh->pipe_old = sh->pipe_new;
 			sh->pipe_new = NULL;
-		}
-		if (pid != 0)
-		{
-			if (cmd->fd_out != -1)
-			{
-				close(cmd->fd_out);
-			}
-
-			if (cmd->fd_in != -1)
-				close(cmd->fd_in);
 		}
 		cmd = cmd->next;
 	}

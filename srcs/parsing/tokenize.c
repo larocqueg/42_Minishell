@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/10 21:04:31 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:02:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	tokenize(char *prompt, t_shell *sh)
 	while (prompt[i] && i < ARG_MAX)
 	{
 		while (is_space(prompt[i]))
-		i++;
+			i++;
 		if (!prompt[i])
 			break ;
 		i = extract_token(-1, i, &tokens, sh);

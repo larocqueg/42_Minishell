@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 17:13:57 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:53:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
 void	expand_tokens(t_shell *sh);
-void	create_cmds(t_shell *sh);
+
 void	execute(t_shell *sh);
 int		get_heredoc(t_shell *sh);
 char	*expand(char *str, t_shell *sh, bool heredoc);
@@ -143,6 +143,16 @@ void	ft_free(char **str);
 void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
+
+//cmds
+void	create_cmds(t_shell *sh);
+t_token	*getfd_tofile(t_token *token, t_cmd *newcmd);
+t_token	*getfd_infile(t_token *token, t_cmd *newcmd);
+t_token	*getfd_append(t_token *token, t_cmd *newcmd);
+t_token	*getfd_heredoc(t_token *token, t_cmd *newcmd, t_shell *sh);
+t_token	*get_command(t_token *token, t_cmd *newcmd);
+int		perm_error(t_cmd *cmd);
+void	ft_freenaporratoda(void);
 
 //env cmds
 char	*ft_get_env(char *var_name, char **env);

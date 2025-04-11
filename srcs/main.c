@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 21:06:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:04:47 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ void	ft_sh_init(t_shell *sh, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
+
 	(void)argv;
-	//if (argc > 1)
-		//return ;
+	if (argc > 1)
+		return (0);
 	ft_sh_init(&sh, envp);
-	if (argc == 2)
-		sh.DEBUG = 1;
 	start_cli(&sh);
 	free_envp(&sh);
 	return (0);

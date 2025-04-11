@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 15:33:33 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:08:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_eof_close(t_shell *sh)
 	rl_clear_history();
 	ft_exit_status(0, false, true);
 }
+
 void	reset_cli(t_shell *sh)
 {
 	dup2(sh->original_stdin, STDIN_FILENO);
@@ -30,9 +31,11 @@ void	reset_cli(t_shell *sh)
 	signal(SIGINT, signal_handler);
 	sh->heredoc_count = 0;
 }
+
 int	start_cli(t_shell *sh)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
+
 	cmd = sh->cmd;
 	while (1)
 	{
@@ -41,11 +44,11 @@ int	start_cli(t_shell *sh)
 			ft_eof_close(sh);
 		add_history(sh->prompt);
 		if (!tokenize(sh->prompt, sh))
-			continue;
+			continue ;
 		if (!check_syntax(sh))
-			continue;
+			continue ;
 		if (!get_heredoc(sh))
-			continue;
+			continue ;
 		expand_tokens(sh);
 		create_cmds(sh);
 		execute(sh);

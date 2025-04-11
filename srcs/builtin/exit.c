@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 15:40:44 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:01:24 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 {
 	if (cmds->cmd[1] == NULL)
 	{
-		//free cli_text ???
 		free_envp(sh);
 		free_cmds(sh);
 		close(sh->original_stdin);
