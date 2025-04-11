@@ -89,7 +89,7 @@ void	create_export(char *str, t_shell *sh)
 	char *no_quotes;
 
 	no_quotes = remove_quotes(str);
-	free(str);
+	//free(str);
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));

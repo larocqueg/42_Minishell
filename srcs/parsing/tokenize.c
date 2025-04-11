@@ -78,8 +78,9 @@ static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 		return (-1);
 	new_token = ft_tokennew(token, get_token_type(token, sh));
 	if (!new_token)
-		return (-1);
+		return (free(token), -1);
 	ft_token_addback(tokens, new_token);
+	free(token);
 	return (i);
 }
 
