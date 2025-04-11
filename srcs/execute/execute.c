@@ -6,47 +6,12 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 19:01:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:06:25 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_character_device(const char *path)
-{
-	if (!path)
-		return (0);
-	struct stat st;
-	if (stat(path, &st) == 0)
-	{
-		return (S_ISCHR(st.st_mode));
-	}
-	return (0);
-}
-
-int	is_folder(char *path)
-{
-	if (!path)
-		return (0);
-	struct stat st;
-	if (stat(path, &st) == 0)
-	{
-		return (S_ISDIR(st.st_mode));
-	}
-	return (0);
-}
-
-int is_file(char *path)
-{
-	if (!path)
-		return (0);
-	struct stat st;
-	if (stat(path, &st) == 0)
-	{
-		return (S_ISREG(st.st_mode));
-	}
-	return (0);
-}
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
 	if (path && ((access(path, F_OK) == 0 && access(path, X_OK) != 0)
@@ -72,46 +37,6 @@ void	ft_command_error(char **cmds, char *path, int *exit_code)
 	ft_putstr_fd("\"\n", 2);
 	if (path)
 		free(path);
-}
-
-char	*path_finder(char *cmds, char **env)
-{
-	int		i;
-	char	**paths;
-	char	*part_path;
-	char	*path;
-
-	path = ft_get_env("PATH", env);
-	if (!path)
-		return (NULL);
-	paths = ft_split(path + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmds);
-		free(part_path);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	ft_free(paths);
-	return (NULL);
-}
-
-char	*local_path_finder(char *cmd)
-{
-	char	*path;
-	char	*temp;
-
-	path = ft_strdup(cmd);
-	if (!path)
-		return (NULL);
-	if (access(path, F_OK) == 0 && (is_file(path)
-		|| is_folder(path) || is_character_device(path)))
-		return (path);
-	return (NULL);
 }
 
 void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
@@ -152,66 +77,6 @@ void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 	free_envp(sh);
 	free(path);
 	ft_exit_status(8, 1, 1);
-}
-void	free_builtin(t_cmd *cmd, t_shell *sh)
-{
-	if (cmd->to_pipe || cmd->from_pipe)
-	{
-		close(sh->original_stdin);
-		close(sh->original_stdout);
-		free_envp(sh);
-		if (cmd->to_pipe)
-			free(sh->pipe_new);
-		free_cmds(sh);
-		ft_exit_status(0, 0, 1);
-	}
-	else
-		return ;
-}
-void 	execute_builtin(t_cmd *cmd, t_shell *sh)
-{
-	if (!cmd->cmd || !*cmd->cmd)
-	{
-		if (cmd->to_pipe || cmd->from_pipe)
-			ft_exit_status(0, 0, 1);
-		return ;
-	}
-	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
-		exec_exit(sh, cmd);
-	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-		exec_cd(cmd->cmd, sh);
-	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
-		exec_export(sh, cmd);
-	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-		exec_pwd(cmd);
-	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
-		exec_echo(cmd);
-	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-		ft_print_env(sh);
-	if (cmd->fd_in != -1)
-		dup2(sh->original_stdin, STDIN_FILENO);
-	if (cmd->fd_out != -1)
-		dup2(sh->original_stdout, STDOUT_FILENO);
-	free_builtin(cmd, sh);
-}
-
-int	ft_is_builtin(char **cmds)
-{
-	if (!cmds || !*cmds)
-		return (0);
-	if (ft_strncmp(cmds[0], "exit", 5) == 0)
-		return (1);
-	if (ft_strncmp(cmds[0], "export", 7) == 0)
-		return (1);
-	if (ft_strncmp(cmds[0], "cd", 3) == 0)
-		return (1);
-	if (ft_strncmp(cmds[0], "pwd", 4) == 0)
-		return (1);
-	if (ft_strncmp(cmds[0], "echo", 5) == 0)
-		return (1);
-	if (ft_strncmp(cmds[0], "env", 4) == 0)
-		return (1);
-	return (0);
 }
 
 int	get_fdout(t_cmd *cmd, t_shell *sh)
@@ -356,21 +221,6 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		ft_fprintf(2, "Quit (core dumped)\n");
 }
 
-void	free_pipes(t_shell *sh)
-{
-	int	i;
-
-	i = 0;
-	while (sh->heredoc_pipes && sh->heredoc_pipes[i])
-	{
-		close(sh->heredoc_pipes[i][0]);
-		free(sh->heredoc_pipes[i]);
-		i++;
-	}
-	free(sh->heredoc_pipes);
-	sh->heredoc_pipes = NULL;
-
-}
 void execute(t_shell *sh)
 {
 	t_cmd *cmd;
