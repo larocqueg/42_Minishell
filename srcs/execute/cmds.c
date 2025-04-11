@@ -120,10 +120,18 @@ t_cmd *cmd_init(bool from_pipe)
 	newcmd->infile_error = false;
 	newcmd->tofile_error = false;
 	newcmd->heredoc = false;
+	return (newcmd);
 }
 void ft_freenaporratoda(void)
 {
 	return ;
+}
+int	perm_error(t_cmd *cmd)
+{
+	if (cmd->infile_error || cmd->tofile_error)
+		return (1);
+	else
+		return (0);
 }
 void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 {
@@ -137,9 +145,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	temp = *token;
 	while (*token && (*token)->type != PIPE)
 	{
-		if (from_pipe)
-			newcmd -> from_pipe = true;
-		if ((*token) -> type == TOFILE && !newcmd->infile_error && !newcmd->tofile_error)
+		if ((*token) -> type == TOFILE && !perm_error(newcmd))
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_out != -1)
@@ -148,7 +154,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			if (newcmd -> fd_out == -1)
 				newcmd->tofile_error = true;
 		}
-		else if ((*token) -> type == INFILE && !newcmd->infile_error && !newcmd->tofile_error)
+		else if ((*token) -> type == INFILE && !perm_error(newcmd))
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !newcmd->heredoc)
@@ -158,7 +164,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 				newcmd->infile_error = true;
 			newcmd->heredoc = false;
 		}
-		else if ((*token) -> type == APPEND && !newcmd->infile_error && !newcmd->tofile_error)
+		else if ((*token) -> type == APPEND && !perm_error(newcmd))
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_out != -1)
@@ -167,7 +173,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			if (newcmd -> fd_out == -1)
 				newcmd->tofile_error = true;
 		}
-		else if ((*token) -> type == HERE_DOC && !newcmd->infile_error && !newcmd->tofile_error)
+		else if ((*token) -> type == HERE_DOC && !perm_error(newcmd))
 		{
 			(*token) = (*token) -> next;
 			if (newcmd -> fd_in != -1 && !newcmd->heredoc)
@@ -176,7 +182,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			sh->heredoc_count++;
 			newcmd->heredoc = true;
 		}
-		else if ((*token) -> type == WORD && !newcmd->infile_error && !newcmd->tofile_error)
+		else if ((*token) -> type == WORD &&!perm_error(newcmd))
 		{
 			if (((*token)->type == WORD) && (*token)->token)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
