@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/11 17:54:32 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/11 18:09:54 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
 	$(SRC_DIR)/execute/cmds.c \
-	$(SRC_DIR)/execute/cmd_utils.c \
 	$(SRC_DIR)/execute/execute.c \
-	$(SRC_DIR)/execute/get_fds.c \
 	$(SRC_DIR)/env/export.c \
 	$(SRC_DIR)/builtin/builtin_utils.c \
 	$(SRC_DIR)/builtin/cd.c \
@@ -50,6 +48,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/free_utils/free_array.c \
 	$(SRC_DIR)/free_utils/free_cmds.c \
 	$(SRC_DIR)/free_utils/free_tokens.c
+
+
 
 # Objects
 OBJS = $(SRC:.c=.o)
