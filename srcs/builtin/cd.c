@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:07:48 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:40:00 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 	char	*home;
 	char	*oldpwd;
 
-	if (get_cd_args(cmd) == 3)
+	if (get_cd_args(cmd) > 2)
 		return (cd_error(sh, "minishell: cd: Too many arguments!\n", NULL));
 	oldpwd = getcwd(NULL, 0);
 	if (cmd[1] == NULL)
@@ -61,7 +61,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 		return (free(path), 1);
 	}
 	else if (chdir(cmd[1]) == -1)
-		return (cd_error(sh, "minishell: cd: No such file or", cmd[1]));
+		return (cd_error(sh, "minishell: cd: No such", cmd[1]));
 	path = getcwd(NULL, 0);
 	change_var(path, oldpwd, sh);
 	ft_exit_status(0, 1, 0);

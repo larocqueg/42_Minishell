@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:39:27 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:00:04 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:32:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 
 	newcmd = cmd_init(from_pipe);
 	if (!newcmd)
-		ft_freenaporratoda();
+		return (ft_freenaporratoda());
 	while (*token && (*token)->type != PIPE)
 	{
 		if ((*token)-> type == TOFILE && !perm_error(newcmd))
