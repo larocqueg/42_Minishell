@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
+/*   Created: 2025/03/31 14:23:45 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/10 16:04:05 by rafaelfe         ###   ########.fr       */
+=======
 /*   Created: 2025/04/10 21:05:03 by rafaelfe          #+#    #+#             */
 /*   Updated: 2025/04/10 21:05:07 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +27,19 @@ static void	ft_heredoc_init(t_shell *sh)
 	{
 		i++;
 	}
+	sh->heredoc_pipes[i] = NULL;
 }
 
 static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 {
 	char	*prompt;
 	char	*temp;
+<<<<<<< HEAD
+=======
 	int		j;
 
 	j = 0;
+>>>>>>> master
 	while (1)
 	{
 		prompt = readline("> ");
@@ -39,11 +48,14 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 			ft_fprintf(2, "warning: here-document at line 1 delimited by end-of-file ");
 			ft_fprintf(2, "(wanted '%s')\n", end);
 			close(sh->heredoc_pipes[i][1]);
+<<<<<<< HEAD
+=======
 			while(j < sh->heredoc_count)
 				free(sh->heredoc_pipes[j++]);
 			free(sh->heredoc_pipes);
 			free_tokens(sh->token);
 			free(end);
+>>>>>>> master
 			break;
 		}
 
@@ -112,6 +124,11 @@ int	get_heredoc(t_shell *sh)
 		if (temp->type == HERE_DOC)
 		{
 			end = remove_quotes(temp->next->token);
+<<<<<<< HEAD
+			pid = fork();
+			if (pid == 0)
+			{
+=======
 			sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
 			pipe(sh->heredoc_pipes[i]);
 			pid = fork();
@@ -119,6 +136,7 @@ int	get_heredoc(t_shell *sh)
 			{
 				free_envp(sh);
 				close(sh->heredoc_pipes[i][0]);
+>>>>>>> master
 				signal_default();
 				signal(SIGINT, heredoc_signal_handler);
 				signal(SIGQUIT, SIG_IGN);
@@ -140,8 +158,13 @@ int	get_heredoc(t_shell *sh)
 				perror("chegou aqui!1");
 				for (int i = 0; i < sh->heredoc_count; i++)
 				{
+<<<<<<< HEAD
+					//close(sh->heredoc_pipes[i][1]);
+					//close(sh->heredoc_pipes[i][0]);
+=======
 					close(sh->heredoc_pipes[i][1]);
 					close(sh->heredoc_pipes[i][0]);
+>>>>>>> master
 				//ak	free(sh->heredoc_pipes[i]);
 					perror("chegou aqui!2");
 					perror("chegou aqui3!");

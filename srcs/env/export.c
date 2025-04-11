@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
+<<<<<<< HEAD:srcs/builtin/export.c
+/*   Updated: 2025/04/07 22:16:26 by rafaelfe         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/10 21:12:05 by rafaelfe         ###   ########.fr       */
+>>>>>>> master:srcs/env/export.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +125,11 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
+<<<<<<< HEAD:srcs/builtin/export.c
+			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
+=======
 			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
+>>>>>>> master:srcs/env/export.c
 			ft_exit_status(1, 1, 0);
 		}
 	}

@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/10 17:49:26 by rafaelfe         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/10 21:14:59 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,28 +136,56 @@ char	*local_path_finder(char *cmd)
 	return (NULL);
 }
 
+<<<<<<< HEAD
+void	executecmd(char **cmds, char **env, t_shell *sh)
+=======
 void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
+>>>>>>> master
 {
 	char	*path;
 	int		exit_code = 127;
 
 	close(sh->original_stdin);
 	close(sh->original_stdout);
+<<<<<<< HEAD
+	if (!cmds || !*cmds)
+=======
 	if (!cmds->cmd || !*cmds->cmd)
+>>>>>>> master
 	{
 		free_cmds(sh);
 		free_envp(sh);
 		ft_exit_status(0, 1, 1);
 	}
 	path = NULL;
+<<<<<<< HEAD
+	if (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0) // ft_is_absolute || ft_is_relative
+		path = local_path_finder(cmds[0]);
+	else if (cmds[0] && !is_folder(cmds[0]))
+		path = path_finder(cmds[0], env);
+=======
 	if (ft_strncmp("./", cmds->cmd[0], 2) == 0 || ft_strncmp("/", cmds->cmd[0], 1) == 0) // ft_is_absolute || ft_is_relative
 		path = local_path_finder(cmds->cmd[0]);
 	else if (cmds->cmd[0] && !is_folder(cmds->cmd[0]))
 		path = path_finder(cmds->cmd[0], env);
+>>>>>>> master
 	else
 		path = cmds->cmd[0];
 	if (!path || access(path, X_OK) != 0 || is_folder(path) || is_character_device(path))
 	{
+<<<<<<< HEAD
+		ft_command_error(cmds, path, &exit_code);
+		free_cmds(sh);
+		free_envp(sh);
+		exit(exit_code);
+	}
+	execve(path, cmds, env);
+	ft_fprintf(2, "cannot execute '%s'\n", path);
+	free_cmds(sh);
+	free_envp(sh);
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+=======
 		ft_command_error(cmds->cmd, path, &exit_code);
 		free_envp(sh);
 		if (cmds->to_pipe)
@@ -171,6 +203,7 @@ void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 	close(sh->original_stdin);
 	close(sh->original_stdout);
 	ft_exit_status(8, 1, 1);
+>>>>>>> master
 }
 
 
@@ -193,13 +226,30 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		exec_pwd(cmd);
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		exec_echo(cmd);
+<<<<<<< HEAD
+	if (is_var(cmd->cmd[0]))
+	{
+		int	i = 0;
+		while (cmd->cmd[i])
+			handle_vars(sh, cmd->cmd[i++]);
+		if (!sh->DEBUG)
+			return;
+		i = 0;
+		while (sh->local_vars[i])
+			printf("%s\n", sh->local_vars[i++]);
+	}
+=======
+>>>>>>> master
 	if (cmd->to_pipe || cmd->from_pipe)
 	{
 		close(sh->original_stdin);
 		close(sh->original_stdout);
 		free_envp(sh);
+<<<<<<< HEAD
+=======
 		if (cmd->to_pipe)
 			free(sh->pipe_new);
+>>>>>>> master
 		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
 	}
@@ -280,6 +330,25 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
 	if (outfd != STDOUT_FILENO)
+<<<<<<< HEAD
+		dup2(outfd, STDOUT_FILENO);
+	if (infd != STDIN_FILENO)
+		dup2(infd, STDIN_FILENO);
+	if (cmd -> fd_out != -1)
+		close (cmd->fd_out);
+	if (cmd -> fd_in != -1)
+		close(cmd ->fd_in);
+	if (!cmd->infile_error && !cmd->tofile_error && ft_is_builtin(cmd->cmd))
+		execute_builtin(cmd, sh);
+	else if (!cmd->infile_error && !cmd->tofile_error)
+		executecmd(cmd->cmd, sh->envp, sh);
+	if (cmd->infile_error || cmd->tofile_error)
+	{
+		ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
+		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
+			ft_exit_status(0, true, true);
+
+=======
 	{
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
@@ -298,6 +367,7 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
 		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
 			ft_exit_status(0, true, true);
+>>>>>>> master
 		ft_exit_status(1, true, false);
 		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
 			ft_exit_status(0, 0, 1);
@@ -328,6 +398,7 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			sh->pipe_new = malloc(sizeof(int) * 2);
 			pipe(sh->pipe_new);
+			ft_fprintf(2, "%i, %i \n", sh->pipe_new[0], sh->pipe_new[1]);
 		}
 		if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 		{
@@ -352,7 +423,10 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 		{
 			close(sh->pipe_new[1]);
 			sh->pipe_old = sh->pipe_new;
+<<<<<<< HEAD
+=======
 			sh->pipe_new = NULL;
+>>>>>>> master
 		}
 		cmd = cmd->next;
 	}

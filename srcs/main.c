@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/09 15:44:45 by rafaelfe         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/10 21:06:27 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +23,21 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->DEBUG = 0;
 	sh->original_stdin = dup(STDIN_FILENO);
 	sh->original_stdout = dup(STDOUT_FILENO);
+<<<<<<< HEAD
+	sh->exit_code = 0;
+=======
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
+>>>>>>> master
 	sh->local_vars = NULL;
 	sh->envp = clone_envp(envp);
 	sh->env_size = get_env_size(sh->envp);
 	sh->pipe_old = NULL;
 	sh->pipe_new = NULL;
+<<<<<<< HEAD
+=======
 	sh->heredoc_pipes = NULL;
+>>>>>>> master
 	sh->heredoc_count = 0;
 }
 

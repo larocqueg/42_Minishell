@@ -66,7 +66,7 @@ static int	check_valid_operators(t_token **temp)
 			return (0);
 		}
 		else if (((*temp)->type == PIPE && pipe)
-|| ((*temp)->type != WORD && !pipe))
+				|| ((*temp)->type != WORD && !pipe))
 		{
 			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->token);
 			return (0);

@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:44:32 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/09 21:46:45 by rafaelfe         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/10 21:11:28 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +82,11 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 	// when redirecting close the other fd;
 	while (*token && (*token)->type != PIPE)
 	{
+<<<<<<< HEAD
+		if ((*token) -> type != WORD && (*token)-> type != VAR && !newcmd->infile_error && !newcmd->tofile_error )
+=======
 		if ((*token) -> type != WORD && !newcmd->infile_error && !newcmd->tofile_error )
+>>>>>>> master
 			export = false;
 		if (from_pipe)
 			newcmd -> from_pipe = true;
@@ -119,10 +127,33 @@ void	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			sh->heredoc_count++;
 			heredoc = true;
 		}
+<<<<<<< HEAD
+		else if (((*token) -> type == WORD || (*token)->type == VAR) && !newcmd->infile_error && !newcmd->tofile_error)
+		{
+			if (((*token)->type == WORD || export) && (*token)->token)
+				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+			else if ((*token) -> type == VAR || ((*token) -> type == WORD))
+			{
+				while(temp && (temp->type == VAR || temp->type == WORD))
+				{
+					if (temp->type != VAR)
+					{
+						if (temp->type != WORD && temp->type != VAR)
+							break;
+						hascmd = true;
+						break;
+					}
+					temp = temp->next;
+				}
+			if ((*token)->type == VAR && !hascmd && (*token)->token)
+				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+			}
+=======
 		else if ((*token) -> type == WORD && !newcmd->infile_error && !newcmd->tofile_error)
 		{
 			if (((*token)->type == WORD || export) && (*token)->token)
 				newcmd->cmd = append_cmd(newcmd->cmd, (*token)->token);
+>>>>>>> master
 		}
 		if (*token)
 			(*token) = (*token) -> next;

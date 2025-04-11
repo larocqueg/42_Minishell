@@ -6,7 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by rafaelfe          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/09 19:12:56 by rafaelfe         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/10 21:04:31 by rafaelfe         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +97,7 @@ int	tokenize(char *prompt, t_shell *sh)
 	while (prompt[i] && i < ARG_MAX)
 	{
 		while (is_space(prompt[i]))
-			i++;
+		i++;
 		if (!prompt[i])
 			break ;
 		i = extract_token(-1, i, &tokens, sh);
@@ -105,5 +109,21 @@ int	tokenize(char *prompt, t_shell *sh)
 		}
 	}
 	sh->token = tokens;
+<<<<<<< HEAD
+	if (!sh->DEBUG)
+		return 1;
+
+	t_token *temp;
+	temp = tokens;
+
+	printf("-----TOKENS------------\n");
+	while (temp)
+	{
+		printf("token->token: '%s', token->type= %d\n", temp->token, temp->type);
+		temp = temp -> next;
+	}
+	printf("-----ENDTOKENS---------\n");
+=======
+>>>>>>> master
 	return (1);
 }

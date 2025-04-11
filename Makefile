@@ -6,7 +6,11 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2025/04/09 16:09:44 by rafaelfe         ###   ########.fr        #
+=======
 #    Updated: 2025/04/10 21:13:36 by rafaelfe         ###   ########.fr        #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +35,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/token_utils.c \
 	$(SRC_DIR)/parsing/expand.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
+	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/execute/cmds.c \
@@ -41,7 +46,12 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/exit.c \
 	$(SRC_DIR)/builtin/echo.c \
+<<<<<<< HEAD
+	$(SRC_DIR)/env_utils/get_env.c \
+	$(SRC_DIR)/vars/vars.c \
+=======
 	$(SRC_DIR)/env/env_utils.c \
+>>>>>>> master
 	$(SRC_DIR)/signals/exit_status.c \
 	$(SRC_DIR)/signals/signal_handler.c \
 	$(SRC_DIR)/free_utils/free_array.c \
