@@ -121,11 +121,7 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
-<<<<<<< HEAD:srcs/builtin/export.c
-			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
-=======
 			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
->>>>>>> master:srcs/env/export.c
 			ft_exit_status(1, 1, 0);
 		}
 	}

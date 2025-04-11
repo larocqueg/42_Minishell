@@ -105,21 +105,5 @@ int	tokenize(char *prompt, t_shell *sh)
 		}
 	}
 	sh->token = tokens;
-<<<<<<< HEAD
-	if (!sh->DEBUG)
-		return 1;
-
-	t_token *temp;
-	temp = tokens;
-
-	printf("-----TOKENS------------\n");
-	while (temp)
-	{
-		printf("token->token: '%s', token->type= %d\n", temp->token, temp->type);
-		temp = temp -> next;
-	}
-	printf("-----ENDTOKENS---------\n");
-=======
->>>>>>> master
 	return (1);
 }

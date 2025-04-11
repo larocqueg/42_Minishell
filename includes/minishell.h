@@ -42,6 +42,7 @@ typedef enum e_type
 	APPEND,
 	INFILE,
 	TOFILE,
+	VAR,
 }	t_type;
 
 typedef struct s_cmd
@@ -129,10 +130,6 @@ int		check_quotes(char *prompt);
 int		check_tokens(t_token *token);
 int		check_syntax(t_shell *sh);
 
-//error handling
-int	check_quotes(char *prompt);
-int	check_tokens(t_token *token);
-int	check_syntax(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);

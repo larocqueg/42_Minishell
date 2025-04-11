@@ -33,7 +33,6 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
-	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/execute.c \
 	$(SRC_DIR)/env/export.c \
@@ -47,7 +46,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/signals/signal_handler.c \
 	$(SRC_DIR)/free_utils/free_array.c \
 	$(SRC_DIR)/free_utils/free_cmds.c \
-	$(SRC_DIR)/free_utils/free_tokens.c \
+	$(SRC_DIR)/free_utils/free_tokens.c
+
 
 
 # Objects
