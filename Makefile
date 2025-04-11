@@ -42,6 +42,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/exit.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/env/env_utils.c \
+	$(SRC_DIR)/env/env.c \
 	$(SRC_DIR)/signals/exit_status.c \
 	$(SRC_DIR)/signals/signal_handler.c \
 	$(SRC_DIR)/free_utils/free_array.c \
