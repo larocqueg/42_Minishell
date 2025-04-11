@@ -113,6 +113,9 @@ char	**clone_envp(char **envp);
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 
+//env.c
+void	ft_print_env(t_shell *sh);
+
 //export.c
 void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
