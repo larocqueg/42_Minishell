@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 17:53:42 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:14:28 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
-
 
 //constants
 # define ARG_MAX 2097152
@@ -75,12 +74,11 @@ typedef struct s_shell
 	int		local_size;
 	char	**local_vars;
 	t_cmd	*cmd;
-	t_token *token;
+	t_token	*token;
 	int		*pipe_old;
 	int		*pipe_new;
 	int		original_stdout;
 	int		original_stdin;
-	int		DEBUG;
 	int		heredoc_count;
 	int		**heredoc_pipes;
 	int		exit_code;
@@ -99,18 +97,24 @@ void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_space(char prompt);
 int		is_operator(char prompt);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
-void	expand_tokens(t_shell *sh);
 
-void	execute(t_shell *sh);
+//heredoc
 int		get_heredoc(t_shell *sh);
-char	*expand(char *str, t_shell *sh, bool heredoc);
 int		is_var(char *token);
+
+//expand
+char	*expand(char *str, t_shell *sh, bool heredoc);
+void	expand_tokens(t_shell *sh);
+char	*extract_variable(char *str, int i);
+int		ft_is_all_var(char	*str);
+char	*ft_expand_string(char *str, size_t *i, t_shell *sh);
+char	*ft_expand_exit(char *str, size_t *i);
+char	*ft_expand_vars(char *str, size_t *i, t_shell *sh);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
 int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 char	**clone_envp(char **envp);
-
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 
@@ -121,13 +125,6 @@ void	ft_print_env(t_shell *sh);
 void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
 int		ft_find_var(char *new_var, char **envp);
-
-//built ins!
-void	exec_pwd(t_cmd *cmd);
-void	exec_export(t_shell *sh, t_cmd *cmd);
-int		exec_cd(char **cmd, t_shell *sh);
-void	exec_exit(t_shell *sh, t_cmd *cmds);
-void	exec_echo(t_cmd *cmds);
 
 //error handling
 int		check_quotes(char *prompt);
@@ -143,6 +140,7 @@ void	ft_free(char **str);
 void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
+void	free_pipes(t_shell *sh);
 
 //cmds
 void	create_cmds(t_shell *sh);
@@ -154,29 +152,44 @@ t_token	*get_command(t_token *token, t_cmd *newcmd);
 int		perm_error(t_cmd *cmd);
 void	ft_freenaporratoda(void);
 
+//execute
+void	execute(t_shell *sh);
+void	change_pipes(t_shell *sh, t_cmd *cmd);
+int		fork_cmd(t_shell *sh, t_cmd *cmd, int *pid);
+int		create_pipe(t_shell *sh, t_cmd *cmd);
+int		get_fdin(t_cmd *cmd, t_shell *sh);
+int		get_fdout(t_cmd *cmd, t_shell *sh);
+void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh);
+void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
+
+//path_finder
+char	*local_path_finder(char *cmd);
+char	*path_finder(char *cmds, char **env);
+int		is_file(char *path);
+int		is_folder(char *path);
+int		is_character_device(const char *path);
+
+//built ins!
+void	exec_pwd(t_cmd *cmd);
+void	exec_export(t_shell *sh, t_cmd *cmd);
+int		exec_cd(char **cmd, t_shell *sh);
+void	exec_exit(t_shell *sh, t_cmd *cmds);
+void	exec_echo(t_cmd *cmds);
+void	free_builtin(t_cmd *cmd, t_shell *sh);
+void	exec_builtin(t_cmd *cmd, t_shell *sh);
+int		ft_is_builtin(char **cmds);
+void	handle_perm_error(t_cmd *cmd);
+
 //env cmds
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
 
 //signals
-int		ft_exit_status(int	exit_code, bool set, bool close);
+int		ft_exit_status(int exit_code, bool set, bool close);
 void	signal_handler(int sig);
 void	signal_default(void);
 
-//prompt name
-
-# define PROGRAM_NAME RED"minihellv3 "RESET
-//colors
-# define RESET "\033[0m"
-# define RED "\033[31m"
-# define GREEN "\033[32m"
-# define BLUE "\033[34m"
-# define YELLOW "\033[33m"
-# define CYAN "\033[36m"
-# define MAGENTA "\033[35m"
-
 //error messages
-# define PATH_ERROR	"Error: PATH not found!\n"
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 
 #endif

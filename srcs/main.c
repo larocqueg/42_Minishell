@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:04:47 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:12:45 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	get_env_size(char **envp);
 
 void	ft_sh_init(t_shell *sh, char **envp)
 {
-	sh->DEBUG = 0;
 	sh->original_stdin = dup(STDIN_FILENO);
 	sh->original_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, SIG_IGN);

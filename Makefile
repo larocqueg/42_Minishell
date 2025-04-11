@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/11 18:21:06 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/11 21:13:23 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,16 +26,21 @@ LIBFT_DIR = ./libs/libft
 # Sources
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/cli/cli.c \
-	$(SRC_DIR)/cli/get_pwd.c \
 	$(SRC_DIR)/parsing/tokenize.c \
 	$(SRC_DIR)/parsing/token_utils.c \
 	$(SRC_DIR)/parsing/expand.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
+	$(SRC_DIR)/parsing/string_utils.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/cmd_utils.c \
 	$(SRC_DIR)/execute/get_fds.c \
+	$(SRC_DIR)/execute/exec_builtin.c \
+	$(SRC_DIR)/execute/exec_errors.c \
+	$(SRC_DIR)/execute/exec_cmd.c \
+	$(SRC_DIR)/execute/execute_utils.c \
+	$(SRC_DIR)/execute/path_finder.c \
 	$(SRC_DIR)/execute/execute.c \
 	$(SRC_DIR)/env/export.c \
 	$(SRC_DIR)/builtin/builtin_utils.c \
@@ -49,7 +54,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/signals/signal_handler.c \
 	$(SRC_DIR)/free_utils/free_array.c \
 	$(SRC_DIR)/free_utils/free_cmds.c \
-	$(SRC_DIR)/free_utils/free_tokens.c
+	$(SRC_DIR)/free_utils/free_tokens.c \
+	$(SRC_DIR)/free_utils/free_heredoc.c \
 
 
 

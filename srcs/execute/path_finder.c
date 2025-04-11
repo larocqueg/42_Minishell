@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:04:01 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 19:04:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:59:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	is_character_device(const char *path)
 {
+	struct stat	st;
+
 	if (!path)
 		return (0);
-	struct stat st;
 	if (stat(path, &st) == 0)
 	{
 		return (S_ISCHR(st.st_mode));
@@ -26,9 +27,10 @@ int	is_character_device(const char *path)
 
 int	is_folder(char *path)
 {
+	struct stat	st;
+
 	if (!path)
 		return (0);
-	struct stat st;
 	if (stat(path, &st) == 0)
 	{
 		return (S_ISDIR(st.st_mode));
@@ -38,9 +40,10 @@ int	is_folder(char *path)
 
 int	is_file(char *path)
 {
+	struct stat	st;
+
 	if (!path)
 		return (0);
-	struct stat st;
 	if (stat(path, &st) == 0)
 	{
 		return (S_ISREG(st.st_mode));
@@ -83,7 +86,7 @@ char	*local_path_finder(char *cmd)
 	if (!path)
 		return (NULL);
 	if (access(path, F_OK) == 0 && (is_file(path)
-		|| is_folder(path) || is_character_device(path)))
+			|| is_folder(path) || is_character_device(path)))
 		return (path);
 	return (NULL);
 }

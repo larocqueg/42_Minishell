@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 19:03:22 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:59:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	free_builtin(t_cmd *cmd, t_shell *sh)
 	else
 		return ;
 }
-void 	execute_builtin(t_cmd *cmd, t_shell *sh)
+
+void	exec_builtin(t_cmd *cmd, t_shell *sh)
 {
 	if (!cmd->cmd || !*cmd->cmd)
 	{
