@@ -6,25 +6,18 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:59:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:25:53 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:25:53 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-<<<<<<< HEAD
-void	free_tokens(t_token *token)
-{
-	t_token	*temp;
-
-=======
 void	free_tokens(t_token	*token)
 {
 	t_token	*temp;
 
 	if (!token)
 		return ;
->>>>>>> master
 	temp = token;
 	while (token)
 	{

@@ -6,11 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/09 21:26:25 by rafaelfe         ###   ########.fr       */
-=======
 /*   Updated: 2025/04/10 21:17:39 by rafaelfe         ###   ########.fr       */
->>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +123,11 @@ void	exec_export(t_shell *sh, t_cmd *cmd);
 int		exec_cd(char **cmd, t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 void	exec_echo(t_cmd *cmds);
-<<<<<<< HEAD
-=======
 
 //error handling
 int		check_quotes(char *prompt);
 int		check_tokens(t_token *token);
 int		check_syntax(t_shell *sh);
->>>>>>> master
 
 //error handling
 int	check_quotes(char *prompt);

@@ -6,11 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-<<<<<<< HEAD:srcs/builtin/export.c
-/*   Updated: 2025/04/07 22:16:26 by rafaelfe         ###   ########.fr       */
-=======
 /*   Updated: 2025/04/10 21:12:05 by rafaelfe         ###   ########.fr       */
->>>>>>> master:srcs/env/export.c
 /*                                                                            */
 /* ************************************************************************** */
 
