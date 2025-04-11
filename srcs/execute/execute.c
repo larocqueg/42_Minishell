@@ -6,19 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:04:15 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:01:30 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_error(char *str)
-{
-	if (str != NULL)
-		ft_putstr_fd(str, 2);
-	return ;
-}
-
 
 int is_character_device(const char *path)
 {
@@ -27,9 +19,9 @@ int is_character_device(const char *path)
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
-		return S_ISCHR(st.st_mode);
+		return (S_ISCHR(st.st_mode));
 	}
-	return 0;
+	return (0);
 }
 
 int	is_folder(char *path)
@@ -39,9 +31,9 @@ int	is_folder(char *path)
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
-		return S_ISDIR(st.st_mode);
+		return (S_ISDIR(st.st_mode));
 	}
-	return 0;
+	return (0);
 }
 
 int is_file(char *path)
@@ -51,21 +43,22 @@ int is_file(char *path)
 	struct stat st;
 	if (stat(path, &st) == 0)
 	{
-		return S_ISREG(st.st_mode);
+		return (S_ISREG(st.st_mode));
 	}
-	return 0;
+	return (0);
 }
 void	ft_command_error(char **cmds, char *path, int *exit_code)
 {
-
-	if (path && ((access(path, F_OK) == 0 && access(path, X_OK) != 0) || is_character_device(path)))
+	if (path && ((access(path, F_OK) == 0 && access(path, X_OK) != 0)
+			|| is_character_device(path)))
 	{
 		ft_putstr_fd("minishell: permission denied: \"", 2);
 		*exit_code = 126;
 	}
-	else if (!is_folder(path) && !is_file(path) && (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0)) //ft_is_Absolute || ft_is_relative
+	else if (!is_folder(path) && !is_file(path) && (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0))
 		ft_putstr_fd("minishell: no such file or directory \"", 2);
-	else if (is_folder(path) &&  (ft_strncmp("./", cmds[0], 2) == 0 || ft_strncmp("/", cmds[0], 1) == 0))
+	else if (is_folder(path) &&  (ft_strncmp("./", cmds[0], 2) == 0
+		|| ft_strncmp("/", cmds[0], 1) == 0))
 	{
 		ft_putstr_fd("minishell: prompt is a directory! \"", 2);
 		*exit_code = 126;
@@ -90,7 +83,7 @@ char	*path_finder(char *cmds, char **env)
 
 	path = ft_get_env("PATH", env);
 	if (!path)
-		ft_error(PATH_ERROR);
+		return (NULL);
 	paths = ft_split(path + 5, ':');
 	i = 0;
 	while (paths[i])
@@ -111,32 +104,22 @@ char	*local_path_finder(char *cmd)
 {
 	char	*path;
 	char	*temp;
-	bool	is_relative;
 
-	is_relative = false;
-	if (ft_strncmp("./", cmd, 2) == 0)
-	{
-		is_relative= true;
-		path = getcwd(NULL, 0);
-		temp = ft_strjoin(path, "/");
-		free(path);
-		path = ft_strjoin(temp, cmd + 2);
-		free(temp);
-	}
-	else
-		path = cmd;
-	if (access(path, F_OK) == 0 && (is_file(path) || is_folder(path) || is_character_device(path)))
+	path = ft_strdup(cmd);
+	if (!path)
+		return (NULL);
+	if (access(path, F_OK) == 0 && (is_file(path)
+		|| is_folder(path) || is_character_device(path)))
 		return (path);
-	if (is_relative)
-		free(path);
 	return (NULL);
 }
 
 void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 {
 	char	*path;
-	int		exit_code = 127;
+	int		exit_code;
 
+	exit_code = 127;
 	close(sh->original_stdin);
 	close(sh->original_stdout);
 	if (!cmds->cmd || !*cmds->cmd)
@@ -146,7 +129,7 @@ void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 		ft_exit_status(0, 1, 1);
 	}
 	path = NULL;
-	if (ft_strncmp("./", cmds->cmd[0], 2) == 0 || ft_strncmp("/", cmds->cmd[0], 1) == 0) // ft_is_absolute || ft_is_relative
+	if (ft_strncmp("./", cmds->cmd[0], 2) == 0 || ft_strncmp("/", cmds->cmd[0], 1) == 0)
 		path = local_path_finder(cmds->cmd[0]);
 	else if (cmds->cmd[0] && !is_folder(cmds->cmd[0]))
 		path = path_finder(cmds->cmd[0], env);
@@ -168,12 +151,23 @@ void	executecmd(t_cmd *cmds, char **env, t_shell *sh)
 	free_cmds(sh);
 	free_envp(sh);
 	free(path);
-	close(sh->original_stdin);
-	close(sh->original_stdout);
 	ft_exit_status(8, 1, 1);
 }
-
-
+void	free_builtin(t_cmd *cmd, t_shell *sh)
+{
+	if (cmd->to_pipe || cmd->from_pipe)
+	{
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		free_envp(sh);
+		if (cmd->to_pipe)
+			free(sh->pipe_new);
+		free_cmds(sh);
+		ft_exit_status(0, 0, 1);
+	}
+	else
+		return ;
+}
 void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 {
 	if (!cmd->cmd || !*cmd->cmd)
@@ -182,7 +176,6 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 			ft_exit_status(0, 0, 1);
 		return ;
 	}
-
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 		exec_exit(sh, cmd);
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
@@ -195,24 +188,12 @@ void 	execute_builtin(t_cmd *cmd, t_shell *sh)
 		exec_echo(cmd);
 	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
 		ft_print_env(sh);
-	if (cmd->to_pipe || cmd->from_pipe)
-	{
-		close(sh->original_stdin);
-		close(sh->original_stdout);
-		free_envp(sh);
-		if (cmd->to_pipe)
-			free(sh->pipe_new);
-		free_cmds(sh);
-		ft_exit_status(0, 0, 1);
-	}
 	if (cmd->fd_in != -1)
-	{
 		dup2(sh->original_stdin, STDIN_FILENO);
-	}
 	if (cmd->fd_out != -1)
 		dup2(sh->original_stdout, STDOUT_FILENO);
+	free_builtin(cmd, sh);
 }
-
 
 int	ft_is_builtin(char **cmds)
 {
@@ -272,13 +253,20 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 	return (fdin);
 }
 
+void	handle_perm_error(t_cmd *cmd)
+{
+	ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
+	if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
+		ft_exit_status(0, true, true);
+	ft_exit_status(1, true, false);
+	if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+		ft_exit_status(0, 0, 1);
+}
 void	handle_child(t_shell *sh, t_cmd *cmd)
 {
 	int outfd;
 	int infd;
 
-	if (sh->DEBUG)
-		printf("---------------executing child!-------------\n");
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
 	if (outfd != STDOUT_FILENO)
@@ -291,19 +279,12 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}
-	if (!cmd->infile_error && !cmd->tofile_error && ft_is_builtin(cmd->cmd))
+	if (!perm_error(cmd) && ft_is_builtin(cmd->cmd))
 		execute_builtin(cmd, sh);
-	else if (!cmd->infile_error && !cmd->tofile_error)
+	else if (!perm_error(cmd))
 		executecmd(cmd, sh->envp, sh);
-	if (cmd->infile_error || cmd->tofile_error)
-	{
-		ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
-		if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
-			ft_exit_status(0, true, true);
-		ft_exit_status(1, true, false);
-		if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
-			ft_exit_status(0, 0, 1);
-	}
+	if (perm_error(cmd))
+		handle_perm_error(cmd);
 	close(outfd);
 	close(infd);
 }
@@ -399,5 +380,4 @@ void execute(t_shell *sh)
 	exec_cmd(sh, cmd);
 	free_cmds(sh);
 	free_pipes(sh);
-
 }

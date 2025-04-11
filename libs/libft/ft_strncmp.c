@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:53:43 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/09 21:21:26 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:14:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 	if (n == 0)
 		return (0);
-	else if(!s1 || !s2)
+	else if (!s1 || !s2)
 		return (-1);
 	i = 0;
 	while (s1[i] && s2[i] && (s1[i] == s2[i]) && i < n - 1)
