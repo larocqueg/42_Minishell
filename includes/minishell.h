@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 21:17:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:13:57 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_cmd
 	int				fd_out;
 	bool			infile_error;
 	bool			tofile_error;
+	bool			heredoc;
 }	t_cmd;
 
 typedef struct s_token

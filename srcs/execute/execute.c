@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 21:14:59 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:06:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ int	ft_is_builtin(char **cmds)
 		return (1);
 	if (ft_strncmp(cmds[0], "echo", 5) == 0)
 		return (1);
-	if (is_var(cmds[0]))
+	if (ft_strncmp(cmds[0], "echo", 5) == 0)
 		return (1);
 	return (0);
 }
@@ -282,8 +282,7 @@ void	handle_child(t_shell *sh, t_cmd *cmd)
 	if (outfd != STDOUT_FILENO)
 	{
 		dup2(outfd, STDOUT_FILENO);
-		if (cmd->to_pipe || cmd ->from_pipe)
-			close(outfd);
+		close(outfd);
 	}
 	if (infd != STDIN_FILENO)
 	{
@@ -338,8 +337,8 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			pid = fork();
 		}
 		else
-			pid = 0;
-		if (pid == 0)
+			pid = -1;
+		if (pid == 0 || pid == -1)
 		{
 			signal_default();
 			handle_child(sh, cmd);
@@ -356,9 +355,19 @@ static void	exec_cmd(t_shell *sh, t_cmd *cmd)
 			sh->pipe_old = sh->pipe_new;
 			sh->pipe_new = NULL;
 		}
+		if (pid != 0)
+		{
+			if (cmd->fd_out != -1)
+			{
+				close(cmd->fd_out);
+			}
+
+			if (cmd->fd_in != -1)
+				close(cmd->fd_in);
+		}
 		cmd = cmd->next;
 	}
-	if (pid != 0)
+	if (pid != 0 && pid != -1)
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);

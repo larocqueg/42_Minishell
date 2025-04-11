@@ -76,6 +76,8 @@ OBJS = $(SRCS:.c=.o)
 
 # all rule
 all: $(NAME)
+	@echo "Checking if $(NAME) was created..."
+	@test -f $(NAME) && echo "$(NAME) successfully built!" || echo "Error: $(NAME) not found!"
 
 # Compile the lib
 $(NAME): $(OBJS)
