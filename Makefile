@@ -59,7 +59,13 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $(NAME)
-	@cat "./plank.txt"
+	@echo "\n\nooo        ooooo  o8o               o8o  ooooo   ooooo           oooo  oooo"
+	@echo "\`88.       .888'  \`\"'               \`\"'  \`888'   \`888'           \`888  \`888"
+	@echo " 888b     d'888  oooo  ooo. .oo.   oooo   888     888   .ooooo.   888   888"
+	@echo " 8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888"
+	@echo " 8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888"
+	@echo " 8    Y     888   888   888   888   888   888     888  888    .o  888   888"
+	@echo "o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n"
 	@echo "✅ Successfully built $(NAME)!"
 
 
