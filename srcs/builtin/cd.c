@@ -47,7 +47,7 @@ static int	cd_quotes(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] != '\"')
+		if (cmd[i] != '\"' && cmd[i] != '\'')
 			return (0);
 		i++;
 	}
