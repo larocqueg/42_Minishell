@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 19:12:16 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/11 21:40:40 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/12 12:01:17 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	**ft_free_back(char **new_env, int k)
+{
+	k--;
+	while (k >= 0)
+		free(new_env[k--]);
+	free(new_env);
+	return (NULL);
+}
 
 static int	ft_strcmp_unset(char *env, char *cmd)
 {
@@ -33,6 +42,7 @@ static int	ft_count_vars(t_shell *sh, char **cmd)
 	int	count;
 
 	j = 1;
+	count = 0;
 	while (cmd[j])
 	{
 		i = 0;
@@ -50,20 +60,14 @@ static int	ft_count_vars(t_shell *sh, char **cmd)
 	return (count);
 }
 
-void	exec_unset(t_shell *sh, char **cmd)
+char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		count;
-	char	**new_env;
+	int	i;
+	int	j;
+	int	k;
 
-	count = ft_count_vars(sh, cmd);
-	new_env = malloc(sizeof(char *) * (sh->env_size - count + 1));
-	if (!new_env)
-		return ;
-	k = 0;
 	i = 0;
+	k = 0;
 	while (i < sh->env_size)
 	{
 		j = 1;
@@ -77,8 +81,28 @@ void	exec_unset(t_shell *sh, char **cmd)
 			j++;
 		}
 		new_env[k++] = ft_strdup(sh->envp[i++]);
+		if (!new_env[k - 1])
+			return (ft_free_back(new_env, k));
 	}
-	new_env[k] = NULL;
+	new_env[k] = (NULL);
+	return (new_env);
+}
+
+void	exec_unset(t_shell *sh, char **cmd)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		count;
+	char	**new_env;
+
+	count = ft_count_vars(sh, cmd);
+	new_env = malloc(sizeof(char *) * (sh->env_size - count + 1));
+	if (!new_env)
+		return ;
+	new_env = ft_get_unset(sh, new_env, cmd);
+	if (!new_env)
+		return ;
 	ft_free(sh->envp);
 	sh->envp = new_env;
 	ft_exit_status(0, 1, 0);
