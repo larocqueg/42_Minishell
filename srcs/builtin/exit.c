@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 20:29:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 20:33:07 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_is_numeric(char **cmd)
 
 	i = 0;
 	if (cmd[1][i] == '-' || cmd[1][i] == '+')
-			i++;
-	while(cmd[1][i])
+		i++;
+	while (cmd[1][i])
 	{
 		if (!ft_isdigit(cmd[1][i]))
 			return (0);
@@ -35,7 +35,15 @@ int	ft_is_numeric(char **cmd)
 		return (0);
 	return (1);
 }
-
+void	ft_free_exit(t_shell *sh)
+{
+	ft_printf("exit\n");
+	free_envp(sh);
+	free_cmds(sh);
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+	rl_clear_history();
+}
 void	exec_exit(t_shell *sh, t_cmd *cmds)
 {
 	int	argc;
@@ -44,23 +52,13 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 	argc = get_argc(cmds->cmd);
 	if (argc == 1)
 	{
-		free_envp(sh);
-		free_cmds(sh);
-		close(sh->original_stdin);
-		close(sh->original_stdout);
-		rl_clear_history();
-		ft_printf("exit\n");
+		ft_free_exit(sh);
 		ft_exit_status(0, 0, 1);
 	}
 	else if (!ft_is_numeric(cmds->cmd))
 	{
-		ft_printf("exit\n");
+		ft_free_exit(sh);
 		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
-		free_envp(sh);
-		free_cmds(sh);
-		close(sh->original_stdin);
-		close(sh->original_stdout);
-		rl_clear_history();
 		ft_exit_status(2, 1, 1);
 	}
 	if (argc > 2)
@@ -70,45 +68,6 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 		return ;
 	}
 	exit_code = ft_atoll(cmds->cmd[1]);
-	free_envp(sh);
-	free_cmds(sh);
-	close(sh->original_stdin);
-	close(sh->original_stdout);
-	rl_clear_history();
-	ft_printf("exit\n");
+	ft_free_exit(sh);
 	ft_exit_status(exit_code, 1, 1);
 }
-/*
-rafaelfe@c1r9s9:~$ exit asdasd
-exit
-bash: exit: asdasd: numeric argument required
-➜  ~ echo $?
-2  // exited
-
-afaelfe@c1r9s9:~$ exit 12319321938219382193821398
-exit
-bash: exit: 12319321938219382193821398: numeric argument required
-➜  ~ echo $?
-2 // exited
-
-rafaelfe@c1r9s9:~$ exit 123 asdasd
-exit
-bash: exit: too many arguments
-rafaelfe@c1r9s9:~$ echo $?
-1 // did not exit
-
-rafaelfe@c1r9s9:~$ exit asijdasi 123
-exit
-bash: exit: asijdasi: numeric argument required
--> ~ echo $?
-2 // exited
-
-
-
-
-
-
-
-
-
-*/
