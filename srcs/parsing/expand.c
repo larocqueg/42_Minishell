@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:06:13 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:07:53 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*expand(char *str, t_shell *sh, bool heredoc)
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (result[i])
+	while (i < ft_strlen(result))
 	{
 		set_quotes(result[i], &in_single_quotes, &in_quotes);
 		if (result[i] == '$' && (!in_single_quotes || heredoc))

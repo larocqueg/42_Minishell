@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:04:01 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 20:59:26 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:43:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*path_finder(char *cmds, char **env)
 
 	path = ft_get_env("PATH", env);
 	if (!path)
-		return (NULL);
+		return (local_path_finder(ft_strjoin("./", cmds), true));
 	paths = ft_split(path + 5, ':');
 	i = 0;
 	while (paths[i])
@@ -77,16 +77,21 @@ char	*path_finder(char *cmds, char **env)
 	return (NULL);
 }
 
-char	*local_path_finder(char *cmd)
+char	*local_path_finder(char *cmd, bool from_path_finder)
 {
 	char	*path;
 	char	*temp;
 
+	if (!cmd || !*cmd)
+		return (NULL);
 	path = ft_strdup(cmd);
+	if (from_path_finder)
+		free(cmd);
 	if (!path)
 		return (NULL);
 	if (access(path, F_OK) == 0 && (is_file(path)
 			|| is_folder(path) || is_character_device(path)))
 		return (path);
+	free(path);
 	return (NULL);
 }

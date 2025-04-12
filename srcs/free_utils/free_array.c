@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:51:08 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 21:11:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:11:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_free(char **str)
 {
 	int	i;
 
-	if (!str)
+	if (!str || !*str)
 		return ;
 	i = 0;
 	while (str[i])

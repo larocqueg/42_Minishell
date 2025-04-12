@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/12 12:01:17 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:02:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ void	exec_unset(t_shell *sh, char **cmd)
 		return ;
 	ft_free(sh->envp);
 	sh->envp = new_env;
+	sh->env_size = sh->env_size - count;
 	ft_exit_status(0, 1, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 13:11:02 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:56:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	handle_child(t_shell *sh, t_cmd *cmd)
 	else if (!perm_error(cmd))
 		exec_cmd(cmd, sh->envp, sh);
 	if (perm_error(cmd))
-		handle_perm_error(cmd);
+		handle_perm_error(cmd, sh);
 	close(outfd);
 	close(infd);
 }

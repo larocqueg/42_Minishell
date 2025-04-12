@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:21:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 20:49:58 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:34:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh)
 	path = NULL;
 	if (ft_strncmp("./", cmds->cmd[0], 2) == 0
 		|| ft_strncmp("/", cmds->cmd[0], 1) == 0)
-		path = local_path_finder(cmds->cmd[0]);
+		path = local_path_finder(cmds->cmd[0], false);
 	else if (cmds->cmd[0] && !is_folder(cmds->cmd[0]))
 		path = path_finder(cmds->cmd[0], env);
 	else

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 11:31:02 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:40:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,6 @@ static int	get_cd_args(char **cmd)
 	return (i);
 }
 
-static int	cd_quotes(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] != '\"' && cmd[i] != '\'')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	exec_cd(char **cmd, t_shell *sh)
 {
 	char	*path;
@@ -63,23 +49,21 @@ int	exec_cd(char **cmd, t_shell *sh)
 	if (get_cd_args(cmd) > 2)
 		return (cd_error(sh, "minishell: cd: Too many arguments!\n", NULL));
 	oldpwd = getcwd(NULL, 0);
-	if (cd_quotes(cmd[1]))
-		return (ft_exit_status(0, 1, 0), 1);
 	if (cmd[1] == NULL)
 	{
 		home = ft_get_env("HOME", sh->envp);
 		if (!home)
-			return (cd_error(sh, "minishell: cd: HOME not set\n", NULL));
-		path = getcwd(NULL, 0);
+			return (free(oldpwd), cd_error(sh, "minishell: cd: HOME not set\n", NULL));
 		chdir(ft_get_env("HOME", sh->envp));
+		path = getcwd(NULL, 0);
 		change_var(path, oldpwd, sh);
 		ft_exit_status(0, 1, 0);
 		return (free(path), free(oldpwd), 1);
 	}
 	else if (chdir(cmd[1]) == -1)
-		return (cd_error(sh, "minishell: cd: No such", cmd[1]));
+		return (free(oldpwd), cd_error(sh, "minishell: cd: No such", cmd[1]));
 	path = getcwd(NULL, 0);
 	change_var(path, oldpwd, sh);
 	ft_exit_status(0, 1, 0);
-	return (free(path), free(oldpwd), 1);
+		return (free(path), free(oldpwd), 1);
 }

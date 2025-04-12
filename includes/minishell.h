@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 13:26:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:56:12 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh);
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
 
 //path_finder
-char	*local_path_finder(char *cmd);
+char	*local_path_finder(char *cmd, bool from_path_finder);
 char	*path_finder(char *cmds, char **env);
 int		is_file(char *path);
 int		is_folder(char *path);
@@ -178,7 +178,7 @@ void	exec_unset(t_shell *sh, char **cmd);
 void	free_builtin(t_cmd *cmd, t_shell *sh);
 void	exec_builtin(t_cmd *cmd, t_shell *sh);
 int		ft_is_builtin(char **cmds);
-void	handle_perm_error(t_cmd *cmd);
+void	handle_perm_error(t_cmd *cmd, t_shell *sh);
 
 //env cmds
 char	*ft_get_env(char *var_name, char **env);
