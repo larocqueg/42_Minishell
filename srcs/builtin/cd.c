@@ -40,6 +40,20 @@ static int	get_cd_args(char **cmd)
 	return (i);
 }
 
+static int	cd_quotes(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] != '\"')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	exec_cd(char **cmd, t_shell *sh)
 {
 	char	*path;
@@ -49,6 +63,8 @@ int	exec_cd(char **cmd, t_shell *sh)
 	if (get_cd_args(cmd) > 2)
 		return (cd_error(sh, "minishell: cd: Too many arguments!\n", NULL));
 	oldpwd = getcwd(NULL, 0);
+	if (cd_quotes(cmd[1]))
+		return (ft_exit_status(0, 1, 0), 1);
 	if (cmd[1] == NULL)
 	{
 		home = ft_get_env("HOME", sh->envp);
