@@ -87,14 +87,30 @@ void	create_export(char *str, t_shell *sh)
 	char	*var_name;
 	char	*no_equal;
 	char	*no_quotes;
+	bool	equals;
+	int		i;
 
+	i = 0;
+	equals = false;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			equals = true;
+			break;
+		}
+		i++;
+	}
 	no_quotes = remove_quotes(str);
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));
 	if (ft_get_env(no_equal, sh->envp) || ft_find_var(no_equal, sh->envp))
 	{
-		ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
+		if (equals)
+			ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
+		else
+			ft_change_var(var_name, "\0", sh->envp);
 	}
 	else
 		sh->envp = append_cmd(sh->envp, str);
