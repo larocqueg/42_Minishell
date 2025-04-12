@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 19:51:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 20:29:08 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,35 @@
 
 int	ft_is_numeric(char **cmd)
 {
+	long long	num;
+	int			i;
 
+	i = 0;
+	if (cmd[1][i] == '-' || cmd[1][i] == '+')
+			i++;
+	while(cmd[1][i])
+	{
+		if (!ft_isdigit(cmd[1][i]))
+			return (0);
+		i++;
+	}
+	num = ft_atoll(cmd[1]);
+	if (num == LLONG_MAX && ft_strncmp("9223372036854775807", cmd[1], 20) != 0)
+		return (0);
+	if (num == LLONG_MAX && ft_strncmp("+9223372036854775807", cmd[1], 21) != 0)
+		return (0);
+	if (num == LLONG_MIN && ft_strncmp("-9223372036854775808", cmd[1], 21) != 0)
+		return (0);
+	return (1);
 }
 
 void	exec_exit(t_shell *sh, t_cmd *cmds)
 {
-	if (cmds->cmd[1] == NULL)
+	int	argc;
+	unsigned char	exit_code;
+
+	argc = get_argc(cmds->cmd);
+	if (argc == 1)
 	{
 		free_envp(sh);
 		free_cmds(sh);
@@ -29,8 +52,31 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 		ft_printf("exit\n");
 		ft_exit_status(0, 0, 1);
 	}
-
-
+	else if (!ft_is_numeric(cmds->cmd))
+	{
+		ft_printf("exit\n");
+		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
+		free_envp(sh);
+		free_cmds(sh);
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		rl_clear_history();
+		ft_exit_status(2, 1, 1);
+	}
+	if (argc > 2)
+	{
+		ft_fprintf(2, "minishell: exit: too many arguments\n");
+		ft_exit_status(1, 1, 0);
+		return ;
+	}
+	exit_code = ft_atoll(cmds->cmd[1]);
+	free_envp(sh);
+	free_cmds(sh);
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+	rl_clear_history();
+	ft_printf("exit\n");
+	ft_exit_status(exit_code, 1, 1);
 }
 /*
 rafaelfe@c1r9s9:~$ exit asdasd
