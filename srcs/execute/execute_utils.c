@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:23:18 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:01:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:56:40 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	fork_cmd(t_shell *sh, t_cmd *cmd, int *pid)
 {
 	if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 	{
-		*pid = fork();
-		if (*pid == -1)
+		(*pid) = fork();
+		if ((*pid) == -1)
 			return (0);
 	}
 	return (1);

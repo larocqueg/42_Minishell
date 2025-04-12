@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:01:02 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:11:02 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,29 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 		status = 0;
 		pid = -1;
 		if (!create_pipe(sh, cmd))
+		{
+			if (cmd->from_pipe)
+			{
+				close(sh->pipe_old[0]);
+				free(sh->pipe_old);
+			}
 			return ;
+		}
 		if (!fork_cmd(sh, cmd, &pid))
+		{
+			if (cmd->from_pipe)
+			{
+				close(sh->pipe_old[0]);
+				free(sh->pipe_old);
+			}
+			if (cmd->to_pipe)
+			{
+				close(sh->pipe_new[1]);
+				close(sh->pipe_new[0]);
+				free(sh->pipe_new);
+			}
 			return ;
+		}
 		if (pid == 0 || pid == -1)
 		{
 			signal_default();
