@@ -6,38 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 17:59:24 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:32:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	check_quotes(char *prompt)
-{
-	int	quote;
-	int	i;
-
-	quote = '\0';
-	i = 0;
-	while (prompt[i])
-	{
-		if ((prompt[i] == '\"' || prompt[i] == '\''))
-		{
-			if (!quote)
-				quote = prompt[i];
-			else if (prompt[i] == quote)
-				quote = '\0';
-		}
-		i++;
-	}
-	if (quote != '\0')
-	{
-		write(2, "minishell: syntax error: unclosed quotes\n", 41);
-		ft_exit_status(2, true, false);
-		return (0);
-	}
-	return (1);
-}
 
 static int	is_first_pipe(t_token *token)
 {
@@ -75,6 +48,25 @@ static int	check_valid_operators(t_token **temp)
 	return (1);
 }
 
+int	is_first_dot(t_token *token)
+{
+	if (token->type != WORD)
+		return (0);
+	if (ft_strncmp(token->token, ".", 2) == 0)
+	{
+		ft_exit_status(2, 1, 0);
+		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, token -> token);
+		return (1);
+	}
+	if (ft_strncmp(token->token, "..", 3) == 0)
+	{
+		ft_exit_status(2, 1, 0);
+		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, token -> token);
+		return (1);
+	}
+	return (0);
+}
+
 int	check_tokens(t_token *token)
 {
 	t_token	*temp;
@@ -82,6 +74,8 @@ int	check_tokens(t_token *token)
 	temp = token;
 	while (temp)
 	{
+		if (is_first_dot(token))
+			return (0);
 		if (is_first_pipe(token))
 			return (0);
 		if (!check_valid_operators(&temp))
