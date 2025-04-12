@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 17:28:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:51:58 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <limits.h>
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>
@@ -116,6 +117,7 @@ int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 char	**clone_envp(char **envp);
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
+int		get_argc(char **cmd);
 
 //env.c
 void	ft_print_env(t_shell *sh);

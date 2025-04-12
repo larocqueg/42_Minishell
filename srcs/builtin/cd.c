@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 14:40:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:51:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	change_var(char *path, char *old_pwd, t_shell *sh)
 	ft_change_var("OLDPWD=", old_pwd, sh->envp);
 }
 
-static int	get_cd_args(char **cmd)
+int	get_argc(char **cmd)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 	char	*home;
 	char	*oldpwd;
 
-	if (get_cd_args(cmd) > 2)
+	if (get_argc(cmd) > 2)
 		return (cd_error(sh, "minishell: cd: Too many arguments!\n", NULL));
 	oldpwd = getcwd(NULL, 0);
 	if (cmd[1] == NULL)
