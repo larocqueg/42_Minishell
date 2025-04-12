@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:07:20 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 19:46:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 19:52:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ long long	ft_atoll(char *str)
 		i++;
 	}
 	num = get_num(str, i, sign);
-	if (num > LONG_MAX)
+	if (num > LLONG_MAX)
 		return (LLONG_MAX);
 	else if (num < LLONG_MIN)
 		return (LLONG_MIN);
