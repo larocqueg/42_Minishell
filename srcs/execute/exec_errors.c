@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 20:57:47 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:12:55 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,33 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh)
 	ft_path_error(sh, cmd);
 }
 
-void	handle_perm_error(t_cmd *cmd)
+void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 {
+	(void)sh;
 	ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
 	if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
-		ft_exit_status(0, true, true);
-	ft_exit_status(1, true, false);
+	{
+		ft_exit_status(0, true, false);
+	}
+	else
+		ft_exit_status(1, true, false);
 	if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+	{
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		free_envp(sh);
+		if (!cmd->to_pipe || !cmd->from_pipe)
+		{
+			if (cmd->fd_in != -1)
+				close(cmd->fd_in);
+			if (cmd->fd_out != -1)
+				close(cmd->fd_out);
+		}
+		if (cmd->from_pipe)
+			free(sh->pipe_old);
+		//if (cmd->to_pipe)
+			//free(sh->pipe_new);
+		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
+	}
 }
