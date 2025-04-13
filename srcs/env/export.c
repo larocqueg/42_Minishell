@@ -70,7 +70,7 @@ static int	is_valid_var(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[0]))
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
 	while (ft_isalnum(str[i]) || str[i] == '_')
 	{
@@ -155,7 +155,7 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
-			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
+			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
 			ft_exit_status(1, 1, 0);
 		}
 	}
