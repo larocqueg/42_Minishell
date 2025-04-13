@@ -82,6 +82,26 @@ static int	is_valid_var(char *str)
 		return (0);
 }
 
+static int	ft_strcmp_export(char **env, char *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while(env[i])
+	{
+		j = 0;
+		while ((env[i][j] && cmd[j]) && env[i][j] == cmd[j])
+		{
+			j++;
+		}
+		if ((!env[i][j] || env[i][j] == '=') && cmd[j] == '\0')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	create_export(char *str, t_shell *sh)
 {
 	char	*var_name;
@@ -105,7 +125,8 @@ void	create_export(char *str, t_shell *sh)
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));
-	if (ft_get_env(no_equal, sh->envp) || ft_find_var(no_equal, sh->envp))
+	ft_fprintf(2, "no_equals = %s\n", no_equal);
+	if (ft_strcmp_export(sh->envp, no_equal))
 	{
 		if (equals)
 			ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
