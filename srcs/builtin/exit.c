@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 16:50:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:57:35 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 		ft_exit_status(1, 1, 0);
 		return ;
 	}
-	exit_code = ft_atoll(cmds->cmd[1]);
+	exit_code = (long long)(ft_atoll(cmds->cmd[1]) % 256 );
 	ft_free_exit(sh);
 	ft_exit_status(exit_code, 1, 1);
 }

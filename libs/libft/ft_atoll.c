@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:07:20 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 19:52:38 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:57:47 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static	long long	get_num(const char *str, int i, long sign)
 		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (num);
+	return (num * sign);
 }
 
 long long	ft_atoll(char *str)
