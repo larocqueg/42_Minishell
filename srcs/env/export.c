@@ -125,7 +125,6 @@ void	create_export(char *str, t_shell *sh)
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);
 	var_name = ft_strndupmod(str, 0, ft_strlen_tochar(str, '='));
-	ft_fprintf(2, "no_equals = %s\n", no_equal);
 	if (ft_strcmp_export(sh->envp, no_equal))
 	{
 		if (equals)
