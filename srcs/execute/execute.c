@@ -6,11 +6,23 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 16:03:56 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:01:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	ft_get_colors(t_cmd *cmds)
+{
+	int	i;
+
+	i = get_argc(cmds->cmd);
+	if (i == 0)
+		return ;
+	if (ft_strncmp(cmds->cmd[0], "ls", 3) == 0
+		|| ft_strncmp(cmds->cmd[0], "grep", 5) == 0)
+		cmds->cmd = append_cmd(cmds->cmd, "--color=auto");
+}
 
 static void	handle_child(t_shell *sh, t_cmd *cmd)
 {
@@ -32,7 +44,10 @@ static void	handle_child(t_shell *sh, t_cmd *cmd)
 	if (!perm_error(cmd) && ft_is_builtin(cmd->cmd))
 		exec_builtin(cmd, sh);
 	else if (!perm_error(cmd))
+	{
+		ft_get_colors(cmd);
 		exec_cmd(cmd, sh->envp, sh);
+	}
 	if (perm_error(cmd))
 		handle_perm_error(cmd, sh);
 }
