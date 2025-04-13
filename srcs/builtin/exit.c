@@ -57,8 +57,8 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 	}
 	else if (!ft_is_numeric(cmds->cmd))
 	{
-		ft_free_exit(sh);
 		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
+		ft_free_exit(sh);
 		ft_exit_status(2, 1, 1);
 	}
 	if (argc > 2)
