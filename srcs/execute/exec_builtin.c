@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:29:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:18:30 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_builtin(t_cmd *cmd, t_shell *sh)
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		exec_echo(cmd);
 	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-		ft_print_env(sh);
+		exec_env(sh, cmd);
 	if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
 		exec_unset(sh, cmd->cmd);
 	if (cmd->fd_in != -1)
