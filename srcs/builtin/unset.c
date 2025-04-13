@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/12 15:02:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:52:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	exec_unset(t_shell *sh, char **cmd)
 		return ;
 	ft_free(sh->envp);
 	sh->envp = new_env;
-	sh->env_size = sh->env_size - count;
+	sh->env_size = sh->env_size - count + 1;
 	ft_exit_status(0, 1, 0);
 }

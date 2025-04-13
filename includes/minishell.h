@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:18:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:47:14 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*ft_expand_vars(char *str, size_t *i, t_shell *sh);
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
 int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
-char	**clone_envp(char **envp);
+char	**clone_envp(t_shell *sh, char **envp);
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 int		get_argc(char **cmd);

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:12:45 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:47:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	sh->local_vars = NULL;
-	sh->envp = clone_envp(envp);
-	sh->env_size = get_env_size(sh->envp);
+	sh->env_size = 0;
+	sh->envp = clone_envp(sh, envp);
 	sh->pipe_old = NULL;
 	sh->pipe_new = NULL;
 	sh->heredoc_pipes = NULL;
@@ -42,12 +42,4 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static int	get_env_size(char **envp)
-{
-	int	i;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}

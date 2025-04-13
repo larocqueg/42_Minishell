@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:26:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:01:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:46:07 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_change_var(char *var_name, char *content, char **env)
 	}
 }
 
-char	**clone_envp(char **envp)
+char	**clone_envp(t_shell *sh, char **envp)
 {
 	int		i;
 	char	**dest;
@@ -54,7 +54,7 @@ char	**clone_envp(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	dest = malloc(sizeof(char *) * (i + 1));
+	dest = malloc(sizeof(char **) * (i + 1));
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -64,6 +64,7 @@ char	**clone_envp(char **envp)
 		i++;
 	}
 	dest[i] = NULL;
+	sh->env_size = i;
 	return (dest);
 }
 
