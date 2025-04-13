@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 13:32:38 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:09:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,30 @@ static int	check_valid_operators(t_token **temp)
 
 int	is_first_dot(t_token *token)
 {
+	char	*temp;
 	if (token->type != WORD)
 		return (0);
-	if (ft_strncmp(token->token, ".", 2) == 0)
+	temp = remove_quotes(token->token);
+	if (!temp)
 	{
-		ft_exit_status(2, 1, 0);
-		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, token -> token);
+		ft_fprintf(2, "Not enough resources\n");
 		return (1);
 	}
-	if (ft_strncmp(token->token, "..", 3) == 0)
+	if (ft_strncmp(temp, ".", 2) == 0)
 	{
 		ft_exit_status(2, 1, 0);
-		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, token -> token);
+		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, temp);
+		free(temp);
 		return (1);
 	}
+	if (ft_strncmp(temp, "..", 3) == 0)
+	{
+		ft_exit_status(2, 1, 0);
+		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, temp);
+		free(temp);
+		return (1);
+	}
+	free(temp);
 	return (0);
 }
 

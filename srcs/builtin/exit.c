@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 20:33:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:01:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_is_numeric(char **cmd)
 	int			i;
 
 	i = 0;
+	if (!cmd[1][0])
+		return (0);
 	if (cmd[1][i] == '-' || cmd[1][i] == '+')
 		i++;
 	while (cmd[1][i])
