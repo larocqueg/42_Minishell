@@ -42,8 +42,8 @@ int	start_cli(t_shell *sh)
 		sh->prompt = readline("minishell $< ");
 		if (!sh->prompt)
 			ft_eof_close(sh);
-		//if (!*sh->prompt)
-		//	continue ;
+		if (!*sh->prompt)
+			continue ;
 		add_history(sh->prompt);
 		if (!tokenize(sh->prompt, sh))
 			continue ;
