@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 20:33:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:50:32 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_free_exit(t_shell *sh)
 }
 void	exec_exit(t_shell *sh, t_cmd *cmds)
 {
-	int	argc;
+	int				argc;
 	unsigned char	exit_code;
 
 	argc = get_argc(cmds->cmd);
@@ -57,8 +57,8 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 	}
 	else if (!ft_is_numeric(cmds->cmd))
 	{
-		ft_free_exit(sh);
 		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
+		ft_free_exit(sh);
 		ft_exit_status(2, 1, 1);
 	}
 	if (argc > 2)

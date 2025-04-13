@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/11 18:07:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:33:14 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	is_valid_var(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[0]))
+	if (!ft_isalpha(str[i] && str[i] != '_'))
 		return (0);
 	while (ft_isalnum(str[i]) || str[i] == '_')
 	{
@@ -119,7 +119,7 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			create_export(cmds[i], sh);
 		else
 		{
-			ft_printf("export: '%s': not a valid identifier\n", cmds[i]);
+			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
 			ft_exit_status(1, 1, 0);
 		}
 	}

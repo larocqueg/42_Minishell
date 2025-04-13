@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 18:09:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:15:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,19 @@ int	start_cli(t_shell *sh)
 	cmd = sh->cmd;
 	while (1)
 	{
+		if (isatty(fileno(stdin)))
 		sh->prompt = readline("minishell $< ");
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			sh->prompt = ft_strtrim(line, "\n");
+			free(line);
+		}
 		if (!sh->prompt)
 			ft_eof_close(sh);
-		//if (!*sh->prompt)
-		//	continue ;
+		if (!*sh->prompt)
+			continue ;
 		add_history(sh->prompt);
 		if (!tokenize(sh->prompt, sh))
 			continue ;
