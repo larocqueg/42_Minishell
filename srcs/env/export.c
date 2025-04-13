@@ -129,11 +129,11 @@ void	create_export(char *str, t_shell *sh)
 	{
 		if (equals)
 			ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
-		else
-			ft_change_var(var_name, "\0", sh->envp);
 	}
 	else
 		sh->envp = append_cmd(sh->envp, str);
+	free(no_equal);
+	free(var_name);
 	ft_exit_status(0, 1, 0);
 }
 
@@ -151,12 +151,16 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 	}
 	else
 	{
-		if (is_valid_var(cmds[i]) || is_var(cmds[i]))
-			create_export(cmds[i], sh);
-		else
+		while (cmds[i])
 		{
-			ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
-			ft_exit_status(1, 1, 0);
+			if (is_valid_var(cmds[i]) || is_var(cmds[i]))
+				create_export(cmds[i], sh);
+			else
+			{
+				ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
+				ft_exit_status(1, 1, 0);
+			}
+			i++;
 		}
 	}
 }
