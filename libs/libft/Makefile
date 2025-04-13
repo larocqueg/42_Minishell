@@ -14,6 +14,7 @@ GNL_DIR = ./get_next_line
 
 # Source files
 SRCS =	$(SRC_DIR)/ft_atoi.c \
+		$(SRC_DIR)/ft_atoll.c \
 		$(SRC_DIR)/ft_bzero.c \
 		$(SRC_DIR)/ft_calloc.c \
 		$(SRC_DIR)/ft_isalnum.c \
