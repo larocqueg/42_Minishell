@@ -29,7 +29,7 @@ static	long long	get_num(const char *str, int i, long sign)
 		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (num);
+	return (num * sign);
 }
 
 long long	ft_atoll(char *str)
