@@ -163,4 +163,8 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 			i++;
 		}
 	}
+	i = 0;
+	while (sh->envp[i])
+		i++;
+	sh->env_size = i;
 }
