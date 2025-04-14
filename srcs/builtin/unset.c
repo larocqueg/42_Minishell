@@ -26,7 +26,7 @@ static int	ft_strcmp_unset(char *env, char *cmd)
 	int	i;
 
 	i = 0;
-	while (env[i] == cmd[i])
+	while ((env[i] && cmd[i]) && env[i] == cmd[i])
 	{
 		i++;
 	}
@@ -68,6 +68,9 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd)
 
 	i = 0;
 	k = 0;
+	new_env = malloc(sizeof(char *) * (sh->env_size + 1));
+	if (!new_env)
+		return (NULL);
 	while (i < sh->env_size)
 	{
 		j = 1;
@@ -80,11 +83,14 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd)
 			}
 			j++;
 		}
-		new_env[k++] = ft_strdup(sh->envp[i++]);
-		if (!new_env[k - 1])
+		new_env[k] = ft_strdup(sh->envp[i]);
+		i++;
+		if (!new_env[k])
 			return (ft_free_back(new_env, k));
+		else
+			k++;
 	}
-	new_env[k] = (NULL);
+	new_env[k] = NULL;
 	return (new_env);
 }
 
@@ -97,14 +103,13 @@ void	exec_unset(t_shell *sh, char **cmd)
 	char	**new_env;
 
 	count = ft_count_vars(sh, cmd);
-	new_env = malloc(sizeof(char *) * (sh->env_size - count + 1));
-	if (!new_env)
+	if (count == 0)
 		return ;
+	sh->env_size = sh->env_size - count + 1;
 	new_env = ft_get_unset(sh, new_env, cmd);
 	if (!new_env)
 		return ;
 	ft_free(sh->envp);
 	sh->envp = new_env;
-	sh->env_size = sh->env_size - count + 1;
 	ft_exit_status(0, 1, 0);
 }
