@@ -20,6 +20,7 @@ static void	ft_heredoc_init(t_shell *sh)
 	sh->heredoc_pipes = malloc(sizeof(int *) * ((sh->heredoc_count) + 1));
 	while (i < sh->heredoc_count)
 	{
+		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
 		i++;
 	}
 	sh->heredoc_pipes[i] = NULL;
@@ -113,7 +114,6 @@ int	get_heredoc(t_shell *sh)
 		if (temp->type == HERE_DOC)
 		{
 			end = remove_quotes(temp->next->token);
-			sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
 			pipe(sh->heredoc_pipes[i]);
 			pid = fork();
 			if (pid == 0)
@@ -143,13 +143,10 @@ int	get_heredoc(t_shell *sh)
 				{
 					close(sh->heredoc_pipes[i][1]);
 					close(sh->heredoc_pipes[i][0]);
-				//ak	free(sh->heredoc_pipes[i]);
-					perror("chegou aqui!2");
-					perror("chegou aqui3!");
+					free(sh->heredoc_pipes[i]);
 				}
-				//free(sh->heredoc_pipes);
+				free(sh->heredoc_pipes);
 				free(end);
-				perror("chegou aqui!4");
 				return (0);
 			}
 			else
