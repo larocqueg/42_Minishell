@@ -60,7 +60,7 @@ static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
 			free(end);
 			break;
 		}
-		if (!ft_strncmp(prompt, end, ft_strlen(prompt) - 1))
+		if (!ft_strncmp(prompt, end, ft_strlen(prompt) - 1) && prompt[0] != '\n')
 		{
 			get_next_line(-1);
 			close(sh->heredoc_pipes[i][1]);
