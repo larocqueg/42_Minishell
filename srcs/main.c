@@ -27,6 +27,7 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->pipe_new = NULL;
 	sh->heredoc_pipes = NULL;
 	sh->heredoc_count = 0;
+	sh->heredoc_status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

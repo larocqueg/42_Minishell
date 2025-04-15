@@ -38,6 +38,8 @@ static void	handle_child(t_shell *sh, t_cmd *cmd)
 	}
 	if (infd != STDIN_FILENO)
 	{
+		if (infd == sh->heredoc_pipes[0][0])
+			sh->heredoc_status = -1;
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}

@@ -83,6 +83,7 @@ typedef struct s_shell
 	int		heredoc_count;
 	int		**heredoc_pipes;
 	int		exit_code;
+	int		heredoc_status;
 }	t_shell;
 
 typedef struct s_fd
