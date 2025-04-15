@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:18:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:21:44 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_builtin(t_cmd *cmd, t_shell *sh)
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
 		free_cmds(sh);
+		if (sh->heredoc_count > 0)
+			free(sh->heredoc_pipes);
 		ft_exit_status(0, 0, 1);
 	}
 	else

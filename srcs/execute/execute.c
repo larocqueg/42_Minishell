@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 20:28:04 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:32:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,21 @@ static void	handle_child(t_shell *sh, t_cmd *cmd)
 	}
 	if (infd != STDIN_FILENO)
 	{
-		if (infd == sh->heredoc_pipes[0][0])
-			sh->heredoc_status = -1;
 		dup2(infd, STDIN_FILENO);
-		close(infd);
+		if (!cmd->heredoc)
+			close(infd);
+	}
+	if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+	{
+		if (sh->heredoc_count > 0)
+		{
+			for(int i = 0; sh->heredoc_pipes[i]; i++)
+			{
+				close(sh->heredoc_pipes[i][0]);
+				free(sh->heredoc_pipes[i]);
+			}
+			free(sh->heredoc_pipes);
+		}
 	}
 	if (!perm_error(cmd) && ft_is_builtin(cmd->cmd))
 		exec_builtin(cmd, sh);
@@ -54,13 +65,14 @@ static void	handle_child(t_shell *sh, t_cmd *cmd)
 		handle_perm_error(cmd, sh);
 }
 
-static void	handle_parent(int pid)
+static void	handle_parent(int pid, t_cmd *cmd)
 {
 	int	status;
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGPIPE, SIG_IGN);
+
 	status = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
@@ -113,11 +125,28 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 			signal_default();
 			handle_child(sh, cmd);
 		}
+		else
+		{
+			if (cmd->to_pipe || cmd ->from_pipe && pid != 0)
+			{
+				if (cmd->fd_out != -1)
+				{
+					close(cmd->fd_out);
+					cmd->fd_out = -1;
+				}
+			if (cmd->fd_in != -1)
+				{
+					close(cmd->fd_in);
+					cmd->fd_in = -1;
+				}
+			}
+
+		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
 	}
 	if (pid != 0 && pid != -1)
-		handle_parent(pid);
+		handle_parent(pid, cmd);
 }
 
 void	execute(t_shell *sh)

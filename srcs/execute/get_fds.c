@@ -26,7 +26,7 @@ t_token	*getfd_tofile(t_token *token, t_cmd *newcmd)
 t_token	*getfd_infile(t_token *token, t_cmd *newcmd)
 {
 	token = token -> next;
-	if (newcmd -> fd_in != -1)
+	if (newcmd -> fd_in != -1 && !newcmd->heredoc)
 		close(newcmd->fd_in);
 	newcmd -> fd_in = open(token->token, O_RDONLY);
 	if (newcmd -> fd_in == -1)

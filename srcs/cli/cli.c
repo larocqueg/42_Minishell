@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/14 10:37:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:07:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_eof_close(t_shell *sh)
 	close(sh->original_stdout);
 	free_envp(sh);
 	rl_clear_history();
+	if (sh->heredoc_count > 0)
+		free(sh->heredoc_pipes);
 	ft_exit_status(0, false, true);
 }
 
@@ -57,4 +59,5 @@ int	start_cli(t_shell *sh)
 		execute(sh);
 		reset_cli(sh);
 	}
+	exit(0);
 }

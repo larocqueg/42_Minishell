@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:47:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:02:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_shell
 	int		heredoc_count;
 	int		**heredoc_pipes;
 	int		exit_code;
-	int		heredoc_status;
 }	t_shell;
 
 typedef struct s_fd
@@ -136,6 +135,7 @@ int		check_syntax(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
+t_shell *ft_get_sh(bool set, t_shell *sh);
 
 //free_utils
 void	ft_free(char **str);

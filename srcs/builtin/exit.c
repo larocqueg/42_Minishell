@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:01:37 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:07:51 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_free_exit(t_shell *sh)
 	free_cmds(sh);
 	close(sh->original_stdin);
 	close(sh->original_stdout);
+	if (sh->heredoc_count > 0)
+		free(sh->heredoc_pipes);
 	rl_clear_history();
 }
 void	exec_exit(t_shell *sh, t_cmd *cmds)

@@ -6,13 +6,25 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:47:26 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:42:14 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	get_env_size(char **envp);
+t_shell *ft_get_sh(bool set, t_shell *sh)
+{
+	static t_shell	*shell;
+	shell = NULL;
+
+	if (set)
+	{
+		if (shell == NULL)
+			shell = sh;
+	}
+	return (shell);
+}
+
 
 void	ft_sh_init(t_shell *sh, char **envp)
 {
@@ -27,7 +39,6 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->pipe_new = NULL;
 	sh->heredoc_pipes = NULL;
 	sh->heredoc_count = 0;
-	sh->heredoc_status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

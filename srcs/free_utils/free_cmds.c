@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:48:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 18:26:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:21:13 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_cmds(t_shell *sh)
 		{
 			if (cmd->fd_out != -1)
 				close(cmd->fd_out);
-			if (cmd->fd_in != -1)
+			if (cmd->fd_in != -1 && !cmd->heredoc)
 				close(cmd->fd_in);
 		}
 		free(cmd);

@@ -5,82 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 21:05:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 21:05:07 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/15 20:22:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	ft_heredoc_init(t_shell *sh)
-{
-	int	i = 0;
-
-	sh->heredoc_pipes = malloc(sizeof(int *) * (sh->heredoc_count + 1));
-	while (i < sh->heredoc_count)
-	{
-		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
-		sh->heredoc_pipes[i][0] = -1;
-		sh->heredoc_pipes[i][1] = -1;
-		i++;
-	}
-	sh->heredoc_pipes[i] = NULL;
-}
-
-static void	free_heredoc_pipes(t_shell *sh)
-{
-	int	i = 0;
-
-	while (i < sh->heredoc_count)
-	{
-		if (sh->heredoc_pipes[i])
-			free(sh->heredoc_pipes[i]);
-		i++;
-	}
-	free(sh->heredoc_pipes);
-}
-
-static void	ft_create_heredoc_pipes(t_shell *sh, char *end, int i, bool quote)
-{
-	char	*prompt;
-	char	*temp;
-
-	while (1)
-	{
-		ft_fprintf(1, "> ");
-		prompt = get_next_line(STDIN_FILENO);
-		if (!prompt)
-		{
-			get_next_line(-1);
-			ft_fprintf(2, "warning: here-document delimited by end-of-file ");
-			ft_fprintf(2, "(wanted '%s')\n", end);
-			close(sh->heredoc_pipes[i][1]);
-			free_heredoc_pipes(sh);
-			free_tokens(sh->token);
-			free(end);
-			break;
-		}
-		if (!ft_strncmp(prompt, end, ft_strlen(prompt) - 1) && prompt[0] != '\n')
-		{
-			get_next_line(-1);
-			close(sh->heredoc_pipes[i][1]);
-			free(prompt);
-			free_heredoc_pipes(sh);
-			free_tokens(sh->token);
-			free(end);
-			break;
-		}
-		if (prompt[0] && !quote)
-		{
-			temp = expand(prompt, sh, true);
-			free(prompt);
-			prompt = temp;
-		}
-		ft_putstr_fd(prompt, sh->heredoc_pipes[i][1]);
-		//ft_putstr_fd("\n", sh->heredoc_pipes[i][1]);
-		free(prompt);
-	}
-}
+void	ft_get_heredoc(t_shell *sh, char *end, char	heredoc_index, bool quote);
 
 int	has_quotes(char *str)
 {
@@ -93,152 +25,170 @@ int	has_quotes(char *str)
 	return (0);
 }
 
-void	heredoc_signal_handler(int sig)
+static int	ft_heredoc_init(t_shell *sh)
 {
-	if (sig)
+	int	i;
+
+	i = 0;
+	ft_fprintf(2, "heredoc_count = %d\n", sh->heredoc_count);
+	sh->heredoc_pipes = malloc(sizeof(int *) * (sh->heredoc_count + 1));
+	while (i < sh->heredoc_count)
 	{
-		write(1, "\n", 1);
-		close(STDIN_FILENO);
-		ft_exit_status(130, true, true);
+		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
+		pipe(sh->heredoc_pipes[i]);
+		ft_fprintf(2, "heredoc pipe[%d][0] == '%d'\n", i, sh->heredoc_pipes[i][0]);
+		ft_fprintf(2, "heredoc pipe[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
+		i++;
 	}
-}
-
-int	get_heredoc(t_shell *sh)
-{
-	int		i = 0;
-	int		pid, status;
-	t_token	*temp = sh->token;
-	char	*end;
-
-	if (sh->heredoc_count < 1)
-		return (1);
-
-	ft_heredoc_init(sh);
-	while (temp)
-	{
-		if (temp->type == HERE_DOC)
-		{
-			end = remove_quotes(temp->next->token);
-			pipe(sh->heredoc_pipes[i]);
-			pid = fork();
-			if (pid == 0)
-			{
-				int j = 0;
-				free_envp(sh);
-				while (j <= i)
-				{
-					if (sh->heredoc_pipes[j][0] != -1)
-						close(sh->heredoc_pipes[j][0]);
-					j++;
-				}
-				signal_default();
-				signal(SIGINT, heredoc_signal_handler);
-				signal(SIGQUIT, SIG_IGN);
-				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
-				close(sh->original_stdin);
-				close(sh->original_stdout);
-				ft_exit_status(0, true, true);
-			}
-			else
-			{
-				signal(SIGINT, SIG_IGN);
-				waitpid(pid, &status, 0);
-			}
-			if (WEXITSTATUS(status) == 130)
-			{
-				ft_exit_status(130, true, false);
-				free(sh->prompt);
-				free_tokens(sh->token);
-				for (int k = 0; k < sh->heredoc_count; k++)
-				{
-					close(sh->heredoc_pipes[k][1]);
-					close(sh->heredoc_pipes[k][0]);
-					free(sh->heredoc_pipes[k]);
-				}
-				free(sh->heredoc_pipes);
-				free(end);
-				dup2(sh->original_stdin, STDIN_FILENO);
-				dup2(sh->original_stdout, STDOUT_FILENO);
-				return (0);
-			}
-			else
-				close(sh->heredoc_pipes[i][1]);
-			free(end);
-			i++;
-		}
-		temp = temp->next;
-	}
-	/*for (int j = 0; j < sh->heredoc_count; j++)
-	{
-		if (sh->heredoc_pipes[j][0] != -1)
-			close(sh->heredoc_pipes[j][0]);
-	}*/
-	dup2(sh->original_stdin, STDIN_FILENO);
-	dup2(sh->original_stdout, STDOUT_FILENO);
-
+	sh->heredoc_pipes[i] = NULL;
 	return (1);
 }
 
-/*
+
+void	ft_heredoc_signal_handler(int sig)
+{
+	ft_exit_status(-1, true, false);
+	close(STDIN_FILENO);
+}
+
 int	get_heredoc(t_shell *sh)
 {
-	int		i;
-	t_token	*temp;
-	char	*end;
+	t_token *token;
+	int		heredoc_index;
 	int		pid;
 	int		status;
-	pid = 0;
-	status = 0;
-	i = 0;
-	if (sh->heredoc_count < 1)
-		return (1);
-	temp = sh->token;
-	ft_heredoc_init(sh);
-	pid = fork();
-	if (pid == 0)
-	{
-		signal_default();
-		signal(SIGINT, heredoc_signal_handler);
-		signal(SIGQUIT, SIG_IGN);
-		//signal(SIGPIPE, SIG_IGN);
-		while (temp)
-		{
-			if (temp->type == HERE_DOC)
-			{
-				end = remove_quotes(temp->next->token);
-				ft_create_heredoc_pipes(sh, end, i, has_quotes(temp->next->token));
-				free(end);
-				i++;
-			}
-			temp = temp->next;
-		}
-		ft_exit_status(0, 1, 1);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-	}
-	if (WEXITSTATUS(status) == 130)
-	{
-		ft_exit_status(130, true, false);
-		free(sh->prompt);
-		free_tokens(sh->token);
-		for (int i = 0; i < sh->heredoc_count; i++)
-		{
-			close(sh->heredoc_pipes[i][1]);
-			close(sh->heredoc_pipes[i][0]);
-			free(sh->heredoc_pipes[i]);
-		}
-		free(sh->heredoc_pipes);
-		return (0);
-	}
-	else
-	{
-		for (int i = 0; i < sh->heredoc_count; i++)
-			close(sh->heredoc_pipes[i][1]);
-		return (1);
 
+	if (sh->heredoc_count == 0)
+		return (1);
+	status = 0;
+	heredoc_index = 0;
+	pid = -1;
+	token = sh->token;
+	ft_heredoc_init(sh);
+	while (token)
+	{
+		if (token->type == HERE_DOC)
+		{
+			pid = fork();
+			if (pid < 0)
+			{
+				perror("fork");
+				exit(1);
+			}
+			if (pid == 0)
+			{
+				free_envp(sh);
+				signal(SIGINT, ft_heredoc_signal_handler);
+				ft_get_heredoc(sh, remove_quotes(token->next->token), heredoc_index, has_quotes(token->next->token));
+				ft_fprintf(2, "exited\n");
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+				if (WIFEXITED(status))
+				{
+					ft_exit_status(WEXITSTATUS(status), true, false);
+					if (WEXITSTATUS(status) == 130)
+					{
+						for (int j = 0; sh->heredoc_pipes[j]; j++)
+						{
+							close(sh->heredoc_pipes[j][0]);
+							close(sh->heredoc_pipes[j][1]);
+							free(sh->heredoc_pipes[j]);
+						}
+						free(sh->heredoc_pipes);
+						sh->heredoc_count = 0;
+						write(1, "\n a", 1);
+						free_tokens(sh->token);
+						return (0);
+					}
+					else if (WEXITSTATUS(status) != 0)
+					{
+						ft_fprintf(2, "exited with code %d\n", WEXITSTATUS(status) + 128);
+					}
+				}
+			}
+
+			heredoc_index++;
+		}
+		token = token->next;
+	}
+	for(int i = 0; sh->heredoc_pipes[i]; i++)
+	{
+		ft_fprintf(2, "closing pipe onparent[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
+		close(sh->heredoc_pipes[i][1]);
+	}
+	return (1);
+}
+void	ft_get_heredoc(t_shell *sh, char *end, char	heredoc_index, bool quote)
+{
+	char	*prompt;
+	prompt = NULL;
+	char	*temp;
+	close(sh->original_stdin);
+	close(sh->original_stdout);
+	ft_fprintf(2, "heredoc_index = %d\n", heredoc_index);
+	for(int i = 0; sh->heredoc_pipes[i]; i++)
+	{
+		close(sh->heredoc_pipes[i][0]);
+		ft_fprintf(2, "closing on child pipe[%d][0] == '%d'\n", i, sh->heredoc_pipes[i][0]);
+
+		if (i != heredoc_index)
+		{
+			ft_fprintf(2, "closing on child pipe[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
+			close (sh->heredoc_pipes[i][1]);
+		}
+	}
+	while (1)
+	{
+		prompt = readline("> ");
+		if (ft_exit_status(0, 0, 0) == -1)
+		{
+			close(sh->heredoc_pipes[heredoc_index][1]);
+			for(int i = 0; sh->heredoc_pipes[i]; i++)
+				free(sh->heredoc_pipes[i]);
+			free(sh->heredoc_pipes);
+			free_tokens(sh->token);
+			free(end);
+			exit(130);
+		}
+		if (!prompt)
+		{
+			ft_fprintf(2, "warning: here-document delimited by end-of-file ");
+			ft_fprintf(2, "(wanted '%s')\n", end);
+			close(sh->heredoc_pipes[heredoc_index][1]);
+			for(int i = 0; sh->heredoc_pipes[i]; i++)
+				free(sh->heredoc_pipes[i]);
+			free(sh->heredoc_pipes);
+			free_tokens(sh->token);
+			free(end);
+			exit(0);
+		}
+		if (!*prompt)
+		{
+			free(prompt);
+			continue ;
+		}
+		if (!ft_strncmp(prompt, end, ft_strlen(end) + 1) && prompt[0] != '\n')
+		{
+			close(sh->heredoc_pipes[heredoc_index][1]);
+			for(int i = 0; sh->heredoc_pipes[i]; i++)
+				free(sh->heredoc_pipes[i]);
+			free(sh->heredoc_pipes);
+			free(prompt);
+			free_tokens(sh->token);
+			free(end);
+			exit(0);
+		}
+		if (prompt[0] && !quote)
+		{
+			temp = expand(prompt, sh, true);
+			free(prompt);
+			prompt = temp;
+		}
+		ft_putstr_fd(prompt, sh->heredoc_pipes[heredoc_index][1]);
+		ft_putstr_fd("\n", sh->heredoc_pipes[heredoc_index][1]);
+		free(prompt);
 	}
 }
-*/
+
