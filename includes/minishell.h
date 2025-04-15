@@ -196,5 +196,6 @@ void	child_signal_handler(int sig);
 
 //error messages
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
+# define REDIRECT_T "minishell: Expected argument after"
 
 #endif
