@@ -18,10 +18,10 @@ void	free_cmds(t_shell *sh)
 	t_cmd	*temp;
 	int		pipe;
 
+	if (!sh->cmd)
+		return ;
 	pipe = false;
 	cmd = sh->cmd;
-	if (!cmd)
-		return ;
 	temp = cmd;
 	while (cmd)
 	{

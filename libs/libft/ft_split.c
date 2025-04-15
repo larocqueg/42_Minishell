@@ -84,8 +84,16 @@ static char	**ft_complete_words(char **dest, const char *s, char c, int *i)
 
 static void	ft_free(char **dest, int count)
 {
-	while (count > 0)
-		free(dest[--count]);
+	int	i;
+
+	if (!dest)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		free(dest[i]);
+		i++;
+	}
 	free(dest);
 }
 /*

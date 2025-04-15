@@ -15,9 +15,9 @@
 void	ft_path_error(t_shell *sh, t_cmd *cmds)
 {
 	free_envp(sh);
-	if (cmds->to_pipe)
+	if (cmds->to_pipe && sh->pipe_new)
 		free(sh->pipe_new);
-	if (cmds->from_pipe)
+	if (cmds->from_pipe && sh->pipe_old)
 		free(sh->pipe_old);
 	free_cmds(sh);
 	ft_exit_status(0, 0, 1);
@@ -53,7 +53,7 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh)
 	if (cmds[0])
 		ft_putstr_fd(cmds[0], 2);
 	ft_putstr_fd("\"\n", 2);
-	if (path)
+	if (path && path != cmd->cmd[0])
 		free(path);
 	ft_path_error(sh, cmd);
 }
