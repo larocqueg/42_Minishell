@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:23:18 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 16:14:48 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 21:58:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	get_fdin(t_cmd *cmd, t_shell *sh)
 			close(sh->pipe_old[0]);
 		fdin = cmd -> fd_in;
 	}
+	read(fdin, NULL, 0);
 	return (fdin);
 }
 

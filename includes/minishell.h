@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 16:02:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:09:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void	ft_change_var(char *var_name, char *content, char **env);
 int		ft_exit_status(int exit_code, bool set, bool close);
 void	signal_handler(int sig);
 void	signal_default(void);
+void	child_signal_handler(int sig);
 
 //error messages
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"

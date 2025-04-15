@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/07 20:07:46 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:11:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,14 @@ void	signal_handler(int sig)
 	}
 }
 
-/*void	child_signal_handler(int sig)
+void	child_signal_handler(int sig)
 {
-	if (sig == SIGINT)
+
+	if (sig == SIGPIPE)
 	{
 		return ;
 	}
-	else if (sig == SIGQUIT)
-	{
-		return ;
-	}
-	else if (sig == SIGPIPE)
-	{
-		//nao sei oq tem q fazer aqui;
-	}
-}*/
+}
 
 void	signal_default(void)
 {

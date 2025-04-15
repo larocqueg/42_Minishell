@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 20:22:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 21:45:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	get_heredoc(t_shell *sh)
 	}
 	for(int i = 0; sh->heredoc_pipes[i]; i++)
 	{
-		ft_fprintf(2, "closing pipe onparent[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
+		//ft_fprintf(2, "closing pipe onparent[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
 		close(sh->heredoc_pipes[i][1]);
 	}
 	return (1);

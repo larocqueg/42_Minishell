@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 20:32:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:08:08 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 		if (pid == 0 || pid == -1)
 		{
 			signal_default();
+			signal(SIGPIPE, child_signal_handler);
 			handle_child(sh, cmd);
 		}
 		else

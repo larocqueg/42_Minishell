@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 18:42:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/15 21:40:45 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->original_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
+	signal(SIGPIPE, SIG_IGN);
 	sh->local_vars = NULL;
 	sh->env_size = 0;
 	sh->envp = clone_envp(sh, envp);
