@@ -46,6 +46,8 @@ void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh)
 	if (!path || access(path, X_OK) != 0 || is_folder(path)
 		|| is_character_device(path))
 		ft_command_error(cmds, path, cmds->cmd, sh);
+	if (sh->heredoc_count > 0)
+		close(sh->heredoc_pipes[0][0]);
 	execve(path, cmds->cmd, env);
 	ft_execve_error(sh, path);
 }
