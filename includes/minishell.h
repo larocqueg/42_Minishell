@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 22:09:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:36:45 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh);
 //env cmds
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
+int	ft_strcmp_unset(char *env, char *cmd);
 
 //signals
 int		ft_exit_status(int exit_code, bool set, bool close);

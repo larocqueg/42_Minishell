@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/13 21:52:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:36:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**ft_free_back(char **new_env, int k)
 	return (NULL);
 }
 
-static int	ft_strcmp_unset(char *env, char *cmd)
+int	ft_strcmp_unset(char *env, char *cmd)
 {
 	int	i;
 

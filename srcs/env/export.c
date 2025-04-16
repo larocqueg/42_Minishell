@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/13 21:48:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:35:23 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	create_export(char *str, t_shell *sh)
 	if (ft_strcmp_export(sh->envp, no_equal))
 	{
 		if (equals)
-			ft_change_var(var_name, str + ft_strlen_tochar(str, '=') + 1, sh->envp);
+			ft_change_var(var_name, str + ft_strlen_tochar(var_name, '=') + 1, sh->envp);
 	}
 	else
 		sh->envp = append_cmd(sh->envp, str);

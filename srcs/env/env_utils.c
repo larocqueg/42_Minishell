@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:26:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/13 21:46:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:38:09 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	ft_change_var(char *var_name, char *content, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(var_name, env[i], ft_strlen(var_name)) == 0)
+		if (ft_strncmp(var_name, env[i], ft_strlen(var_name)) == 0
+			|| ft_strcmp_unset(var_name, env[i]))
 		{
 			free(env[i]);
 			env[i] = ft_strjoin(var_name, content);
