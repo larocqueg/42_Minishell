@@ -135,7 +135,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 					close(cmd->fd_out);
 					cmd->fd_out = -1;
 				}
-			if (cmd->fd_in != -1)
+			if (cmd->fd_in != -1 && !cmd->heredoc)	
 				{
 					close(cmd->fd_in);
 					cmd->fd_in = -1;
