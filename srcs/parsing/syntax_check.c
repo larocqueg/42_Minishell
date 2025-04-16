@@ -33,9 +33,9 @@ static int	check_valid_operators(t_token **temp)
 		if ((*temp)->type == PIPE)
 			pipe = true;
 		(*temp) = (*temp)-> next;
-		if (!(*temp))
+		if (!(*temp) || !(*temp)->next)
 		{
-			ft_fprintf(2, "%s \\n\n", UNEXPECTED_T);
+			ft_fprintf(2, "%s \n", UNEXPECTED_T);
 			return (0);
 		}
 		else if (((*temp)->type == PIPE && pipe)
