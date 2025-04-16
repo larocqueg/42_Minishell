@@ -65,7 +65,7 @@ char	**clone_envp(t_shell *sh, char **envp)
 		i++;
 	}
 	dest[i] = NULL;
-	sh->env_size = i;
+	sh->env_size = i - 1;
 	return (dest);
 }
 

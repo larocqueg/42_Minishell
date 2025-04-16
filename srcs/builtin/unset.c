@@ -105,7 +105,7 @@ void	exec_unset(t_shell *sh, char **cmd)
 	count = ft_count_vars(sh, cmd);
 	if (count == 0)
 		return ;
-	sh->env_size = sh->env_size - count + 1;
+	sh->env_size = sh->env_size - count;
 	new_env = ft_get_unset(sh, new_env, cmd);
 	if (!new_env)
 		return ;
