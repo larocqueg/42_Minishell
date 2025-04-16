@@ -32,21 +32,20 @@ static int	check_valid_operators(t_token **temp)
 	{
 		if ((*temp)->type == PIPE)
 			pipe = true;
-		(*temp) = (*temp)-> next;
-		if (!(*temp) || !(*temp)->next)
+		if (!(*temp)->next)
 		{
 			ft_fprintf(2, "%s \n", UNEXPECTED_T);
 			return (0);
 		}
-		else if (((*temp)->type == PIPE && pipe)
-			|| ((*temp)->type != WORD && !pipe))	
+		else if (((*temp)->next->type == PIPE && pipe)
+			|| ((*temp)->next->type != WORD && !pipe))	
 		{
-			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->token);
+			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->next->token);
 			return (0);
 		}
-		else if ((*temp)->type == TOFILE && !(*temp)->next)
+		else if ((*temp)->next->type == TOFILE && !(*temp)->next->next)
 		{
-			ft_fprintf(2, "%s \'%s\'\n", REDIRECT_T, (*temp)->token);
+			ft_fprintf(2, "%s \'%s\'\n", REDIRECT_T, (*temp)->next->token);
 			return (0);
 		}
 	}
