@@ -53,7 +53,11 @@ void	free_envp(t_shell *sh)
 
 	i = 0;
 	if (!sh->envp)
+		return ;
 	while (sh->envp[i])
-		free(sh->envp[i++]);
+	{
+		free(sh->envp[i]);
+		i++;
+	}
 	free(sh->envp);
 }
