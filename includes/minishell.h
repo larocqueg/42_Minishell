@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:31:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:38:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,12 @@ size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 int		get_argc(char **cmd);
 int		has_equals(char *str);
+int		is_append_var(char *str);
+void	append_var(char *var_name, char *var, char *temp, t_shell *sh);
+void	do_append(char *var, t_shell *sh);
+void	put_export(char *str);
+int		ft_strcmp_export(char **env, char *cmd);
+
 
 //env.c
 void	ft_print_env(t_shell *sh);

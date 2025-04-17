@@ -6,13 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 18:36:10 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:39:09 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 void	print_export(t_shell *sh)
 {
@@ -60,7 +58,7 @@ static int	is_valid_var(char *str)
 		return (0);
 }
 
-static int	ft_strcmp_export(char **env, char *cmd)
+int	ft_strcmp_export(char **env, char *cmd)
 {
 	int	i;
 	int	j;

@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/17 18:08:18 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/17 18:38:48 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/unset.c \
 	$(SRC_DIR)/builtin/env.c \
 	$(SRC_DIR)/builtin/export.c \
+	$(SRC_DIR)/builtin/export_utils.c \
 	$(SRC_DIR)/env/env_utils.c \
 	$(SRC_DIR)/env/print_env.c \
 	$(SRC_DIR)/signals/exit_status.c \
