@@ -37,6 +37,7 @@ int	ft_is_numeric(char **cmd)
 		return (0);
 	return (1);
 }
+
 void	ft_free_exit(t_shell *sh)
 {
 	ft_printf("exit\n");
@@ -48,9 +49,10 @@ void	ft_free_exit(t_shell *sh)
 		free(sh->heredoc_pipes);
 	rl_clear_history();
 }
+
 void	exec_exit(t_shell *sh, t_cmd *cmds)
 {
-	int	argc;
+	int				argc;
 	unsigned char	exit_code;
 
 	argc = get_argc(cmds->cmd);

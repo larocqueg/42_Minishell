@@ -53,7 +53,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 	{
 		home = ft_get_env("HOME", sh->envp);
 		if (!home)
-			return (free(oldpwd), cd_error(sh, "minishell: cd: HOME not set\n", NULL));
+			return (free(oldpwd), cd_error(sh, HOME_ERROR, NULL));
 		chdir(ft_get_env("HOME", sh->envp));
 		path = getcwd(NULL, 0);
 		change_var(path, oldpwd, sh);
@@ -65,5 +65,5 @@ int	exec_cd(char **cmd, t_shell *sh)
 	path = getcwd(NULL, 0);
 	change_var(path, oldpwd, sh);
 	ft_exit_status(0, 1, 0);
-		return (free(path), free(oldpwd), 1);
+	return (free(path), free(oldpwd), 1);
 }

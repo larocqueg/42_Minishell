@@ -198,6 +198,7 @@ void	signal_default(void);
 void	child_signal_handler(int sig);
 
 //error messages
+# define HOME_ERROR	"minishell: cd: HOME not set\n"
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 # define REDIRECT_T "minishell: Expected argument after"
 
