@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 17:12:55 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:42:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 		}
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
-		//if (cmd->to_pipe)
-			//free(sh->pipe_new);
 		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:38:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:52:06 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ char	*ft_insertstr(char	*string, size_t index, char *substr);
 //heredoc
 int		get_heredoc(t_shell *sh);
 int		is_var(char *token);
+void	handle_exit(t_shell *sh);
+void	free_exit(t_shell *sh, char *end, int heredoc_index, char *prompt);
+int		here_doc_loop(t_token *token, t_shell *sh, int *heredoc_index, int *pid);
+int		has_quotes(char *str);
+int		ft_heredoc_init(t_shell *sh);
+void	ft_heredoc_signal_handler(int sig);
+int		not_prompt(t_shell *sh, char *end, int heredoc_index, char *prompt);
 
 //expand
 char	*expand(char *str, t_shell *sh, bool heredoc);
@@ -125,7 +132,6 @@ void	do_append(char *var, t_shell *sh);
 void	put_export(char *str);
 int		ft_strcmp_export(char **env, char *cmd);
 
-
 //env.c
 void	ft_print_env(t_shell *sh);
 
@@ -144,7 +150,6 @@ int		check_syntax(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
-t_shell *ft_get_sh(bool set, t_shell *sh);
 
 //free_utils
 void	ft_free(char **str);

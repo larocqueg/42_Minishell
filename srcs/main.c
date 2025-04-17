@@ -6,25 +6,11 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 17:29:48 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:44:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_shell *ft_get_sh(bool set, t_shell *sh)
-{
-	static t_shell	*shell;
-	shell = NULL;
-
-	if (set)
-	{
-		if (shell == NULL)
-			shell = sh;
-	}
-	return (shell);
-}
-
 
 void	ft_sh_init(t_shell *sh, char **envp)
 {

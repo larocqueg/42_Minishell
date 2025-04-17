@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 22:08:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:45:44 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,12 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 					close(cmd->fd_out);
 					cmd->fd_out = -1;
 				}
-			if (cmd->fd_in != -1 && !cmd->heredoc)	
+			if (cmd->fd_in != -1 && !cmd->heredoc)
 				{
 					close(cmd->fd_in);
 					cmd->fd_in = -1;
 				}
 			}
-
 		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
