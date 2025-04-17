@@ -114,7 +114,7 @@ int		handle_heredoc_parent(t_shell *sh, int pid);
 void	start_heredoc(t_shell *sh, int heredoc_i);
 
 //expand
-char	*expand(char *str, t_shell *sh, bool heredoc);
+char	*expand(char *str, t_shell *sh, bool heredoc, size_t i);
 void	expand_tokens(t_shell *sh);
 char	*extract_variable(char *str, int i);
 int		ft_is_all_var(char	*str);
@@ -145,6 +145,7 @@ char	*remove_quotes(char *str);
 int		ft_find_var(char *new_var, char **envp);
 void	create_export(char *str, t_shell *sh);
 void	create_var(char *var_name, char *var, t_shell *sh);
+void	ft_free_export(char **temp);
 
 //error handling
 int		check_quotes(char *prompt);

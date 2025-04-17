@@ -30,19 +30,19 @@ void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes)
 	}
 }
 
-char	*expand(char *str, t_shell *sh, bool heredoc)
+char	*expand(char *str, t_shell *sh, bool heredoc, size_t i)
 {
-	size_t	i;
 	char	*result;
 	bool	in_quotes;
 	bool	in_single_quotes;
 
+	if (!str || !*str)
+		return (NULL);
 	in_single_quotes = false;
 	in_quotes = false;
 	result = ft_strdup(str);
 	if (!result)
 		return (NULL);
-	i = 0;
 	while (i < ft_strlen(result))
 	{
 		set_quotes(result[i], &in_single_quotes, &in_quotes);
@@ -70,7 +70,9 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (token->type == WORD)
 		{
-			temp = expand(token->token, sh, false);
+			temp = expand(token->token, sh, false, 0);
+			if (!temp)
+				return ;
 			free(token->token);
 			token->token = remove_quotes(temp);
 			free(temp);

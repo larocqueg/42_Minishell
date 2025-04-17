@@ -33,12 +33,7 @@ void	print_export(t_shell *sh)
 		}
 		i++;
 	}
-	i = 0;
-	while (temp[i])
-	{
-		put_export(temp[i]);
-		free(temp[i++]);
-	}
+	ft_free_export(temp);
 	free(temp);
 	return ;
 }

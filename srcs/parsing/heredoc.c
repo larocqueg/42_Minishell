@@ -102,7 +102,7 @@ void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote)
 			free_exit(sh, end, heredoc_i, prompt);
 		if (prompt[0] && !quote)
 		{
-			temp = expand(prompt, sh, true);
+			temp = expand(prompt, sh, true, 0);
 			free(prompt);
 			prompt = temp;
 		}

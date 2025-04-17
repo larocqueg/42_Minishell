@@ -41,9 +41,7 @@ int	start_cli(t_shell *sh)
 	cmd = sh->cmd;
 	while (1)
 	{
-
 		sh->prompt = readline("minishell $< ");
-		ft_fprintf(2, "env size= %d\n", sh->env_size);
 		if (!sh->prompt)
 			ft_eof_close(sh);
 		if (!*sh->prompt)

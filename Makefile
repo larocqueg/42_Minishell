@@ -54,6 +54,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/env.c \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/export_utils.c \
+	$(SRC_DIR)/builtin/export_utils_2.c \
 	$(SRC_DIR)/env/env_utils.c \
 	$(SRC_DIR)/env/print_env.c \
 	$(SRC_DIR)/signals/exit_status.c \
