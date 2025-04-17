@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:03:00 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:25:58 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void	ft_get_shlvl(t_shell *sh)
 	free(itoa);
 }
 
+void	ft_init_pwd(t_shell *sh)
+{
+	char	*current_pwd;
+	char	*temp;
+
+	temp = ft_get_env("OLDPWD", sh->envp);
+	if (!temp)
+		create_export("OLDPWD=", sh);
+	temp = NULL;
+	current_pwd = getcwd(NULL, 0);
+	if (!current_pwd)
+		return ;
+	temp = ft_strjoin("PWD=", current_pwd);
+	create_export(temp, sh);
+	free(current_pwd);
+	free (temp);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
@@ -63,6 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	ft_sh_init(&sh, envp);
 	ft_get_shlvl(&sh);
+	ft_init_pwd(&sh);
 	start_cli(&sh);
 	free_envp(&sh);
 	return (0);
