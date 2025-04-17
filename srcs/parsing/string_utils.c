@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:03:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 13:25:07 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:16:00 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,18 @@ int	check_quotes(char *prompt)
 		return (0);
 	}
 	return (1);
+}
+
+int	has_equals(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }

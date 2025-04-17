@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 17:30:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:31:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	**clone_envp(t_shell *sh, char **envp);
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 int		get_argc(char **cmd);
+int		has_equals(char *str);
 
 //env.c
 void	ft_print_env(t_shell *sh);
@@ -127,6 +128,7 @@ void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
 int		ft_find_var(char *new_var, char **envp);
 void	create_export(char *str, t_shell *sh);
+void	create_var(char *var_name, char *var, t_shell *sh);
 
 //error handling
 int		check_quotes(char *prompt);
@@ -144,7 +146,7 @@ void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
-int	ft_check_type(t_token *tokens);
+int		ft_check_type(t_token *tokens);
 
 //cmds
 int		create_cmds(t_shell *sh);
@@ -200,5 +202,6 @@ void	child_signal_handler(int sig);
 //error messages
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 # define REDIRECT_T "minishell: Expected argument after"
+# define INVALID_I "not a valid identifier"
 
 #endif

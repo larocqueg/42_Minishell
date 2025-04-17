@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 21:45:18 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:10:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int	ft_heredoc_init(t_shell *sh)
 	{
 		sh->heredoc_pipes[i] = malloc(sizeof(int) * 2);
 		pipe(sh->heredoc_pipes[i]);
-		ft_fprintf(2, "heredoc pipe[%d][0] == '%d'\n", i, sh->heredoc_pipes[i][0]);
-		ft_fprintf(2, "heredoc pipe[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
 		i++;
 	}
 	sh->heredoc_pipes[i] = NULL;
@@ -80,7 +78,6 @@ int	get_heredoc(t_shell *sh)
 				free_envp(sh);
 				signal(SIGINT, ft_heredoc_signal_handler);
 				ft_get_heredoc(sh, remove_quotes(token->next->token), heredoc_index, has_quotes(token->next->token));
-				ft_fprintf(2, "exited\n");
 			}
 			else
 			{
@@ -115,7 +112,6 @@ int	get_heredoc(t_shell *sh)
 	}
 	for(int i = 0; sh->heredoc_pipes[i]; i++)
 	{
-		//ft_fprintf(2, "closing pipe onparent[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
 		close(sh->heredoc_pipes[i][1]);
 	}
 	return (1);
@@ -131,11 +127,9 @@ void	ft_get_heredoc(t_shell *sh, char *end, char	heredoc_index, bool quote)
 	for(int i = 0; sh->heredoc_pipes[i]; i++)
 	{
 		close(sh->heredoc_pipes[i][0]);
-		ft_fprintf(2, "closing on child pipe[%d][0] == '%d'\n", i, sh->heredoc_pipes[i][0]);
 
 		if (i != heredoc_index)
 		{
-			ft_fprintf(2, "closing on child pipe[%d][1] == '%d'\n", i, sh->heredoc_pipes[i][1]);
 			close (sh->heredoc_pipes[i][1]);
 		}
 	}
