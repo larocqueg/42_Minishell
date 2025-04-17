@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:00:51 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/09 16:25:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:42:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	is_var(char *token)
 	if (!ft_isalpha(token[0]) && token[0] != '_')
 		return (0);
 	while (token[i] && (ft_isalnum(token[i]) || token[i] == '_'))
-		i++;
-	if (token[i] == '+')
 		i++;
 	if (token[i] == '=')
 		return (1);

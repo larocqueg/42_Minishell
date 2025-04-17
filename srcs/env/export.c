@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/16 18:35:23 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:00:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,71 @@ void	create_export(char *str, t_shell *sh)
 	ft_exit_status(0, 1, 0);
 }
 
+int	is_append_var(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	while (ft_isalnum(str[i]) || str[i] == '_')
+	{
+		i++;
+	}
+	if (str[i] == '+')
+		i++;
+	if (str[i] == '=')
+		return (1);
+	else
+		return (0);
+}
+
+void	append_var(char *var, t_shell *sh)
+{
+	int		i;
+	char 	*temp;
+	char	*var_name;
+	char	*value;
+	i = 0;
+
+	var_name = ft_strndupmod(var, 0, ft_strlen_tochar(var, '+') - 1);
+	temp = ft_get_env(var_name, sh->envp);
+	if (!temp)
+	{
+		value = (ft_strjoin(var_name, "="));
+		if (!value)
+			return ;
+		temp = ft_strjoin(value, var + ft_strlen_tochar(var, '=') + 1);
+		if (!temp)
+			return ;
+		ft_fprintf(2, "temp == '%s'\n", temp);
+		create_export(temp, sh);
+		free(value);
+		free(temp);
+		return ;
+	}
+	else
+	{
+		value = ft_strjoin(temp, var + ft_strlen_tochar(var, '=') + 1);
+		if (!value)
+			return ;
+		ft_fprintf(2, "var == %s, value == '%s'\n", var, value);
+		temp = ft_strjoin(var_name, "=");
+		if (!temp)
+			return ;
+		free(var_name);
+		var_name = ft_strjoin(temp, value);
+		if (!var_name)
+			return ;
+		ft_fprintf(2, "var_name == '%s'\n", var_name);
+		create_export(var_name, sh);
+		free(temp);
+		free(value);
+		free(var_name);
+		return ;
+	}
+}
+
 void	exec_export(t_shell *sh, t_cmd *cmd)
 {
 	char	**cmds;
@@ -159,6 +224,11 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 		{
 			if (is_valid_var(cmds[i]) || is_var(cmds[i]))
 				create_export(cmds[i], sh);
+			else if (is_append_var(cmds[i]))
+			{
+				append_var(cmds[i], sh);
+				ft_exit_status(0, 1, 0);
+			}
 			else
 			{
 				ft_fprintf(2, "export: '%s': not a valid identifier\n", cmds[i]);
