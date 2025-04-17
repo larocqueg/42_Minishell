@@ -99,7 +99,7 @@ int	tokenize(char *prompt, t_shell *sh)
 			i++;
 		if (i == j)
 		{
-			if (prompt[i] == '-' && ft_check_type(tokens) == HERE_DOC)
+			if ((prompt[i] == '-' || prompt[i] == '!') && ft_check_type(tokens) == HERE_DOC)
 				i++;
 		}
 		if (!prompt[i])
