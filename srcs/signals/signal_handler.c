@@ -26,11 +26,8 @@ void	signal_handler(int sig)
 
 void	child_signal_handler(int sig)
 {
-
 	if (sig == SIGPIPE)
-	{
 		return ;
-	}
 }
 
 void	signal_default(void)

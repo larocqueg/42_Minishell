@@ -17,7 +17,6 @@ void	free_pipes(t_shell *sh)
 	int	i;
 
 	i = 0;
-
 	if (sh->heredoc_count == 0)
 		return ;
 	while (sh->heredoc_pipes[i])

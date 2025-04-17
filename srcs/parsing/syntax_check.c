@@ -38,7 +38,7 @@ static int	check_valid_operators(t_token **temp)
 			return (0);
 		}
 		else if (((*temp)->next->type == PIPE && pipe)
-			|| ((*temp)->next->type != WORD && !pipe))	
+			|| ((*temp)->next->type != WORD && !pipe))
 		{
 			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->next->token);
 			return (0);
@@ -52,35 +52,6 @@ static int	check_valid_operators(t_token **temp)
 	return (1);
 }
 
-int	is_first_dot(t_token *token)
-{
-	char	*temp;
-	if (token->type != WORD)
-		return (0);
-	temp = remove_quotes(token->token);
-	if (!temp)
-	{
-		ft_fprintf(2, "Not enough resources\n");
-		return (1);
-	}
-	if (ft_strncmp(temp, ".", 2) == 0)
-	{
-		ft_exit_status(2, 1, 0);
-		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, temp);
-		free(temp);
-		return (1);
-	}
-	if (ft_strncmp(temp, "..", 3) == 0)
-	{
-		ft_exit_status(2, 1, 0);
-		ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, temp);
-		free(temp);
-		return (1);
-	}
-	free(temp);
-	return (0);
-}
-
 int	check_tokens(t_token *token)
 {
 	t_token	*temp;
@@ -88,8 +59,6 @@ int	check_tokens(t_token *token)
 	temp = token;
 	while (temp)
 	{
-		if (is_first_dot(token))
-			return (0);
 		if (is_first_pipe(token))
 			return (0);
 		if (!check_valid_operators(&temp))

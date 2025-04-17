@@ -145,7 +145,8 @@ void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
 void	ft_free_child_pipes(t_shell *sh);
-int		ft_check_type(t_token *tokens);
+void	ft_free_tokenize(t_token *token, char *prompt);
+int		ft_type(t_token *tokens);
 
 //cmds
 int		create_cmds(t_shell *sh);

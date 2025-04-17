@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_check_type(t_token *tokens)
+int	ft_type(t_token *tokens)
 {
 	if (!tokens)
 		return (0);
