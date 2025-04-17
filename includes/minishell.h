@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 17:30:30 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:55:26 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,17 @@ char	*ft_insertstr(char	*string, size_t index, char *substr);
 //heredoc
 int		get_heredoc(t_shell *sh);
 int		is_var(char *token);
+void	handle_exit(t_shell *sh);
+void	free_exit(t_shell *sh, char *end, int heredoc_index, char *prompt);
+int		here_doc_loop(t_token *token, t_shell *sh, int *heredoc_index, int *pid);
+int		has_quotes(char *str);
+int		ft_heredoc_init(t_shell *sh);
+void	ft_heredoc_signal_handler(int sig);
+int		not_prompt(t_shell *sh, char *end, int heredoc_index, char *prompt);
+void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_index, bool quote);
+void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_index);
+int		handle_heredoc_parent(t_shell *sh, int pid);
+void	start_heredoc(t_shell *sh, int heredoc_index);
 
 //expand
 char	*expand(char *str, t_shell *sh, bool heredoc);
@@ -118,6 +129,12 @@ char	**clone_envp(t_shell *sh, char **envp);
 size_t	ft_strlen_tochar(char *str, char c);
 char	**append_cmd(char **cmd, char *newcmd);
 int		get_argc(char **cmd);
+int		has_equals(char *str);
+int		is_append_var(char *str);
+void	append_var(char *var_name, char *var, char *temp, t_shell *sh);
+void	do_append(char *var, t_shell *sh);
+void	put_export(char *str);
+int		ft_strcmp_export(char **env, char *cmd);
 
 //env.c
 void	ft_print_env(t_shell *sh);
@@ -127,6 +144,7 @@ void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
 int		ft_find_var(char *new_var, char **envp);
 void	create_export(char *str, t_shell *sh);
+void	create_var(char *var_name, char *var, t_shell *sh);
 
 //error handling
 int		check_quotes(char *prompt);
@@ -136,7 +154,6 @@ int		check_syntax(t_shell *sh);
 //cli
 int		start_cli(t_shell *sh);
 void	get_cli_pwd(t_shell *sh);
-t_shell *ft_get_sh(bool set, t_shell *sh);
 
 //free_utils
 void	ft_free(char **str);
@@ -144,6 +161,7 @@ void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
+int		ft_check_type(t_token *tokens);
 void	ft_free_child_pipes(t_shell *sh);
 void	ft_free_tokenize(t_token *token, char *prompt);
 int		ft_type(t_token *tokens);
@@ -205,5 +223,6 @@ void	child_signal_handler(int sig);
 # define HOME_ERROR	"minishell: cd: HOME not set\n"
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 # define REDIRECT_T "minishell: Expected argument after"
+# define INVALID_I "not a valid identifier"
 
 #endif

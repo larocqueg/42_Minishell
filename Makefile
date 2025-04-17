@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/13 21:19:07 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/17 20:53:56 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 # Compilation
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g
 CFLAGS = -g
 LDFLAGS= -lreadline -lncurses
 # Paths
@@ -34,6 +34,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/string_utils.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
+	$(SRC_DIR)/parsing/heredoc_utils.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/cmd_utils.c \
 	$(SRC_DIR)/execute/get_fds.c \
@@ -44,7 +45,6 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/execute/execute_utils.c \
 	$(SRC_DIR)/execute/path_finder.c \
 	$(SRC_DIR)/execute/execute.c \
-	$(SRC_DIR)/env/export.c \
 	$(SRC_DIR)/builtin/builtin_utils.c \
 	$(SRC_DIR)/builtin/cd.c \
 	$(SRC_DIR)/builtin/pwd.c \
@@ -52,6 +52,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/unset.c \
 	$(SRC_DIR)/builtin/env.c \
+	$(SRC_DIR)/builtin/export.c \
+	$(SRC_DIR)/builtin/export_utils.c \
 	$(SRC_DIR)/env/env_utils.c \
 	$(SRC_DIR)/env/print_env.c \
 	$(SRC_DIR)/signals/exit_status.c \
