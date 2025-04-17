@@ -82,8 +82,6 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 		}
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
-		//if (cmd->to_pipe)
-			//free(sh->pipe_new);
 		free_cmds(sh);
 		ft_exit_status(0, 0, 1);
 	}
