@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 22:11:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:52:53 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	signal_handler(int sig)
 
 void	child_signal_handler(int sig)
 {
-
 	if (sig == SIGPIPE)
 	{
 		return ;

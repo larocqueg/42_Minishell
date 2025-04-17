@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/17 18:43:45 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/04/17 20:53:56 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/string_utils.c \
 	$(SRC_DIR)/parsing/syntax_check.c \
 	$(SRC_DIR)/parsing/heredoc.c \
+	$(SRC_DIR)/parsing/heredoc_utils.c \
 	$(SRC_DIR)/execute/cmds.c \
 	$(SRC_DIR)/execute/cmd_utils.c \
 	$(SRC_DIR)/execute/get_fds.c \

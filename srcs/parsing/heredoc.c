@@ -6,11 +6,12 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 20:50:54 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:55:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_index)
 {
@@ -84,8 +85,6 @@ void	start_heredoc(t_shell *sh, int heredoc_index)
 		i++;
 	}
 }
-
-
 
 void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_index, bool quote)
 {
