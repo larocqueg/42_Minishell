@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/16 18:36:45 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:30:30 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	ft_print_env(t_shell *sh);
 void	print_export(t_shell *sh);
 char	*remove_quotes(char *str);
 int		ft_find_var(char *new_var, char **envp);
+void	create_export(char *str, t_shell *sh);
 
 //error handling
 int		check_quotes(char *prompt);
