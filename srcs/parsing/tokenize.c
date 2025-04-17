@@ -87,14 +87,21 @@ static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 int	tokenize(char *prompt, t_shell *sh)
 {
 	int		i;
+	int		j;
 	t_token	*tokens;
 
 	i = 0;
 	tokens = NULL;
 	while (prompt[i] && i < ARG_MAX)
 	{
+		j = i;
 		while (is_space(prompt[i]))
 			i++;
+		if (i == j)
+		{
+			if (prompt[i] == '-' && ft_check_type(tokens) == HERE_DOC)
+				i++;
+		}
 		if (!prompt[i])
 			break ;
 		i = extract_token(-1, i, &tokens, sh);

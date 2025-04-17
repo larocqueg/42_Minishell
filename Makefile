@@ -29,6 +29,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parsing/tokenize.c \
 	$(SRC_DIR)/parsing/token_utils.c \
 	$(SRC_DIR)/parsing/expand.c \
+	$(SRC_DIR)/parsing/token_last.c \
 	$(SRC_DIR)/parsing/expand_utils.c \
 	$(SRC_DIR)/parsing/string_utils.c \
 	$(SRC_DIR)/parsing/syntax_check.c \

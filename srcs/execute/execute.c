@@ -128,7 +128,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 		}
 		else
 		{
-			if (cmd->to_pipe || cmd ->from_pipe && pid != 0)
+			if (cmd->to_pipe || cmd ->from_pipe || !ft_is_builtin(cmd->cmd) && pid != 0)
 			{
 				if (cmd->fd_out != -1)
 				{

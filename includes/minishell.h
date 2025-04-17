@@ -143,6 +143,7 @@ void	free_cmds(t_shell *sh);
 void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
+int	ft_check_type(t_token *tokens);
 
 //cmds
 int		create_cmds(t_shell *sh);
