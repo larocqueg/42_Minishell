@@ -36,7 +36,7 @@ char	*expand(char *str, t_shell *sh, bool heredoc, size_t i)
 	bool	in_quotes;
 	bool	in_single_quotes;
 
-	if (!str || !*str)
+	if (!str)
 		return (NULL);
 	in_single_quotes = false;
 	in_quotes = false;
@@ -46,7 +46,7 @@ char	*expand(char *str, t_shell *sh, bool heredoc, size_t i)
 	while (i < ft_strlen(result))
 	{
 		set_quotes(result[i], &in_single_quotes, &in_quotes);
-		if (result[i] == '$' && (!in_single_quotes || heredoc))
+		if (result[i] && result[i] == '$' && (!in_single_quotes || heredoc))
 		{
 			i++;
 			if (result[i] == '?' || ft_isalpha(result[i]) || result[i] == '_' )
@@ -72,7 +72,7 @@ void	expand_tokens(t_shell *sh)
 		{
 			temp = expand(token->token, sh, false, 0);
 			if (!temp)
-				return ;
+				continue ;
 			free(token->token);
 			token->token = remove_quotes(temp);
 			free(temp);
