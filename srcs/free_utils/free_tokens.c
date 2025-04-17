@@ -28,3 +28,9 @@ void	free_tokens(t_token	*token)
 	}
 	token = NULL;
 }
+
+void	ft_free_tokenize(t_token *token, char *prompt)
+{
+	free(prompt);
+	free_tokens(token);
+}

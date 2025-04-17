@@ -41,6 +41,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/execute/exec_builtin.c \
 	$(SRC_DIR)/execute/exec_errors.c \
 	$(SRC_DIR)/execute/exec_cmd.c \
+	$(SRC_DIR)/execute/execute_pipe_utils.c \
 	$(SRC_DIR)/execute/execute_utils.c \
 	$(SRC_DIR)/execute/path_finder.c \
 	$(SRC_DIR)/execute/execute.c \
@@ -61,6 +62,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/free_utils/free_cmds.c \
 	$(SRC_DIR)/free_utils/free_tokens.c \
 	$(SRC_DIR)/free_utils/free_heredoc.c \
+	$(SRC_DIR)/free_utils/free_child.c \
 
 # Objects
 OBJS = $(SRC:.c=.o)

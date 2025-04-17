@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_last.c                                       :+:      :+:    :+:   */
+/*   free_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 15:11:10 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 15:13:27 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/17 18:55:12 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/17 18:59:15 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_type(t_token *tokens)
+void	ft_free_child_pipes(t_shell *sh)
 {
-	if (!tokens)
-		return (0);
-	while (tokens)
+	int	i;
+
+	if (sh->heredoc_count > 0)
 	{
-		if (tokens->next == NULL)
-			break ;
-		tokens = tokens->next;
+		i = 0;
+		while (sh->heredoc_pipes[i])
+		{
+			close(sh->heredoc_pipes[i][0]);
+			free(sh->heredoc_pipes[i]);
+			i++;
+		}
+		free(sh->heredoc_pipes);
 	}
-	return (tokens->type);
 }

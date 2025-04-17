@@ -99,18 +99,14 @@ int	tokenize(char *prompt, t_shell *sh)
 			i++;
 		if (i == j)
 		{
-			if ((prompt[i] == '-' || prompt[i] == '!') && ft_check_type(tokens) == HERE_DOC)
+			if ((prompt[i] == '-' || prompt[i] == '!') && ft_type(tokens) == 2)
 				i++;
 		}
 		if (!prompt[i])
 			break ;
 		i = extract_token(-1, i, &tokens, sh);
 		if (i == -1)
-		{
-			free_tokens(tokens);
-			free(sh->prompt);
-			return (0);
-		}
+			ft_free_tokenize(tokens, sh->prompt);
 	}
 	sh->token = tokens;
 	return (1);

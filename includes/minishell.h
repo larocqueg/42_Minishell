@@ -162,6 +162,9 @@ void	free_tokens(t_token *token);
 void	free_envp(t_shell *sh);
 void	free_pipes(t_shell *sh);
 int		ft_check_type(t_token *tokens);
+void	ft_free_child_pipes(t_shell *sh);
+void	ft_free_tokenize(t_token *token, char *prompt);
+int		ft_type(t_token *tokens);
 
 //cmds
 int		create_cmds(t_shell *sh);
@@ -182,6 +185,8 @@ int		get_fdin(t_cmd *cmd, t_shell *sh);
 int		get_fdout(t_cmd *cmd, t_shell *sh);
 void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh);
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
+void	ft_close_execute_pipes(t_cmd *cmd);
+int		init_exec_commands(t_shell *sh, t_cmd *cmd, int *pid);
 
 //path_finder
 char	*local_path_finder(char *cmd, bool from_path_finder);
@@ -215,6 +220,7 @@ void	signal_default(void);
 void	child_signal_handler(int sig);
 
 //error messages
+# define HOME_ERROR	"minishell: cd: HOME not set\n"
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 # define REDIRECT_T "minishell: Expected argument after"
 # define INVALID_I "not a valid identifier"
