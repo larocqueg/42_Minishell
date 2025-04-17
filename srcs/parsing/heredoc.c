@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:04:37 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:03:34 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_i)
 {
-	free_envp(sh);
 	signal(SIGINT, ft_heredoc_signal_handler);
 	ft_get_heredoc(sh, remove_quotes(token->next->token),
 		heredoc_i, has_quotes(token->next->token));

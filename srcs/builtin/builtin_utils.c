@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:01:04 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:19:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_strcmp_tochar(const char *s1, const char *s2, char c)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	while ((s1[i] || s2[i]) || s1[i] != c || s2[i] != c)
 	{
 		if (s1[i] != s2[i])

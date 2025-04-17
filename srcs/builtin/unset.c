@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/16 18:36:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:20:29 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	exec_unset(t_shell *sh, char **cmd)
 	int		count;
 	char	**new_env;
 
+	if (sh->env_size == 0)
+		return ;
 	count = ft_count_vars(sh, cmd);
 	if (count == 0)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 20:07:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:23:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	start_cli(t_shell *sh)
 	cmd = sh->cmd;
 	while (1)
 	{
+
 		sh->prompt = readline("minishell $< ");
+		ft_fprintf(2, "env size= %d\n", sh->env_size);
 		if (!sh->prompt)
 			ft_eof_close(sh);
 		if (!*sh->prompt)

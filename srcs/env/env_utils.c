@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:26:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/16 18:38:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:31:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_get_env(char *var_name, char **env)
 {
 	int		i;
 
-	if (!env || !*env)
+	if (!env)
 		return (NULL);
 	i = 0;
 	while (env[i])
@@ -65,7 +65,7 @@ char	**clone_envp(t_shell *sh, char **envp)
 		i++;
 	}
 	dest[i] = NULL;
-	sh->env_size = i - 1;
+	sh->env_size = i;
 	return (dest);
 }
 

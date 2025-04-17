@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:44 by gde-la-r          #+#    #+#             */
-/*   Updated: 2024/12/02 17:33:00 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:36:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static int	ft_count_words(const char *str, char sep)
 	int	i;
 	int	words;
 
-	if (!str || !str[0])
+	if (!str)
 		return (0);
 	i = 0;
 	words = 0;
 	while (str[i])
 	{
-		while (str[i] == sep)
+		while (str[i] == sep && str[i])
 			i++;
 		if (str[i] != '\0' && str[i] != sep)
 			words++;

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 18:39:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:13:11 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	print_export(t_shell *sh)
 	char	**temp;
 
 	i = 0;
+	if (sh->env_size == 0)
+		return ;
 	temp = clone_envp(sh, sh->envp);
 	while (temp[i])
 	{

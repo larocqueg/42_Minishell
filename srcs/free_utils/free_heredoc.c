@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:05:55 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:04:51 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:03:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	free_exit(t_shell *sh, char *end, int heredoc_i, char *prompt)
 	free(sh->heredoc_pipes);
 	free_tokens(sh->token);
 	free(end);
+	free_envp(sh);
 	if (ft_exit_status(0, 0, 0) == -1)
 		exit(130);
 	else
