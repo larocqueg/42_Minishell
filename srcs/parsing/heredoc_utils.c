@@ -6,13 +6,13 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:50:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 20:52:01 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:04:40 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	here_doc_loop(t_token *token, t_shell *sh, int *heredoc_index, int *pid)
+int	here_doc_loop(t_token *token, t_shell *sh, int *heredoc_i, int *pid)
 {
 	if (token->type == HERE_DOC)
 	{
@@ -23,13 +23,13 @@ int	here_doc_loop(t_token *token, t_shell *sh, int *heredoc_index, int *pid)
 			return (0);
 		}
 		if ((*pid) == 0)
-			handle_heredoc_child(sh, token, *heredoc_index);
+			handle_heredoc_child(sh, token, *heredoc_i);
 		else
 		{
 			if (!handle_heredoc_parent(sh, (*pid)))
 				return (0);
 		}
-		(*heredoc_index)++;
+		(*heredoc_i)++;
 	}
 	return (1);
 }
@@ -78,13 +78,13 @@ void	ft_heredoc_signal_handler(int sig)
 	close(STDIN_FILENO);
 }
 
-int	not_prompt(t_shell *sh, char *end, int heredoc_index, char *prompt)
+int	not_prompt(t_shell *sh, char *end, int heredoc_i, char *prompt)
 {
 	if (!prompt)
 	{
 		ft_fprintf(2, "warning: here-document delimited by end-of-file ");
 		ft_fprintf(2, "(wanted '%s')\n", end);
-		free_exit(sh, end, heredoc_index, NULL);
+		free_exit(sh, end, heredoc_i, NULL);
 	}
 	return (1);
 }

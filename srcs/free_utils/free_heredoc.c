@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:05:55 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 20:53:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:04:51 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	handle_exit(t_shell *sh)
 	free_tokens(sh->token);
 }
 
-void	free_exit(t_shell *sh, char *end, int heredoc_index, char *prompt)
+void	free_exit(t_shell *sh, char *end, int heredoc_i, char *prompt)
 {
 	int	i;
 
 	i = 0;
-	close(sh->heredoc_pipes[heredoc_index][1]);
+	close(sh->heredoc_pipes[heredoc_i][1]);
 	while (sh->heredoc_pipes[i])
 	{
 		free(sh->heredoc_pipes[i]);
@@ -68,5 +68,3 @@ void	free_exit(t_shell *sh, char *end, int heredoc_index, char *prompt)
 	else
 		exit(0);
 }
-
-

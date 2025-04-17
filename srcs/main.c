@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:44:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:03:00 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->heredoc_pipes = NULL;
 	sh->heredoc_count = 0;
 }
+
 void	ft_get_shlvl(t_shell *sh)
 {
 	char		**env;
 	long long	shlvl;
 	char		*temp;
-	char 		*itoa;
+	char		*itoa;
 
 	env = sh->envp;
 	temp = ft_get_env("SHLVL", sh->envp);
@@ -66,5 +67,3 @@ int	main(int argc, char **argv, char **envp)
 	free_envp(&sh);
 	return (0);
 }
-
-
