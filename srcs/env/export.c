@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 18:00:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:05:37 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void	append_var(char *var, t_shell *sh)
 		create_export(temp, sh);
 		free(value);
 		free(temp);
+		free(var_name);
 		return ;
 	}
 	else
@@ -189,7 +190,6 @@ void	append_var(char *var, t_shell *sh)
 		value = ft_strjoin(temp, var + ft_strlen_tochar(var, '=') + 1);
 		if (!value)
 			return ;
-		ft_fprintf(2, "var == %s, value == '%s'\n", var, value);
 		temp = ft_strjoin(var_name, "=");
 		if (!temp)
 			return ;
@@ -197,7 +197,6 @@ void	append_var(char *var, t_shell *sh)
 		var_name = ft_strjoin(temp, value);
 		if (!var_name)
 			return ;
-		ft_fprintf(2, "var_name == '%s'\n", var_name);
 		create_export(var_name, sh);
 		free(temp);
 		free(value);
