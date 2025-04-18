@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:04:01 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 15:43:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:43:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*path_finder(char *cmds, char **env)
 	path = ft_get_env("PATH", env);
 	if (!path)
 		return (local_path_finder(ft_strjoin("./", cmds), true));
-	paths = ft_split(path + 5, ':');
+	paths = ft_split(path, ':');
 	i = 0;
 	while (paths[i])
 	{

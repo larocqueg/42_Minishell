@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 22:03:34 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:33:20 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote)
 			free(prompt);
 			prompt = temp;
 		}
-		ft_putstr_fd(prompt, sh->heredoc_pipes[heredoc_i][1]);
+		if (prompt)
+			ft_putstr_fd(prompt, sh->heredoc_pipes[heredoc_i][1]);
 		ft_putstr_fd("\n", sh->heredoc_pipes[heredoc_i][1]);
 		free(prompt);
 	}
