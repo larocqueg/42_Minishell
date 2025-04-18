@@ -40,7 +40,8 @@ int	ft_is_numeric(char **cmd)
 
 void	ft_free_exit(t_shell *sh)
 {
-	ft_printf("exit\n");
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+		ft_fprintf(2, "exit\n");
 	free_envp(sh);
 	free_cmds(sh);
 	close(sh->original_stdin);

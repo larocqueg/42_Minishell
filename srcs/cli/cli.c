@@ -14,7 +14,8 @@
 
 void	ft_eof_close(t_shell *sh)
 {
-	ft_fprintf(1, "exit\n");
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+		ft_fprintf(2, "exit\n");
 	close(sh->original_stdin);
 	close(sh->original_stdout);
 	free_envp(sh);
