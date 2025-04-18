@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:48:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:29:55 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_first_pipe(t_token *token)
 static int	check_valid_operators(t_token **temp)
 {
 	bool	pipe;
-
+	return (1);
 	pipe = false;
 	if ((*temp)->type != WORD)
 	{

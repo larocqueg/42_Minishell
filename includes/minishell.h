@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:13:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:31:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum e_type
 	INFILE,
 	TOFILE,
 	VAR,
+	WILDCARD,
 }	t_type;
 
 typedef struct s_cmd

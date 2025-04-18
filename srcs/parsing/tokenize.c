@@ -6,11 +6,28 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:20:53 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/12 18:11:47 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:34:38 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
+int	has_wildcard(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (has_quotes(str))
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '*')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 static t_type	get_token_type(char *token, t_shell *sh)
 {
@@ -29,6 +46,8 @@ static t_type	get_token_type(char *token, t_shell *sh)
 		return (INFILE);
 	if (ft_strncmp(token, ">", 1) == 0)
 		return (TOFILE);
+	if (has_wildcard(token))
+		return (WILDCARD);
 	return (WORD);
 }
 

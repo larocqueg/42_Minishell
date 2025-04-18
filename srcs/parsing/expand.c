@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 15:07:53 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:35:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	expand_tokens(t_shell *sh)
 	token = sh->token;
 	while (token)
 	{
-		if (token->type == WORD)
+		if (token->type == WORD || token->type == WILDCARD)
 		{
 			temp = expand(token->token, sh, false, 0);
 			if (!temp)
