@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:05:55 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 22:03:46 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:01:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	handle_exit(t_shell *sh)
 	}
 	free(sh->heredoc_pipes);
 	sh->heredoc_count = 0;
-	write(1, "\n", 1);
 	free_tokens(sh->token);
 }
 

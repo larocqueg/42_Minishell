@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:05:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:13:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	free_exit(t_shell *sh, char *end, int heredoc_i, char *prompt);
 int		here_doc_loop(t_token *token, t_shell *sh, int *heredoc_i, int *pid);
 int		has_quotes(char *str);
 int		ft_heredoc_init(t_shell *sh);
-void	ft_heredoc_signal_handler(int sig);
+void	ft_heredoc_child_signal_handler(int sig);
+void	ft_heredoc_parent_signal_handler(int sig);
 int		not_prompt(t_shell *sh, char *end, int heredoc_i, char *prompt);
 void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote);
 void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_i);

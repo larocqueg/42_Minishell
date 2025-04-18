@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 20:52:53 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:14:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	signal_handler(int sig)
 		rl_redisplay();
 		ft_exit_status(130, true, false);
 	}
+}
+
+void	ft_heredoc_child_signal_handler(int sig)
+{
+	ft_exit_status(-1, true, false);
+	close(STDIN_FILENO);
+}
+
+void	ft_heredoc_parent_signal_handler(int sig)
+{
+	write(1, "\n", 1);
 }
 
 void	child_signal_handler(int sig)

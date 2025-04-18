@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:50:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:04:40 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:13:40 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,8 @@ int	ft_heredoc_init(t_shell *sh)
 		i++;
 		sh->heredoc_pipes[i] = NULL;
 	}
+	signal(SIGINT, ft_heredoc_parent_signal_handler);
 	return (1);
-}
-
-void	ft_heredoc_signal_handler(int sig)
-{
-	ft_exit_status(-1, true, false);
-	close(STDIN_FILENO);
 }
 
 int	not_prompt(t_shell *sh, char *end, int heredoc_i, char *prompt)

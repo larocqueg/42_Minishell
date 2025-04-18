@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 15:33:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:16:01 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_i)
 {
-	signal(SIGINT, ft_heredoc_signal_handler);
+	signal(SIGINT, ft_heredoc_child_signal_handler);
 	ft_get_heredoc(sh, remove_quotes(token->next->token),
 		heredoc_i, has_quotes(token->next->token));
 }
@@ -59,10 +59,8 @@ int	get_heredoc(t_shell *sh)
 		token = token->next;
 	}
 	while (sh->heredoc_pipes[i])
-	{
-		close(sh->heredoc_pipes[i][1]);
-		i++;
-	}
+		close(sh->heredoc_pipes[i++][1]);
+	signal(SIGINT, signal_handler);
 	return (1);
 }
 
