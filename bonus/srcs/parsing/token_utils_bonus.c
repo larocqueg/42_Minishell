@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   token_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:00:51 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 17:42:49 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 13:57:32 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ t_token	*ft_tokennew(char *str, int type)
 		return (NULL);
 	}
 	n_token->type = type;
+	if (n_token->type == WORD && has_wildcard(str))
+		n_token->wildcard = true;
+	else
+		n_token->wildcard = false;
 	n_token->next = NULL;
 	return (n_token);
 }

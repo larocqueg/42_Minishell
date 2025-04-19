@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmds.c                                             :+:      :+:    :+:   */
+/*   cmds_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:39:27 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 21:32:09 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 12:39:42 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh)
 			(*token) = getfd_append(*token, newcmd);
 		else if ((*token)-> type == HERE_DOC && !perm_error(newcmd))
 			(*token) = getfd_heredoc(*token, newcmd, sh);
-		else if ((*token)-> type == WORD || (*token)->type == WILDCARD)
+		else if ((*token)-> type == WORD)
 			(*token) = get_command(*token, newcmd);
 		if (*token)
 			(*token) = (*token)-> next;

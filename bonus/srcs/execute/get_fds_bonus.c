@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_fds.c                                          :+:      :+:    :+:   */
+/*   get_fds_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:48:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 21:32:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 13:59:01 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 t_token	*getfd_tofile(t_token *token, t_cmd *newcmd)
 {
 	token = token -> next;
+	if (token->wildcard)
+		newcmd->tofile_error = true;
 	if (newcmd -> fd_out != -1)
 		close(newcmd->fd_out);
 	newcmd -> fd_out = open(token->token, O_RDWR | O_TRUNC | O_CREAT, 0644);
@@ -26,6 +28,8 @@ t_token	*getfd_tofile(t_token *token, t_cmd *newcmd)
 t_token	*getfd_infile(t_token *token, t_cmd *newcmd)
 {
 	token = token -> next;
+	if (token->wildcard)
+		newcmd->infile_error = true;
 	if (newcmd -> fd_in != -1 && !newcmd->heredoc)
 		close(newcmd->fd_in);
 	newcmd -> fd_in = open(token->token, O_RDONLY);
@@ -38,6 +42,8 @@ t_token	*getfd_infile(t_token *token, t_cmd *newcmd)
 t_token	*getfd_append(t_token *token, t_cmd *newcmd)
 {
 	token = token -> next;
+	if (token->wildcard)
+		newcmd->tofile_error = true;
 	if (newcmd -> fd_out != -1)
 		close(newcmd->fd_out);
 	newcmd -> fd_out = open(token->token, O_RDWR | O_APPEND | O_CREAT, 0644);
@@ -63,9 +69,9 @@ t_token	*get_command(t_token *token, t_cmd *newcmd)
 	static DIR	*directory;
 
 	line = NULL;
-	if ((token->type == WORD || token->type == WILDCARD) && token->token)
+	if ((token->type == WORD) && token->token)
 	{
-		if (token->type == WILDCARD)
+		if (token->wildcard)
 		{
 			directory = opendir(".");
 			while (1)

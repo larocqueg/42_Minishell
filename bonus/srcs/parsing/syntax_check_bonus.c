@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_check.c                                     :+:      :+:    :+:   */
+/*   syntax_check_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 21:29:55 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 12:35:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ static int	is_first_pipe(t_token *token)
 	return (0);
 }
 
-static int	check_valid_operators(t_token **temp, bool pipe)
+static int	check_valid_operators(t_token **temp)
 {
+	bool	pipe;
+
+	pipe = false;
 	if ((*temp)->type != WORD)
 	{
 		if ((*temp)->type == PIPE)
@@ -40,8 +43,7 @@ static int	check_valid_operators(t_token **temp, bool pipe)
 			ft_fprintf(2, "%s '%s'\n", UNEXPECTED_T, (*temp)->next->token);
 			return (0);
 		}
-		else if ((*temp)->next->type == TOFILE && !(*temp)->next->next
-			|| (*temp)->next->type == WILDCARD)
+		else if ((*temp)->next->type == TOFILE && !(*temp)->next->next)
 		{
 			ft_fprintf(2, "%s \'%s\'\n", REDIRECT_T, (*temp)->next->token);
 			return (0);
@@ -59,7 +61,7 @@ int	check_tokens(t_token *token)
 	{
 		if (is_first_pipe(token))
 			return (0);
-		if (!check_valid_operators(&temp, false))
+		if (!check_valid_operators(&temp))
 			return (0);
 		temp = temp -> next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:30:46 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/19 12:31:10 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/19 12:40:04 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_token
 	t_type			type;
 	bool			expand;
 	struct s_token	*next;
+	bool			wildcard;
 }	t_token;
 
 typedef struct s_shell
