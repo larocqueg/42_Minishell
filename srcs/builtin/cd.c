@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 19:51:36 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:40:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	cd_error(t_shell *sh, char *error, char *cmd)
 		ft_fprintf(2, "%s", error);
 	else
 		ft_fprintf(2, "%s directory \"%s\"\n", error, cmd);
-	ft_exit_status(1, 1, 0);
+	ft_exit(1, 1, 0);
 	return (1);
 }
 
@@ -57,13 +57,13 @@ int	exec_cd(char **cmd, t_shell *sh)
 		chdir(ft_get_env("HOME", sh->envp));
 		path = getcwd(NULL, 0);
 		change_var(path, oldpwd, sh);
-		ft_exit_status(0, 1, 0);
+		ft_exit(0, 1, 0);
 		return (free(path), free(oldpwd), 1);
 	}
 	else if (chdir(cmd[1]) == -1)
 		return (free(oldpwd), cd_error(sh, "minishell: cd: No such", cmd[1]));
 	path = getcwd(NULL, 0);
 	change_var(path, oldpwd, sh);
-	ft_exit_status(0, 1, 0);
+	ft_exit(0, 1, 0);
 	return (free(path), free(oldpwd), 1);
 }

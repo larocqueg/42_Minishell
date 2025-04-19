@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:28:46 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:14:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:40:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_expand_exit(char *str, size_t *i)
 	char	*temp;
 	char	*exit_code;
 
-	exit_code = ft_itoa(ft_exit_status(0, 0, 0));
+	exit_code = ft_itoa(ft_exit(0, 0, 0));
 	if (!exit_code)
 	{
 		free(str);

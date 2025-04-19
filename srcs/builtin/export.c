@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:00:07 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 22:13:11 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:40:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	create_export(char *str, t_shell *sh)
 	free(no_equal);
 	free(no_quotes);
 	free(var_name);
-	ft_exit_status(0, 1, 0);
+	ft_exit(0, 1, 0);
 }
 
 void	exec_export(t_shell *sh, t_cmd *cmd)
@@ -114,13 +114,13 @@ void	exec_export(t_shell *sh, t_cmd *cmd)
 	if (cmds[1] == NULL)
 	{
 		print_export(sh);
-		ft_exit_status(0, 1, 0);
+		ft_exit(0, 1, 0);
 	}
 	else
 	{
 		while (cmds[i])
 		{
-			ft_exit_status(1, 1, 0);
+			ft_exit(1, 1, 0);
 			if (is_valid_var(cmds[i]) || is_var(cmds[i]))
 				create_export(cmds[i], sh);
 			else if (is_append_var(cmds[i]))

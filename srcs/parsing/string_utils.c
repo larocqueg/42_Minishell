@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:03:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:16:00 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:40:49 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	check_quotes(char *prompt)
 	if (quote != '\0')
 	{
 		write(2, "minishell: syntax error: unclosed quotes\n", 41);
-		ft_exit_status(2, true, false);
+		ft_exit(2, true, false);
 		return (0);
 	}
 	return (1);

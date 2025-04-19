@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:45:44 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:41:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static void	handle_parent(int pid, t_cmd *cmd)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
-		ft_exit_status(WEXITSTATUS(status), true, false);
+		ft_exit(WEXITSTATUS(status), true, false);
 	}
 	else if (WIFSIGNALED(status))
 	{
-		ft_exit_status(WTERMSIG(status) + 128, true, false);
+		ft_exit(WTERMSIG(status) + 128, true, false);
 	}
-	if (ft_exit_status(0, 0, 0) == 131)
+	if (ft_exit(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
 }
 
@@ -86,7 +86,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 			return ;
 		if (pid == 0 || pid == -1)
 		{
-			signal_default();
+			signal_reset();
 			signal(SIGPIPE, child_signal_handler);
 			handle_child(sh, cmd, 0, 0);
 		}
