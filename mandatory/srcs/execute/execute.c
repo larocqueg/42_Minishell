@@ -52,7 +52,7 @@ static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 		handle_perm_error(cmd, sh);
 }
 
-static void	handle_parent(int pid, t_cmd *cmd)
+static void	handle_parent(int pid)
 {
 	int	status;
 
@@ -76,11 +76,9 @@ static void	handle_parent(int pid, t_cmd *cmd)
 static void	execute_commands(t_shell *sh, t_cmd *cmd)
 {
 	int		pid;
-	int		status;
 
 	while (cmd)
 	{
-		status = 0;
 		pid = -1;
 		if (!init_exec_commands(sh, cmd, &pid))
 			return ;
@@ -96,7 +94,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	if (pid != 0 && pid != -1)
-		handle_parent(pid, cmd);
+		handle_parent(pid);
 }
 
 void	execute(t_shell *sh)

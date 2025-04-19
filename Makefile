@@ -16,7 +16,6 @@ BONUS_NAME = minishell_bonus
 # Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS = -g
 LDFLAGS= -lreadline -lncurses
 # Paths
 SRC_DIR = ./mandatory/srcs

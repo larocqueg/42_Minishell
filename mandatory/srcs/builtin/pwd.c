@@ -14,10 +14,9 @@
 
 void	exec_pwd(t_cmd *cmd)
 {
-	char	**cmds;
 	char	*current_pwd;
 
-	cmds = cmd->cmd;
+	(void)cmd;
 	current_pwd = getcwd(NULL, 0);
 	if (!current_pwd)
 	{

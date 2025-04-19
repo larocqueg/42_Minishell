@@ -82,7 +82,7 @@ void	start_heredoc(t_shell *sh, int heredoc_i)
 	}
 }
 
-void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote)
+void	ft_get_heredoc(t_shell *sh, char *end, int heredoc_i, bool quote)
 {
 	char	*prompt;
 	char	*temp;

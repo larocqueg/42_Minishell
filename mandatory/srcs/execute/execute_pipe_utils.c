@@ -40,7 +40,7 @@ int	init_exec_commands(t_shell *sh, t_cmd *cmd, int *pid)
 		}
 		return (0);
 	}
-	if (!fork_cmd(sh, cmd, pid))
+	if (!fork_cmd(cmd, pid))
 	{
 		if (cmd->from_pipe)
 		{

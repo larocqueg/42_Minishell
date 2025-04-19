@@ -75,12 +75,9 @@ void	append_var(char *var_name, char *var, char *temp, t_shell *sh)
 
 void	do_append(char *var, t_shell *sh)
 {
-	int		i;
 	char	*temp;
 	char	*var_name;
-	char	*value;
 
-	i = 0;
 	var_name = ft_strndupmod(var, 0, ft_strlen_tochar(var, '+') - 1);
 	if (!var_name)
 		return ;

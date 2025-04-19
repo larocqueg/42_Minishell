@@ -80,9 +80,7 @@ void	create_export(char *str, t_shell *sh)
 	char	*var_name;
 	char	*no_equal;
 	char	*no_quotes;
-	int		i;
 
-	i = 0;
 	no_quotes = remove_quotes(str);
 	str = no_quotes;
 	no_equal = ft_strndupmod(str, 0, ft_strlen_tochar(str, '=') - 1);

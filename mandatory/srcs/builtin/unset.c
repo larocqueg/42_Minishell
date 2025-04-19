@@ -96,6 +96,7 @@ void	exec_unset(t_shell *sh, char **cmd)
 
 	if (sh->env_size == 0)
 		return ;
+	new_env = NULL;
 	count = ft_count_vars(sh, cmd);
 	if (count == 0)
 		return ;

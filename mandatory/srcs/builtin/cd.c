@@ -14,6 +14,7 @@
 
 static int	cd_error(t_shell *sh, char *error, char *cmd)
 {
+	(void)sh;
 	if (!cmd)
 		ft_fprintf(2, "%s", error);
 	else

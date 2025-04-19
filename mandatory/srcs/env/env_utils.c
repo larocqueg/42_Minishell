@@ -72,10 +72,8 @@ char	**clone_envp(t_shell *sh, char **envp)
 int	ft_strcmp_var(char *env_var, char *new_var)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (env_var[i])
 	{
 		if (env_var[i] == new_var[i])

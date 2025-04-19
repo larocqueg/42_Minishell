@@ -70,7 +70,7 @@ int	create_pipe(t_shell *sh, t_cmd *cmd)
 	return (1);
 }
 
-int	fork_cmd(t_shell *sh, t_cmd *cmd, int *pid)
+int	fork_cmd(t_cmd *cmd, int *pid)
 {
 	if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 	{

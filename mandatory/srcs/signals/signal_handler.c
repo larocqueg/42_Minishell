@@ -26,12 +26,14 @@ void	signal_handler(int sig)
 
 void	ft_heredoc_child_signal_handler(int sig)
 {
+	(void)sig;
 	ft_exit(-1, true, false);
 	close(STDIN_FILENO);
 }
 
 void	ft_heredoc_parent_signal_handler(int sig)
 {
+	(void)sig;
 	write(1, "\n", 1);
 }
 

@@ -80,7 +80,6 @@ char	*path_finder(char *cmds, char **env)
 char	*local_path_finder(char *cmd, bool from_path_finder)
 {
 	char	*path;
-	char	*temp;
 
 	if (!cmd || !*cmd)
 		return (NULL);

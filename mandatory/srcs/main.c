@@ -6,11 +6,26 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 22:28:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 21:04:36 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell	sh;
+
+	(void)argv;
+	if (argc != 1 || !isatty(STDOUT_FILENO))
+		return (1);
+	ft_sh_init(&sh, envp);
+	ft_get_shlvl(&sh);
+	ft_init_pwd(&sh);
+	start_cli(&sh);
+	free_envp(&sh);
+	return (0);
+}
 
 void	ft_sh_init(t_shell *sh, char **envp)
 {
@@ -30,12 +45,10 @@ void	ft_sh_init(t_shell *sh, char **envp)
 
 void	ft_get_shlvl(t_shell *sh)
 {
-	char		**env;
 	long long	shlvl;
 	char		*temp;
 	char		*itoa;
 
-	env = sh->envp;
 	temp = ft_get_env("SHLVL", sh->envp);
 	if (!temp)
 	{
@@ -70,18 +83,4 @@ void	ft_init_pwd(t_shell *sh)
 	create_export(temp, sh);
 	free(current_pwd);
 	free (temp);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_shell	sh;
-
-	if (argc != 1 || !isatty(STDOUT_FILENO))
-		return (1);
-	ft_sh_init(&sh, envp);
-	ft_get_shlvl(&sh);
-	ft_init_pwd(&sh);
-	start_cli(&sh);
-	free_envp(&sh);
-	return (0);
 }
