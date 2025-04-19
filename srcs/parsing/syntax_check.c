@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:02:44 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:48:14 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_first_pipe(t_token *token)
 	if (token->type == PIPE)
 	{
 		ft_fprintf(2, "%s '|'\n", UNEXPECTED_T);
-		ft_exit_status(2, true, false);
+		ft_exit(2, true, false);
 		return (1);
 	}
 	return (0);
@@ -85,7 +85,7 @@ int	check_syntax(t_shell *sh)
 	{
 		free_tokens(sh->token);
 		free(sh->prompt);
-		ft_exit_status(2, true, false);
+		ft_exit(2, true, false);
 		return (0);
 	}
 	free(sh->prompt);

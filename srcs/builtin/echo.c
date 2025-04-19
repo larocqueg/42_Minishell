@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:48:28 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 21:25:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	exec_echo(t_cmd *cmds)
 	}
 	if (!flag)
 		ft_printf("\n");
-	ft_exit_status(0, 1, 0);
+	ft_exit(0, 1, 0);
 }

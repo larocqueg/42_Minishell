@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 22:23:43 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_eof_close(t_shell *sh)
 	rl_clear_history();
 	if (sh->heredoc_count > 0)
 		free(sh->heredoc_pipes);
-	ft_exit_status(0, false, true);
+	ft_exit(0, false, true);
 }
 
 void	reset_cli(t_shell *sh)
 {
 	dup2(sh->original_stdin, STDIN_FILENO);
 	dup2(sh->original_stdout, STDOUT_FILENO);
-	signal_default();
+	signal_reset();
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	sh->heredoc_count = 0;

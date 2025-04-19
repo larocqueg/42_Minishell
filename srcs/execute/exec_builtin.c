@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 20:21:44 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_builtin(t_cmd *cmd, t_shell *sh)
 		free_cmds(sh);
 		if (sh->heredoc_count > 0)
 			free(sh->heredoc_pipes);
-		ft_exit_status(0, 0, 1);
+		ft_exit(0, 0, 1);
 	}
 	else
 		return ;
@@ -37,7 +37,7 @@ void	exec_builtin(t_cmd *cmd, t_shell *sh)
 	if (!cmd->cmd || !*cmd->cmd)
 	{
 		if (cmd->to_pipe || cmd->from_pipe)
-			ft_exit_status(0, 0, 1);
+			ft_exit(0, 0, 1);
 		return ;
 	}
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)

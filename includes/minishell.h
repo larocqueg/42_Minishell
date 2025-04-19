@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:44:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:13:05 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,9 @@ void	ft_change_var(char *var_name, char *content, char **env);
 int		ft_strcmp_unset(char *env, char *cmd);
 
 //signals
-int		ft_exit_status(int exit_code, bool set, bool close);
+int		ft_exit(int exit_code, bool set, bool close);
 void	signal_handler(int sig);
-void	signal_default(void);
+void	signal_reset(void);
 void	child_signal_handler(int sig);
 
 //error messages

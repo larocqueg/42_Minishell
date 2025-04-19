@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:14:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:59 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	signal_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		ft_exit_status(130, true, false);
+		ft_exit(130, true, false);
 	}
 }
 
 void	ft_heredoc_child_signal_handler(int sig)
 {
-	ft_exit_status(-1, true, false);
+	ft_exit(-1, true, false);
 	close(STDIN_FILENO);
 }
 
@@ -38,10 +38,10 @@ void	ft_heredoc_parent_signal_handler(int sig)
 void	child_signal_handler(int sig)
 {
 	if (sig == SIGPIPE)
-		return ;
+		ft_exit(141, 1, 0);
 }
 
-void	signal_default(void)
+void	signal_reset(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

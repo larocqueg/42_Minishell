@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:47:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 	if (argc == 1)
 	{
 		ft_free_exit(sh);
-		ft_exit_status(0, 0, 1);
+		ft_exit(0, 0, 1);
 	}
 	else if (!ft_is_numeric(cmds->cmd))
 	{
 		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
 		ft_free_exit(sh);
-		ft_exit_status(2, 1, 1);
+		ft_exit(2, 1, 1);
 	}
 	if (argc > 2)
 	{
 		ft_fprintf(2, "minishell: exit: too many arguments\n");
-		ft_exit_status(1, 1, 0);
+		ft_exit(1, 1, 0);
 		return ;
 	}
 	exit_code = ft_atoll(cmds->cmd[1]);
 	ft_free_exit(sh);
-	ft_exit_status(exit_code, 1, 1);
+	ft_exit(exit_code, 1, 1);
 }

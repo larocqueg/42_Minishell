@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:36:25 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:36:32 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	do_append(char *var, t_shell *sh)
 	else
 		append_var(var_name, var, temp, sh);
 	free(var_name);
-	ft_exit_status(0, 1, 0);
+	ft_exit(0, 1, 0);
 }
 
 void	put_export(char *str)

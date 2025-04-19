@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:16:01 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	handle_heredoc_parent(t_shell *sh, int pid)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
-		ft_exit_status(WEXITSTATUS(status), true, false);
-		if (ft_exit_status(0, 0, 0) == 130)
+		ft_exit(WEXITSTATUS(status), true, false);
+		if (ft_exit(0, 0, 0) == 130)
 		{
 			handle_exit(sh);
 			return (0);
@@ -92,7 +92,7 @@ void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote)
 	while (1)
 	{
 		prompt = readline("> ");
-		if (ft_exit_status(0, 0, 0) == -1)
+		if (ft_exit(0, 0, 0) == -1)
 			free_exit(sh, end, heredoc_i, prompt);
 		if (!not_prompt(sh, end, heredoc_i, prompt))
 			continue ;
