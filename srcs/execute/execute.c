@@ -41,7 +41,7 @@ static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 	}
 	if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
 		ft_free_child_pipes(sh);
-	if (!perm_error(cmd) && ft_is_builtin(cmd->cmd))
+	if (!perm_error(cmd) && ft_is_builtin(cmd->cmd) && ft_exit(0, 0, 0) != 141)
 		exec_builtin(cmd, sh);
 	else if (!perm_error(cmd))
 	{
