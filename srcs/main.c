@@ -76,9 +76,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
 
-	(void)argv;
-	if (argc > 1)
-		return (0);
+	if (argc != 1 || !isatty(STDOUT_FILENO))
+		return (1);
 	ft_sh_init(&sh, envp);
 	ft_get_shlvl(&sh);
 	ft_init_pwd(&sh);

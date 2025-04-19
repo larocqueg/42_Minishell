@@ -37,9 +37,6 @@ void	reset_cli(t_shell *sh)
 
 int	start_cli(t_shell *sh)
 {
-	t_cmd	*cmd;
-
-	cmd = sh->cmd;
 	while (1)
 	{
 		sh->prompt = readline("minishell $< ");
@@ -59,6 +56,8 @@ int	start_cli(t_shell *sh)
 			continue ;
 		execute(sh);
 		reset_cli(sh);
+		if (!isatty(STDIN_FILENO) && !isatty(STDOUT_FILENO))
+			ft_eof_close(sh);
 	}
 	exit(0);
 }

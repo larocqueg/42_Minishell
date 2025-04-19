@@ -38,7 +38,9 @@ void	ft_heredoc_parent_signal_handler(int sig)
 void	child_signal_handler(int sig)
 {
 	if (sig == SIGPIPE)
-		return ;
+	{
+		ft_exit_status(141, 1, 0);
+	}
 }
 
 void	signal_default(void)
