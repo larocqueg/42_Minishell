@@ -41,7 +41,7 @@ void	exec_echo(t_cmd *cmds)
 	i = 1;
 	flag = false;
 	cmd = cmds->cmd;
-	if (ft_is_flag(cmd[1]))
+	while (ft_is_flag(cmd[i]))
 	{
 		i++;
 		flag = true;
