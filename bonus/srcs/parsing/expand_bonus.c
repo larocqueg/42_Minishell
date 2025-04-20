@@ -71,8 +71,6 @@ void	expand_tokens(t_shell *sh)
 		if (token->type == WORD || token->type == WILDCARD)
 		{
 			temp = expand(token->token, sh, false, 0);
-			if (!temp)
-				continue ;
 			free(token->token);
 			token->token = remove_quotes(temp);
 			free(temp);
