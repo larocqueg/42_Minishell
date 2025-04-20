@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   export_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 18:36:25 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 18:36:32 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:06:40 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:06:42 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,9 @@ void	append_var(char *var_name, char *var, char *temp, t_shell *sh)
 
 void	do_append(char *var, t_shell *sh)
 {
-	int		i;
 	char	*temp;
 	char	*var_name;
-	char	*value;
 
-	i = 0;
 	var_name = ft_strndupmod(var, 0, ft_strlen_tochar(var, '+') - 1);
 	if (!var_name)
 		return ;

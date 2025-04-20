@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*   signal_handler_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:14:19 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:49:21 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:49:23 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ void	signal_handler(int sig)
 
 void	ft_heredoc_child_signal_handler(int sig)
 {
+	(void)sig;
 	ft_exit(-1, true, false);
 	close(STDIN_FILENO);
 }
 
 void	ft_heredoc_parent_signal_handler(int sig)
 {
+	(void)sig;
 	write(1, "\n", 1);
 }
 

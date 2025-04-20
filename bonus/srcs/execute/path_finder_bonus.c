@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_finder.c                                      :+:      :+:    :+:   */
+/*   path_finder_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 19:04:01 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 15:43:15 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:44:59 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:45:00 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*path_finder(char *cmds, char **env)
 char	*local_path_finder(char *cmd, bool from_path_finder)
 {
 	char	*path;
-	char	*temp;
 
 	if (!cmd || !*cmd)
 		return (NULL);

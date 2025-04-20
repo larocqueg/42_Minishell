@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 19:26:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/17 22:31:16 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:44:08 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:44:09 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,8 @@ char	**clone_envp(t_shell *sh, char **envp)
 int	ft_strcmp_var(char *env_var, char *new_var)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (env_var[i])
 	{
 		if (env_var[i] == new_var[i])

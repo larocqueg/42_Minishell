@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*   execute_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 20:23:18 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/15 21:58:19 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:46:22 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:46:23 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	create_pipe(t_shell *sh, t_cmd *cmd)
 
 int	fork_cmd(t_shell *sh, t_cmd *cmd, int *pid)
 {
+	(void)sh;
 	if (cmd->from_pipe || !ft_is_builtin(cmd->cmd) || cmd->to_pipe)
 	{
 		(*pid) = fork();

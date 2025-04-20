@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_bonus.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 19:51:36 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:43:47 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:43:49 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	cd_error(t_shell *sh, char *error, char *cmd)
 {
+	(void)sh;
 	if (!cmd)
 		ft_fprintf(2, "%s", error);
 	else

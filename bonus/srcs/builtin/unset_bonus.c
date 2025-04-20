@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   unset_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/17 22:20:29 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:05:01 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:05:03 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	exec_unset(t_shell *sh, char **cmd)
 	int		count;
 	char	**new_env;
 
+	new_env = NULL;
 	if (sh->env_size == 0)
 		return ;
 	count = ft_count_vars(sh, cmd);

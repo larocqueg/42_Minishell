@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   pwd_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 20:16:32 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/10 20:52:16 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:05:32 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:05:33 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	exec_pwd(t_cmd *cmd)
 {
-	char	**cmds;
 	char	*current_pwd;
 
-	cmds = cmd->cmd;
+	(void)cmd;
 	current_pwd = getcwd(NULL, 0);
 	if (!current_pwd)
 	{

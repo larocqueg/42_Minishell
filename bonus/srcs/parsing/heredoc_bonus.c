@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   heredoc_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 16:22:26 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/18 16:16:01 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:48:00 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:48:02 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	start_heredoc(t_shell *sh, int heredoc_i)
 	}
 }
 
-void	ft_get_heredoc(t_shell *sh, char *end, char heredoc_i, bool quote)
+void	ft_get_heredoc(t_shell *sh, char *end, int heredoc_i, bool quote)
 {
 	char	*prompt;
 	char	*temp;

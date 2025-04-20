@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_cmd_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 20:21:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/12 15:34:03 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/20 18:45:34 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/20 18:45:35 by gde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_execve_error(t_shell *sh, char *path)
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh)
 {
 	char	*path;
-	int		exit_code;
 
 	ft_exit(127, 1, 0);
 	close(sh->original_stdin);
