@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/19 11:33:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:56:15 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,45 @@ static void	ft_get_colors(t_cmd *cmds)
 		cmds->cmd = append_cmd(cmds->cmd, "--color=auto");
 }
 
+void	free_all_cmds(t_shell *sh, t_cmd *current)
+{
+	t_cmd	*cmd;
+	t_cmd	*temp;
+	int		pipe;
+
+	if (!sh->cmd)
+		return ;
+	pipe = false;
+	cmd = sh->cmd;
+	temp = cmd;
+	while (cmd)
+	{
+		temp = cmd -> next;
+		if (cmd == current)
+		{
+			cmd = temp;
+			continue;
+		}
+		ft_free(cmd->cmd);
+		if (cmd->to_pipe || cmd->from_pipe)
+			pipe = true;
+		if (pipe)
+		{
+			if (cmd->fd_out != -1)
+				close(cmd->fd_out);
+			if (cmd->fd_in != -1 && !cmd->heredoc)
+				close(cmd->fd_in);
+		}
+		free(cmd);
+		cmd = temp;
+	}
+}
+
 static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 {
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
+	free_all_cmds(sh, cmd);
 	if (outfd != STDOUT_FILENO)
 	{
 		dup2(outfd, STDOUT_FILENO);
@@ -92,7 +127,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 		else if (pid != 0)
 		{
 			if (pid > 0)
-				pids[i++] = pid;	
+				pids[i++] = pid;
 			ft_close_execute_pipes(cmd);
 		}
 		change_pipes(sh, cmd);
