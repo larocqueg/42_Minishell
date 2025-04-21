@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/21 15:56:15 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:01:19 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_all_cmds(t_shell *sh, t_cmd *current)
 	t_cmd	*temp;
 	int		pipe;
 
-	if (!sh->cmd)
+	if (!sh->cmd || ((!current->from_pipe && !current->to_pipe) || ft_is_builtin(current->cmd)))
 		return ;
 	pipe = false;
 	cmd = sh->cmd;
