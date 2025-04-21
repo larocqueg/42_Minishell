@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/19 21:04:36 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:11:08 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	sh;
 
 	(void)argv;
-	if (argc != 1 || !isatty(STDOUT_FILENO))
+	if (argc != 1 /*|| !isatty(STDOUT_FILENO)*/)
 		return (1);
 	ft_sh_init(&sh, envp);
 	ft_get_shlvl(&sh);

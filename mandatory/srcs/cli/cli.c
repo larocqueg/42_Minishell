@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 22:04:14 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/19 11:33:59 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:10:35 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	start_cli(t_shell *sh)
 			continue ;
 		execute(sh);
 		reset_cli(sh);
-		if (!isatty(STDIN_FILENO) && !isatty(STDOUT_FILENO))
-			ft_eof_close(sh);
+		//if (!isatty(STDIN_FILENO) && !isatty(STDOUT_FILENO))
+		//	ft_eof_close(sh);
 	}
 	exit(0);
 }
