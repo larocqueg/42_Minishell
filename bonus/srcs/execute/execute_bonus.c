@@ -89,10 +89,12 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 			signal(SIGPIPE, child_signal_handler);
 			handle_child(sh, cmd, 0, 0);
 		}
-		else if (pid > 0)
+		else if (pid != 0)
 		{
-			pids[i++] = pid;
-			ft_close_execute_pipes(cmd);
+			if (pid > 0)
+				pids[i++] = pid;
+			else
+				ft_close_execute_pipes(cmd);
 		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
