@@ -52,30 +52,31 @@ static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 		handle_perm_error(cmd, sh);
 }
 
-static void	handle_parent(int pid)
+static void	wait_for_pds(int *pids, int count)
 {
 	int	status;
+	int	i;
 
-	status = 0;
+	i = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
+	signal(SIGPIPE, child_signal_handler);
+	while (i < count)
 	{
-		ft_exit(WEXITSTATUS(status), true, false);
-	}
-	else if (WIFSIGNALED(status))
-	{
-		ft_exit(WTERMSIG(status) + 128, true, false);
+		waitpid(pids[i], &status, 0);
+		if (WIFEXITED(status))
+			ft_exit(WEXITSTATUS(status), true, false);
+		else if (WIFSIGNALED(status))
+			ft_exit(WTERMSIG(status) + 128, true, false);
+		i++;
 	}
 	if (ft_exit(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
 }
 
-static void	execute_commands(t_shell *sh, t_cmd *cmd)
+static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 {
-	int		pid;
+	int		pids[4096];
 
 	while (cmd)
 	{
@@ -88,13 +89,16 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd)
 			signal(SIGPIPE, child_signal_handler);
 			handle_child(sh, cmd, 0, 0);
 		}
-		else if (pid != 0)
+		else if (pid > 0)
+		{
+			pids[i++] = pid;
 			ft_close_execute_pipes(cmd);
+		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
 	}
-	if (pid != 0 && pid != -1)
-		handle_parent(pid);
+	if (i > 0)
+		wait_for_pds(pids, i);
 }
 
 void	execute(t_shell *sh)
@@ -103,7 +107,7 @@ void	execute(t_shell *sh)
 
 	cmd = sh->cmd;
 	free_tokens(sh->token);
-	execute_commands(sh, cmd);
+	execute_commands(sh, cmd, 0, -1);
 	free_cmds(sh);
 	free_pipes(sh);
 }
