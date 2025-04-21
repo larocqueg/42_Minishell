@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:46:32 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:46:33 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:13:44 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,44 @@ static void	ft_get_colors(t_cmd *cmds)
 		cmds->cmd = append_cmd(cmds->cmd, "--color=auto");
 }
 
+void	free_all_cmds(t_shell *sh, t_cmd *current)
+{
+	t_cmd	*cmd;
+	t_cmd	*temp;
+	int		pipe;
+
+	if (!sh->cmd || ((!current->from_pipe && !current->to_pipe) || ft_is_builtin(current->cmd)))
+		return ;
+	pipe = false;
+	cmd = sh->cmd;
+	temp = cmd;
+	while (cmd)
+	{
+		temp = cmd -> next;
+		if (cmd == current)
+		{
+			cmd = temp;
+			continue;
+		}
+		ft_free(cmd->cmd);
+		if (cmd->to_pipe || cmd->from_pipe)
+			pipe = true;
+		if (pipe)
+		{
+			if (cmd->fd_out != -1)
+				close(cmd->fd_out);
+			if (cmd->fd_in != -1 && !cmd->heredoc)
+				close(cmd->fd_in);
+		}
+		free(cmd);
+		cmd = temp;
+	}
+}
 static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 {
 	outfd = get_fdout(cmd, sh);
 	infd = get_fdin(cmd, sh);
+	free_all_cmds(sh, cmd);
 	if (outfd != STDOUT_FILENO)
 	{
 		dup2(outfd, STDOUT_FILENO);
@@ -73,6 +107,8 @@ static void	wait_for_pds(int *pids, int count)
 	if (ft_exit(0, 0, 0) == 131)
 		ft_fprintf(2, "Quit (core dumped)\n");
 }
+
+
 
 static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 {
