@@ -93,8 +93,7 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 		{
 			if (pid > 0)
 				pids[i++] = pid;
-			else
-				ft_close_execute_pipes(cmd);
+			ft_close_execute_pipes(cmd);
 		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
