@@ -50,7 +50,7 @@ int	exec_cd(char **cmd, t_shell *sh)
 	if (get_argc(cmd) > 2)
 		return (cd_error(sh, "minishell: cd: Too many arguments!\n", NULL));
 	oldpwd = getcwd(NULL, 0);
-	if (cmd[1] == NULL)
+	if (cmd[1] == NULL || (get_argc(cmd) > 1 && cmd[1][0] == '\0'))
 	{
 		home = ft_get_env("HOME", sh->envp);
 		if (!home)
