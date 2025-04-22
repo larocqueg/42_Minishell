@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:25:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/22 17:48:31 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:05:50 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int		create_cmds(t_shell *sh);
 int		perm_error(t_cmd *cmd);
 void	get_pids(t_shell *sh, t_cmd *cmd);
 void	ft_free_until_cmds(t_shell *sh);
-void    free_all_cmds(t_shell *sh, t_cmd *current);
+void	free_all_cmds(t_shell *sh, t_cmd *current);
 void	free_single_cmd(t_cmd *cmd);
 
 //exec_builtin.c
@@ -180,6 +180,7 @@ int		ft_is_builtin(char **cmds);
 //exec_cmd.c
 void	ft_execve_error(t_shell *sh, char *path);
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
+void	close_cmd_fds(t_cmd *cmd);
 
 //exec_erros.c
 void	ft_path_error(t_shell *sh, t_cmd *cmds);

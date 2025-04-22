@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 17:54:40 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:59:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ int	ft_is_numeric(char **cmd)
 		i++;
 	}
 	num = ft_atoll(cmd[1]);
-	if (num == LLONG_MAX && ft_strncmp("9223372036854775807", cmd[1], 20) == 0)
-		return (1);
-	if (num == LLONG_MAX && ft_strncmp("+9223372036854775807", cmd[1], 21) == 0)
-		return (1);
+	if ((num == LLONG_MAX) && ft_strncmp("9223372036854775807", cmd[1], 20) != 0
+		&& ft_strncmp("+9223372036854775807", cmd[1], 21) != 0)
+		return (0);
 	if (num == LLONG_MIN && ft_strncmp("-9223372036854775808", cmd[1], 21) == 0)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void	ft_free_exit(t_shell *sh)

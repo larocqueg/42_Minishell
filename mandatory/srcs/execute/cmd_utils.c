@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 17:19:03 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:06:01 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ void	free_all_cmds(t_shell *sh, t_cmd *current)
 {
 	t_cmd	*cmd;
 	t_cmd	*temp;
-	int		pipe;
 
 	if (sh->pids != NULL)
 		free(sh->pids);
 	if (!sh->cmd || ((!current->from_pipe && !current->to_pipe)
 			|| ft_is_builtin(current->cmd)))
 		return ;
-	pipe = false;
 	cmd = sh->cmd;
 	temp = cmd;
 	while (cmd)
@@ -65,15 +63,7 @@ void	free_all_cmds(t_shell *sh, t_cmd *current)
 			continue ;
 		}
 		ft_free(cmd->cmd);
-		if (cmd->to_pipe || cmd->from_pipe)
-			pipe = true;
-		if (pipe)
-		{
-			if (cmd->fd_out != -1)
-				close(cmd->fd_out);
-			if (cmd->fd_in != -1 && !cmd->heredoc)
-				close(cmd->fd_in);
-		}
+		close_cmd_fds(cmd);
 		free(cmd);
 		cmd = temp;
 	}
