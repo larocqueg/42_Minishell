@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:34:07 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	free_all_cmds(t_shell *sh, t_cmd *current)
 
 	if (sh->pids != NULL)
 		free(sh->pids);
+	sh->pids = NULL;
 	if (!sh->cmd || ((!current->from_pipe && !current->to_pipe)
-			|| ft_is_builtin(current->cmd)))
+			&& ft_is_builtin(current->cmd)))
 		return ;
 	cmd = sh->cmd;
 	temp = cmd;
@@ -74,6 +75,6 @@ void	free_single_cmd(t_cmd *cmd)
 	if (!cmd)
 		return ;
 	if (cmd->cmd)
-		free(cmd->cmd);
+		ft_free(cmd->cmd);
 	free(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 17:21:35 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:29:44 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,11 @@ void	execute(t_shell *sh)
 	get_pids(sh, cmd);
 	free_tokens(sh->token);
 	execute_commands(sh, cmd, 0, -1);
-	if (sh->pids != NULL && (cmd->to_pipe || cmd->from_pipe))
+	if (sh->pids != NULL)
+	{
 		free(sh->pids);
+		sh->pids = NULL;
+	}
 	free_cmds(sh);
 	free_pipes(sh);
 }
