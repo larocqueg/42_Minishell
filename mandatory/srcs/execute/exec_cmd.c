@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:21:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 18:05:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:07:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	close_cmd_fds(t_cmd *cmd)
 
 	pipe = false;
 	if (cmd->to_pipe || cmd->from_pipe)
-			pipe = true;
+		pipe = true;
 	if (pipe)
 	{
 		if (cmd->fd_out != -1)
