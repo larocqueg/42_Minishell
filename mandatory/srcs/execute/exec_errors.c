@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/19 11:33:21 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:17:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_path_error(t_shell *sh, t_cmd *cmds)
 		free(sh->pipe_new);
 	if (cmds->from_pipe && sh->pipe_old)
 		free(sh->pipe_old);
-	free_cmds(sh);
+	free_single_cmd(cmds);
 	ft_exit(0, 0, 1);
 }
 
@@ -82,7 +82,7 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 		}
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
-		free_cmds(sh);
+		free_single_cmd(cmd);
 		ft_exit(0, 0, 1);
 	}
 }

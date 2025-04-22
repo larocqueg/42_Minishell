@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:52:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/11 21:49:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:19:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void	free_single_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	//free(cmd->cmd);
+	if (cmd->cmd)
+		free(cmd->cmd);
+	free(cmd);
 }

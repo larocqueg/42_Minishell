@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:25:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/19 21:04:24 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:48:31 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,5 +297,7 @@ void	signal_reset(void);
 # define UNEXPECTED_T "minishell: syntax error: unexpected token"
 # define REDIRECT_T "minishell: Expected argument after"
 # define INVALID_I "not a valid identifier"
+# define LONGMAX 9223372036854775807
+# define LONGMIN -9223372036854775808
 
 #endif
