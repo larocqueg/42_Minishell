@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_utils_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:45:49 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:45:51 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/17 19:07:17 by gde-la-r          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	init_exec_commands(t_shell *sh, t_cmd *cmd, int *pid)
 		}
 		return (0);
 	}
-	if (!fork_cmd(sh, cmd, pid))
+	if (!fork_cmd(cmd, pid))
 	{
 		if (cmd->from_pipe)
 		{

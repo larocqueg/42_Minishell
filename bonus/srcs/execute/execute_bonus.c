@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:46:32 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/21 16:13:44 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/03/26 17:47:15 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,6 @@ static void	ft_get_colors(t_cmd *cmds)
 		cmds->cmd = append_cmd(cmds->cmd, "--color=auto");
 }
 
-void	free_all_cmds(t_shell *sh, t_cmd *current)
-{
-	t_cmd	*cmd;
-	t_cmd	*temp;
-	int		pipe;
-
-	if (!sh->cmd || ((!current->from_pipe && !current->to_pipe) || ft_is_builtin(current->cmd)))
-		return ;
-	pipe = false;
-	cmd = sh->cmd;
-	temp = cmd;
-	while (cmd)
-	{
-		temp = cmd -> next;
-		if (cmd == current)
-		{
-			cmd = temp;
-			continue;
-		}
-		ft_free(cmd->cmd);
-		if (cmd->to_pipe || cmd->from_pipe)
-			pipe = true;
-		if (pipe)
-		{
-			if (cmd->fd_out != -1)
-				close(cmd->fd_out);
-			if (cmd->fd_in != -1 && !cmd->heredoc)
-				close(cmd->fd_in);
-		}
-		free(cmd);
-		cmd = temp;
-	}
-}
 static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 {
 	outfd = get_fdout(cmd, sh);
@@ -86,10 +53,10 @@ static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 		handle_perm_error(cmd, sh);
 }
 
-static void	wait_for_pds(int *pids, int count)
+static void	wait_for_pids(t_shell *sh, int count)
 {
-	int	status;
 	int	i;
+	int	status;
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
@@ -97,7 +64,7 @@ static void	wait_for_pds(int *pids, int count)
 	signal(SIGPIPE, child_signal_handler);
 	while (i < count)
 	{
-		waitpid(pids[i], &status, 0);
+		waitpid(sh->pids[i], &status, 0);
 		if (WIFEXITED(status))
 			ft_exit(WEXITSTATUS(status), true, false);
 		else if (WIFSIGNALED(status))
@@ -108,12 +75,8 @@ static void	wait_for_pds(int *pids, int count)
 		ft_fprintf(2, "Quit (core dumped)\n");
 }
 
-
-
 static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 {
-	int		pids[4096];
-
 	while (cmd)
 	{
 		pid = -1;
@@ -128,14 +91,14 @@ static void	execute_commands(t_shell *sh, t_cmd *cmd, int i, int pid)
 		else if (pid != 0)
 		{
 			if (pid > 0)
-				pids[i++] = pid;
+				sh->pids[i++] = pid;
 			ft_close_execute_pipes(cmd);
 		}
 		change_pipes(sh, cmd);
 		cmd = cmd->next;
 	}
 	if (i > 0)
-		wait_for_pds(pids, i);
+		wait_for_pids(sh, i);
 }
 
 void	execute(t_shell *sh)
@@ -143,8 +106,11 @@ void	execute(t_shell *sh)
 	t_cmd	*cmd;
 
 	cmd = sh->cmd;
+	get_pids(sh, cmd);
 	free_tokens(sh->token);
 	execute_commands(sh, cmd, 0, -1);
+	if (sh->pids != NULL && (cmd->to_pipe || cmd->from_pipe))
+		free(sh->pids);
 	free_cmds(sh);
 	free_pipes(sh);
 }

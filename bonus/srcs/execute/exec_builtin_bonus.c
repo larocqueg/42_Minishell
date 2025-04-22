@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:46:06 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:46:07 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/11 19:02:57 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_builtin(t_cmd *cmd, t_shell *sh)
 			free(sh->pipe_new);
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
-		free_cmds(sh);
+		free_single_cmd(cmd);
 		if (sh->heredoc_count > 0)
 			free(sh->heredoc_pipes);
 		ft_exit(0, 0, 1);

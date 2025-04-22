@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:48:52 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:48:53 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/03/25 16:03:03 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	expand_tokens(t_shell *sh)
 	token = sh->token;
 	while (token)
 	{
-		if (token->type == WORD || token->type == WILDCARD)
+		if (token->type == WORD)
 		{
 			temp = expand(token->token, sh, false, 0);
 			free(token->token);

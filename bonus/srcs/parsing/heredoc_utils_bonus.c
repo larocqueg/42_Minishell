@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:50:22 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/19 13:59:12 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	here_doc_loop(t_token *token, t_shell *sh, int *heredoc_i, int *pid)
 {
-	if (token->type == HERE_DOC && token->next)
+	if (token->type == HERE_DOC)
 	{
 		(*pid) = fork();
 		if ((*pid) == -1)

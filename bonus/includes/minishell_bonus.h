@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:12:20 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/22 17:47:57 by rafaelfe         ###   ########.fr       */
+/*   Created: 2025/04/22 18:29:25 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:29:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef enum e_type
 	INFILE,
 	TOFILE,
 	VAR,
-	WILDCARD,
 }	t_type;
 
 typedef struct s_cmd
@@ -64,8 +63,8 @@ typedef struct s_token
 	char			*token;
 	t_type			type;
 	bool			expand;
-	struct s_token	*next;
 	bool			wildcard;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_shell
@@ -85,6 +84,7 @@ typedef struct s_shell
 	int		heredoc_count;
 	int		**heredoc_pipes;
 	int		exit_code;
+	int		*pids;
 }	t_shell;
 
 typedef struct s_fd
@@ -93,10 +93,45 @@ typedef struct s_fd
 	int	fd_out;
 }	t_fd;
 
-//main_bonus.c
-void	ft_sh_init(t_shell *sh, char **envp);
+//main.c
 void	ft_get_shlvl(t_shell *sh);
 void	ft_init_pwd(t_shell *sh);
+void	ft_sh_init(t_shell *sh, char **envp);
+
+//cd.c
+int		get_argc(char **cmd);
+int		exec_cd(char **cmd, t_shell *sh);
+
+//echo.c
+void	exec_echo(t_cmd *cmd);
+
+//unset.c
+void	exec_unset(t_shell *sh, char **cmd);
+int		ft_strcmp_unset(char *env, char *cmd);
+char	**ft_free_back(char **new_env, int k);
+char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k);
+
+//pwd.c
+void	exec_pwd(t_cmd *cmd);
+
+//env.c
+void	exec_env(t_shell *sh, t_cmd *cmd);
+
+//export.c
+void	print_export(t_shell *sh);
+void	exec_export(t_shell *sh, t_cmd *cmd);
+void	create_export(char *str, t_shell *sh);
+int		ft_strcmp_export(char **env, char *cmd);
+
+//export_utils.c
+int		is_append_var(char *str);
+void	create_var(char *var_name, char *var, t_shell *sh);
+void	append_var(char *var_name, char *var, char *temp, t_shell *sh);
+void	do_append(char *var, t_shell *sh);
+void	put_export(char *str);
+
+//export_utils_2.c
+void	ft_free_export(char **temp);
 
 //builtin_utils.c
 void	ft_swap(char **s1, char **s2);
@@ -104,114 +139,97 @@ int		ft_strcmp_tochar(const char *s1, const char *s2, char c);
 size_t	ft_strlen_tochar(char *str, char c);
 void	free_envp(t_shell *sh);
 
-//cd_bonus.c
-int		get_argc(char **cmd);
-int		exec_cd(char **cmd, t_shell *sh);
-
-//echo_bonus.c
-void	exec_echo(t_cmd *cmds);
-
-//env_bonus.c
-void	exec_env(t_shell *sh, t_cmd *cmd);
-
-//exit_bonus.c
+//exit.c
 int		ft_is_numeric(char **cmd);
 void	ft_free_exit(t_shell *sh);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 
-//export_bonus.c
-void	print_export(t_shell *sh);
-int		ft_strcmp_export(char **env, char *cmd);
-void	create_export(char *str, t_shell *sh);
-void	exec_export(t_shell *sh, t_cmd *cmd);
-
-//export_utils_bonus.c
-int		is_append_var(char *str);
-void	create_var(char *var_name, char *var, t_shell *sh);
-void	append_var(char *var_name, char *var, char *temp, t_shell *sh);
-void	do_append(char *var, t_shell *sh);
-void	put_export(char *str);
-
-//export_utils_bonus_2.c
-void	ft_free_export(char **temp);
-
-//pwd_bonus.c
-void	exec_pwd(t_cmd *cmd);
-
-//unset_bonus.c
-char	**ft_free_back(char **new_env, int k);
-int		ft_strcmp_unset(char *env, char *cmd);
-char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k);
-void	exec_unset(t_shell *sh, char **cmd);
-
-//cli_bonus.c
+//cli.c
 void	ft_eof_close(t_shell *sh);
 void	reset_cli(t_shell *sh);
 int		start_cli(t_shell *sh);
 
-//env_utils_bonus.c;
+//env_utils.c
 char	*ft_get_env(char *var_name, char **env);
 void	ft_change_var(char *var_name, char *content, char **env);
 char	**clone_envp(t_shell *sh, char **envp);
 int		ft_strcmp_var(char *env_var, char *new_var);
 int		ft_find_var(char *new_var, char **envp);
 
-//env_bonus.c
+//print_env.c
 void	ft_print_env(t_shell *sh);
 
-//cmd_bonus.c
+//cmds.c
 void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 char	**append_cmd(char **cmd, char *newcmd);
 t_cmd	*cmd_init(bool from_pipe);
 int		extract_cmd(t_cmd **cmd, t_token **token, bool from_pipe, t_shell *sh);
 int		create_cmds(t_shell *sh);
 
-//cmd_utils_bonus.c
+//cmd_utils.c
 int		perm_error(t_cmd *cmd);
+void	get_pids(t_shell *sh, t_cmd *cmd);
 void	ft_free_until_cmds(t_shell *sh);
+void	free_all_cmds(t_shell *sh, t_cmd *current);
+void	free_single_cmd(t_cmd *cmd);
 
-//exec_builtin_bonus.c
+//exec_builtin.c
 void	free_builtin(t_cmd *cmd, t_shell *sh);
 void	exec_builtin(t_cmd *cmd, t_shell *sh);
 int		ft_is_builtin(char **cmds);
 
-//exec_cmd_bonus.c
+//exec_cmd.c
 void	ft_execve_error(t_shell *sh, char *path);
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
+void	close_cmd_fds(t_cmd *cmd);
 
-//exec_errors_bonus.c
+//exec_erros.c
 void	ft_path_error(t_shell *sh, t_cmd *cmds);
 int		ft_isrelative(char *str);
 void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh);
 void	handle_perm_error(t_cmd *cmd, t_shell *sh);
 
-//execute_bonus.c
+//execute.c
 void	execute(t_shell *sh);
 
-//execute_pipe_utils_bonus.c
-void	ft_close_execute_pipes(t_cmd *cmd);
-int		init_exec_commands(t_shell *sh, t_cmd *cmd, int *pid);
-
-//execute_utils_bonus.c
+//execute_utils.c
 int		get_fdout(t_cmd *cmd, t_shell *sh);
 int		get_fdin(t_cmd *cmd, t_shell *sh);
 int		create_pipe(t_shell *sh, t_cmd *cmd);
-int		fork_cmd(t_shell *sh, t_cmd *cmd, int *pid);
+int		fork_cmd(t_cmd *cmd, int *pid);
 void	change_pipes(t_shell *sh, t_cmd *cmd);
 
-//get_fds_bonus.c
+//execute_pipes_utils.c
+void	ft_close_execute_pipes(t_cmd *cmd);
+int		init_exec_commands(t_shell *sh, t_cmd *cmd, int *pid);
+
+//get_fds.c
 t_token	*getfd_tofile(t_token *token, t_cmd *newcmd);
 t_token	*getfd_infile(t_token *token, t_cmd *newcmd);
 t_token	*getfd_append(t_token *token, t_cmd *newcmd);
 t_token	*getfd_heredoc(t_token *token, t_cmd *newcmd, t_shell *sh);
 t_token	*get_command(t_token *token, t_cmd *newcmd);
 
-//path_finder_bonus.c
+//path_finder.c
 int		is_character_device(const char *path);
 int		is_folder(char *path);
 int		is_file(char *path);
 char	*path_finder(char *cmds, char **env);
 char	*local_path_finder(char *cmd, bool from_path_finder);
+
+//free_array.c
+void	ft_free(char **str);
+
+//free_child.c
+void	ft_free_child_pipes(t_shell *sh);
+
+//free_cmds.c
+void	free_cmds(t_shell *sh);
+
+//free_heredoc.c
+void	free_pipes(t_shell *sh);
+void	handle_exit(t_shell *sh);
+void	free_exit(t_shell *sh, char *end, int heredoc_i, char *prompt);
 
 //wild_card_bonus.c
 int		ft_match(char *str, char *line);
@@ -219,77 +237,63 @@ char	*get_dir(DIR *directory);
 char	*get_arg(DIR *directory, char *str);
 int		has_wildcard(char *str);
 
-//free_array_bonus.c
-void	ft_free(char **str);
-
-//free_child_bonus.c
-void	ft_free_child_pipes(t_shell *sh);
-
-//free_cmds_bonus.c
-void	free_cmds(t_shell *sh);
-
-//free_heredoc_bonus.c
-void	free_pipes(t_shell *sh);
-void	handle_exit(t_shell *sh);
-void	free_exit(t_shell *sh, char *end, int heredoc_i, char *prompt);
-
-//free_tokens_utils.c
+//free_tokens.c
 void	free_tokens(t_token	*token);
 void	ft_free_tokenize(t_token *token, char *prompt);
 
-//expand_bonus.c
+//expand.c
 void	set_quotes(char c, bool *in_single_quotes, bool *in_quotes);
 char	*expand(char *str, t_shell *sh, bool heredoc, size_t i);
 void	expand_tokens(t_shell *sh);
 
-//expand_utils_bonus.c
+//expand_utils.c
 char	*extract_variable(char *str, int i);
 int		ft_is_all_var(char	*str);
 char	*ft_expand_string(char *str, size_t *i, t_shell *sh);
 char	*ft_expand_exit(char *str, size_t *i);
 char	*ft_expand_vars(char *str, size_t *i, t_shell *sh);
 
-//heredoc_bonus.c
+//heredoc.c
 void	handle_heredoc_child(t_shell *sh, t_token *token, int heredoc_i);
 int		handle_heredoc_parent(t_shell *sh, int pid);
 int		get_heredoc(t_shell *sh);
 void	start_heredoc(t_shell *sh, int heredoc_i);
 void	ft_get_heredoc(t_shell *sh, char *end, int heredoc_i, bool quote);
 
-//heredoc_utils_bonus.c
+//heredoc_utils.c
 int		here_doc_loop(t_token *token, t_shell *sh, int *heredoc_i, int *pid);
 int		has_quotes(char *str);
 int		ft_heredoc_init(t_shell *sh);
 int		not_prompt(t_shell *sh, char *end, int heredoc_i, char *prompt);
 
-//string_utils_bonus.c
+//string_utils.c
 char	ft_ischar(int *i);
 char	*remove_quotes(char *str);
 char	*ft_insertstr(char	*string, size_t index, char *substr);
 int		check_quotes(char *prompt);
 int		has_equals(char *str);
 
-//syntax_check_bonus.c
+//syntax_check.c
 int		check_tokens(t_token *token);
 int		check_syntax(t_shell *sh);
 
-//tokenize_bonus.c
+//tokenize.c
 int		tokenize(char *prompt, t_shell *sh);
 
-//token_last_bonus.c
-int		ft_type(t_token *tokens);
-
-//token_utils_bonus.c
+//token_utils.c
 t_token	*ft_tokennew(char *str, int type);
 void	ft_token_addback(t_token **token, t_token *new_token);
 int		is_operator(char prompt);
 int		is_space(char prompt);
 int		is_var(char *token);
 
-//exit_status_bonus.c
+//token_last.c
+int		ft_type(t_token *tokens);
+
+//exit_status.c
 int		ft_exit(int exit_code, bool set, bool close);
 
-//signal_handler_bonus.c
+//signal_handler.c
 void	signal_handler(int sig);
 void	ft_heredoc_child_signal_handler(int sig);
 void	ft_heredoc_parent_signal_handler(int sig);

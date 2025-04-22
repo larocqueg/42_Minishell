@@ -3,17 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:30:15 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:30:17 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/03/20 20:44:47 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_bonus.h"
 
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell	sh;
+
+	(void)argv;
+	if (argc != 1 /*|| !isatty(STDOUT_FILENO)*/)
+		return (1);
+	ft_sh_init(&sh, envp);
+	ft_get_shlvl(&sh);
+	ft_init_pwd(&sh);
+	start_cli(&sh);
+	free_envp(&sh);
+	return (0);
+}
+
 void	ft_sh_init(t_shell *sh, char **envp)
 {
+	sh->pids = NULL;
 	sh->original_stdin = dup(STDIN_FILENO);
 	sh->original_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, SIG_IGN);
@@ -68,19 +84,4 @@ void	ft_init_pwd(t_shell *sh)
 	create_export(temp, sh);
 	free(current_pwd);
 	free (temp);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_shell	sh;
-
-	(void)argv;
-	if (argc != 1 || !isatty(STDOUT_FILENO))
-		return (1);
-	ft_sh_init(&sh, envp);
-	ft_get_shlvl(&sh);
-	ft_init_pwd(&sh);
-	start_cli(&sh);
-	free_envp(&sh);
-	return (0);
 }

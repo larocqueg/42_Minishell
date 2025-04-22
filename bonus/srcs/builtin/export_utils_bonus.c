@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:06:40 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:06:42 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/17 18:36:25 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,15 @@ void	append_var(char *var_name, char *var, char *temp, t_shell *sh)
 	free(var_name);
 	var_name = ft_strjoin(temp, value);
 	if (!var_name)
+	{
+		free(value);
+		free(temp);
 		return ;
+	}
 	create_export(var_name, sh);
 	free(temp);
 	free(value);
+	free(var_name);
 }
 
 void	do_append(char *var, t_shell *sh)
@@ -86,7 +91,6 @@ void	do_append(char *var, t_shell *sh)
 		create_var(var_name, var, sh);
 	else
 		append_var(var_name, var, temp, sh);
-	free(var_name);
 	ft_exit(0, 1, 0);
 }
 

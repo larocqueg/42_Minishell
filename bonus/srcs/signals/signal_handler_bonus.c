@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:49:21 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:49:23 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/04 20:23:54 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_heredoc_parent_signal_handler(int sig)
 void	child_signal_handler(int sig)
 {
 	if (sig == SIGPIPE)
-		return ;
+		ft_exit(141, 1, 0);
 }
 
 void	signal_reset(void)

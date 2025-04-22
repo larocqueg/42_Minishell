@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:46:53 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/20 18:47:03 by gde-la-r         ###   ########.fr       */
+/*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
+/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_path_error(t_shell *sh, t_cmd *cmds)
 		free(sh->pipe_new);
 	if (cmds->from_pipe && sh->pipe_old)
 		free(sh->pipe_old);
-	free_cmds(sh);
+	free_single_cmd(cmds);
 	ft_exit(0, 0, 1);
 }
 
@@ -82,7 +82,7 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 		}
 		if (cmd->from_pipe)
 			free(sh->pipe_old);
-		free_cmds(sh);
+		free_single_cmd(cmd);
 		ft_exit(0, 0, 1);
 	}
 }
