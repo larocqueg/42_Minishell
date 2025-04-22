@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 19:44:19 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:47:46 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh)
 	ft_path_error(sh, cmd);
 }
 
+static void	close_pipes(t_shell *sh, t_cmd *cmd)
+{
+	if (cmd->from_pipe)
+		free(sh->pipe_old);
+	if (cmd->to_pipe)
+		free(sh->pipe_new);
+}
+
 void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 {
 	(void)sh;
@@ -80,10 +88,7 @@ void	handle_perm_error(t_cmd *cmd, t_shell *sh)
 			if (cmd->fd_out != -1)
 				close(cmd->fd_out);
 		}
-		if (cmd->from_pipe)
-			free(sh->pipe_old);
-		if (cmd->to_pipe)
-			free(sh->pipe_new);
+		close_pipes(sh, cmd);
 		free_single_cmd(cmd);
 		ft_exit(0, 0, 1);
 	}
