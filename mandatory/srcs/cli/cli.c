@@ -56,8 +56,8 @@ int	start_cli(t_shell *sh)
 			continue ;
 		execute(sh);
 		reset_cli(sh);
-		//if (!isatty(STDIN_FILENO) && !isatty(STDOUT_FILENO))
-		//	ft_eof_close(sh);
+		if (!isatty(STDIN_FILENO) && !isatty(STDOUT_FILENO))
+			ft_eof_close(sh);
 	}
 	exit(0);
 }

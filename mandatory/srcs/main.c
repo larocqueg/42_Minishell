@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 
 void	ft_sh_init(t_shell *sh, char **envp)
 {
+	sh->pids = NULL;
 	sh->original_stdin = dup(STDIN_FILENO);
 	sh->original_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, SIG_IGN);

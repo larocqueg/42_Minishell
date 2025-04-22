@@ -83,6 +83,7 @@ typedef struct s_shell
 	int		heredoc_count;
 	int		**heredoc_pipes;
 	int		exit_code;
+	int		*pids;
 }	t_shell;
 
 typedef struct s_fd
@@ -166,7 +167,10 @@ int		create_cmds(t_shell *sh);
 
 //cmd_utils.c
 int		perm_error(t_cmd *cmd);
+void	get_pids(t_shell *sh, t_cmd *cmd);
 void	ft_free_until_cmds(t_shell *sh);
+void    free_all_cmds(t_shell *sh, t_cmd *current);
+void	free_single_cmd(t_cmd *cmd);
 
 //exec_builtin.c
 void	free_builtin(t_cmd *cmd, t_shell *sh);
