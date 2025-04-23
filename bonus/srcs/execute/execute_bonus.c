@@ -109,7 +109,7 @@ void	execute(t_shell *sh)
 	get_pids(sh, cmd);
 	free_tokens(sh->token);
 	execute_commands(sh, cmd, 0, -1);
-	if (sh->pids != NULL && (cmd->to_pipe || cmd->from_pipe))
+	if (sh->pids != NULL)
 		free(sh->pids);
 	free_cmds(sh);
 	free_pipes(sh);
