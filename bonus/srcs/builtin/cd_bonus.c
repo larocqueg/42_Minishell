@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:13:00 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:36:01 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ static int	cd_error(t_shell *sh, char *error, char *cmd)
 
 static void	change_var(char *path, char *old_pwd, t_shell *sh)
 {
-	ft_change_var("PWD=", path, sh->envp);
-	ft_change_var("OLDPWD=", old_pwd, sh->envp);
+	if (ft_get_env("PWD", sh->envp))
+		ft_change_var("PWD=", path, sh->envp);
+	if (ft_get_env("OLDPWD", sh->envp))
+		ft_change_var("OLDPWD=", old_pwd, sh->envp);
 }
 
 int	get_argc(char **cmd)
