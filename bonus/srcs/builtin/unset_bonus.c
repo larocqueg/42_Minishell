@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:34:36 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 	new_env = malloc(sizeof(char *) * (sh->env_size + 1));
 	if (!new_env)
 		return (NULL);
-	while (i < sh->env_size)
+	while (i <= sh->env_size)
 	{
 		j = 1;
 		while (cmd[j])
