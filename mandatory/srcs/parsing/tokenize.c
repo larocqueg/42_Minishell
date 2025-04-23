@@ -16,18 +16,18 @@ static t_type	get_token_type(char *token, t_shell *sh)
 {
 	if (!token)
 		return (WORD);
-	if (ft_strncmp(token, "|", 1) == 0)
+	if (ft_strncmp(token, "|", 2) == 0)
 		return (PIPE);
-	if (ft_strncmp(token, "<<", 2) == 0)
+	if (ft_strncmp(token, "<<", 3) == 0)
 	{
 		sh->heredoc_count++;
 		return (HERE_DOC);
 	}
-	if (ft_strncmp(token, ">>", 2) == 0)
+	if (ft_strncmp(token, ">>", 3) == 0)
 		return (APPEND);
-	if (ft_strncmp(token, "<", 1) == 0)
+	if (ft_strncmp(token, "<", 2) == 0)
 		return (INFILE);
-	if (ft_strncmp(token, ">", 1) == 0)
+	if (ft_strncmp(token, ">", 2) == 0 || ft_strncmp(token, ">|", 3) == 0)
 		return (TOFILE);
 	return (WORD);
 }
@@ -70,7 +70,8 @@ static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 	else
 	{
 		start = i++;
-		if (sh->prompt[i] == sh->prompt[i - 1])
+		if (sh->prompt[i] == sh->prompt[i - 1]
+			|| (sh->prompt[i] == '|' && sh->prompt[i - 1] == '>'))
 			i++;
 		token = ft_strndupmod(sh->prompt, start, i - 1);
 	}
