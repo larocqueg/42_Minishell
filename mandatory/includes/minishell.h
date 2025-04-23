@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:25:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/22 18:05:50 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:58:39 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ int		ft_is_builtin(char **cmds);
 void	ft_execve_error(t_shell *sh, char *path);
 void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh);
 void	close_cmd_fds(t_cmd *cmd);
+void	close_pipes(t_shell *sh, t_cmd *cmd);
 
 //exec_erros.c
 void	ft_path_error(t_shell *sh, t_cmd *cmds);

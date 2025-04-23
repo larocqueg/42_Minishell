@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:00:35 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 19:50:20 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:57:18 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh)
 	ft_path_error(sh, cmd);
 }
 
-static void	close_pipes(t_shell *sh, t_cmd *cmd)
+void	close_pipes(t_shell *sh, t_cmd *cmd)
 {
 	if (cmd->from_pipe)
 		free(sh->pipe_old);

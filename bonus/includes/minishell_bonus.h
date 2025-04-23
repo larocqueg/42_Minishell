@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-la-r <gde-la-r@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:19 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/23 14:49:30 by gde-la-r         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:58:06 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void	ft_path_error(t_shell *sh, t_cmd *cmds);
 int		ft_isrelative(char *str);
 void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh);
 void	handle_perm_error(t_cmd *cmd, t_shell *sh);
+void	close_pipes(t_shell *sh, t_cmd *cmd);
 
 //execute.c
 void	execute(t_shell *sh);

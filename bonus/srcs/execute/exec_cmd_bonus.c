@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:21:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:57:43 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh)
 	close(sh->original_stdout);
 	if (!cmds->cmd || !*cmds->cmd)
 	{
+		close_pipes(sh, cmds);
 		free_single_cmd(cmds);
 		free_envp(sh);
 		ft_exit(0, 1, 1);
