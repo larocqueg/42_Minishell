@@ -1,5 +1,9 @@
 *.o
 
+valgrind.sh
+
+readline.supp
+
 minishell_tester
 
 minishell

@@ -24,3 +24,10 @@ int	ft_type(t_token *tokens)
 	}
 	return (tokens->type);
 }
+
+int	is_redir(char c)
+{
+	if (c == '>' || c == '<')
+		return (1);
+	return (0);
+}

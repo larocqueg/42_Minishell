@@ -290,6 +290,7 @@ int		is_var(char *token);
 
 //token_last.c
 int		ft_type(t_token *tokens);
+int		is_redir(char c);
 
 //exit_status.c
 int		ft_exit(int exit_code, bool set, bool close);

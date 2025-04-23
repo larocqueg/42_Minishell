@@ -70,7 +70,7 @@ static int	extract_token(int start, int i, t_token **tokens, t_shell *sh)
 	else
 	{
 		start = i++;
-		if ((sh->prompt[i] == sh->prompt[i - 1])
+		if ((is_redir(sh->prompt[i]) && sh->prompt[i] == sh->prompt[i - 1])
 			|| (sh->prompt[i] == '|' && sh->prompt[i - 1] == '>'))
 			i++;
 		token = ft_strndupmod(sh->prompt, start, i - 1);
