@@ -57,3 +57,39 @@ void	ft_command_error(t_cmd *cmd, char *path, char **cmds, t_shell *sh)
 		free(path);
 	ft_path_error(sh, cmd);
 }
+
+static void	close_pipes(t_shell *sh, t_cmd *cmd)
+{
+	if (cmd->from_pipe)
+		free(sh->pipe_old);
+	if (cmd->to_pipe)
+		free(sh->pipe_new);
+}
+
+void	handle_perm_error(t_cmd *cmd, t_shell *sh)
+{
+	(void)sh;
+	ft_fprintf(2, "minishell: Permission denied or file does not exist!\n");
+	if ((cmd->to_pipe || cmd->from_pipe) && !cmd->cmd && cmd->infile_error)
+	{
+		ft_exit(0, true, false);
+	}
+	else
+		ft_exit(1, true, false);
+	if (cmd->to_pipe || cmd->from_pipe || !ft_is_builtin(cmd->cmd))
+	{
+		close(sh->original_stdin);
+		close(sh->original_stdout);
+		free_envp(sh);
+		if (!cmd->to_pipe || !cmd->from_pipe)
+		{
+			if (cmd->fd_in != -1)
+				close(cmd->fd_in);
+			if (cmd->fd_out != -1)
+				close(cmd->fd_out);
+		}
+		close_pipes(sh, cmd);
+		free_single_cmd(cmd);
+		ft_exit(0, 0, 1);
+	}
+}

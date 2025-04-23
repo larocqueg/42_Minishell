@@ -69,7 +69,10 @@ char	*path_finder(char *cmds, char **env)
 		path = ft_strjoin(part_path, cmds);
 		free(part_path);
 		if (access(path, F_OK) == 0)
+		{
+			ft_free(paths);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
