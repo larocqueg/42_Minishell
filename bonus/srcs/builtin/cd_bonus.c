@@ -25,10 +25,8 @@ static int	cd_error(t_shell *sh, char *error, char *cmd)
 
 static void	change_var(char *path, char *old_pwd, t_shell *sh)
 {
-	if (ft_get_env("PWD", sh->envp))
-		ft_change_var("PWD=", path, sh->envp);
-	if (ft_get_env("OLDPWD", sh->envp))
-		ft_change_var("OLDPWD=", old_pwd, sh->envp);
+	ft_change_var("PWD=", path, sh->envp);
+	ft_change_var("OLDPWD=", old_pwd, sh->envp);
 }
 
 int	get_argc(char **cmd)
