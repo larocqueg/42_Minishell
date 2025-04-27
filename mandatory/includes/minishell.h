@@ -110,6 +110,9 @@ int		ft_strcmp_unset(char *env, char *cmd);
 char	**ft_free_back(char **new_env, int k);
 char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k);
 
+//unset_utils.c
+void	get_new_env(t_shell *sh, int *i, int *k, char **new_env);
+
 //pwd.c
 void	exec_pwd(t_cmd *cmd);
 

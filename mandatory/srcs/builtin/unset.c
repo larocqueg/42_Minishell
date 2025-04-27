@@ -14,7 +14,6 @@
 
 char	**ft_free_back(char **new_env, int k)
 {
-	k--;
 	while (k >= 0)
 		free(new_env[k--]);
 	free(new_env);
@@ -81,9 +80,9 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 			}
 			j++;
 		}
-		new_env[k++] = ft_strdup(sh->envp[i++]);
+		get_new_env(sh, &i, &k, new_env);
 		if (!new_env[k - 1])
-			return (ft_free_back(new_env, k - 1));
+			return (ft_free_back(new_env, k - 2));
 	}
 	new_env[k] = NULL;
 	return (new_env);
