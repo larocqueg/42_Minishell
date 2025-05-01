@@ -14,11 +14,7 @@
 
 void	get_new_env(t_shell *sh, int *i, int *k, char **new_env)
 {
-	if (*i == sh->env_size)
-	{
-		new_env[(*k)++] = ft_strdup(sh->envp[*i]);
-		(*i)++;
-	}
-	else if (*i < sh->env_size)
-		new_env[(*k)++] = ft_strdup(sh->envp[(*i)++]);
+	if (*i < sh->old_env_size)
+		new_env[(*k)++] = ft_strdup(sh->envp[(*i)]);
+	(*i)++;
 }
