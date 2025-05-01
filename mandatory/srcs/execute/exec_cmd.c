@@ -6,16 +6,17 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 20:21:23 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/23 16:53:00 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:57:54 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_execve_error(t_shell *sh, char *path)
+void	ft_execve_error(t_shell *sh, char *path, t_cmd *cmd)
 {
 	ft_fprintf(2, "cannot execute '%s'\n", path);
-	free_cmds(sh);
+	close_pipes(sh, cmd);
+	free_single_cmd(cmd);
 	free_envp(sh);
 	free(path);
 	ft_exit(8, 1, 1);
@@ -63,5 +64,5 @@ void	exec_cmd(t_cmd *cmds, char **env, t_shell *sh)
 		|| is_character_device(path))
 		ft_command_error(cmds, path, cmds->cmd, sh);
 	execve(path, cmds->cmd, env);
-	ft_execve_error(sh, path);
+	ft_execve_error(sh, path, cmds);
 }
