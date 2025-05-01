@@ -79,6 +79,7 @@ typedef struct s_shell
 	char	*prompt;
 	char	*cli_text;
 	int		env_size;
+	int		old_env_size;
 	char	**envp;
 	int		local_size;
 	char	**local_vars;

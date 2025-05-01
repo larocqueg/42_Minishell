@@ -26,12 +26,15 @@ int	ft_strcmp_unset(char *env, char *cmd)
 	int	i;
 
 	i = 0;
-	while ((env[i] && cmd[i]) && env[i] == cmd[i])
+	if (env && *env)
 	{
-		i++;
+		while ((env[i] && cmd[i]) && env[i] == cmd[i])
+		{
+			i++;
+		}
+		if ((!env[i] || env[i] == '=') && cmd[i] == '\0')
+			return (1);
 	}
-	if ((!env[i] || env[i] == '=') && cmd[i] == '\0')
-		return (1);
 	return (0);
 }
 
@@ -43,6 +46,7 @@ static int	ft_count_vars(t_shell *sh, char **cmd)
 
 	j = 1;
 	count = 0;
+	sh->old_env_size = sh->env_size;
 	while (cmd[j])
 	{
 		i = 0;
@@ -69,7 +73,7 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 	new_env = malloc(sizeof(char *) * (sh->env_size + 1));
 	if (!new_env)
 		return (NULL);
-	while (i <= sh->env_size)
+	while (i < sh->old_env_size)
 	{
 		j = 1;
 		while (cmd[j])

@@ -42,6 +42,7 @@ void	ft_sh_init(t_shell *sh, char **envp)
 	sh->pipe_new = NULL;
 	sh->heredoc_pipes = NULL;
 	sh->heredoc_count = 0;
+	sh->old_env_size = 0;
 }
 
 void	ft_get_shlvl(t_shell *sh)
