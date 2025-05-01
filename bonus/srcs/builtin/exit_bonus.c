@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/04/22 18:26:16 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:31:27 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_is_numeric(char **cmd)
 	if ((num == LLONG_MAX) && ft_strncmp("9223372036854775807", cmd[1], 20) != 0
 		&& ft_strncmp("+9223372036854775807", cmd[1], 21) != 0)
 		return (0);
-	if (num == LLONG_MIN && ft_strncmp("-9223372036854775808", cmd[1], 21) == 0)
+	if (num == LLONG_MIN && ft_strncmp("-9223372036854775808", cmd[1], 21) != 0)
 		return (0);
 	return (1);
 }
