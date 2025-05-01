@@ -24,6 +24,11 @@ LIBFT_DIR = ./libs/libft
 BONUS_DIR = ./bonus/srcs
 BONUS_INCLUDES = ./bonus/includes
 
+#Colors
+RED    = \033[38;5;196m
+GREEN  = \033[38;5;46m
+NC     = \033[0m
+
 # Sources
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/cli/cli.c \
@@ -121,25 +126,25 @@ bonus: $(BONUS_NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $(NAME)
-	@echo "\n\nooo        ooooo  o8o               o8o  ooooo   ooooo           oooo  oooo"
-	@echo "\`88.       .888'  \`\"'               \`\"'  \`888'   \`888'           \`888  \`888"
-	@echo " 888b     d'888  oooo  ooo. .oo.   oooo   888     888   .ooooo.   888   888"
-	@echo " 8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888"
-	@echo " 8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888"
-	@echo " 8    Y     888   888   888   888   888   888     888  888    .o  888   888"
-	@echo "o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n"
-	@echo "✅ Successfully built $(NAME)!"
+	@echo "$(RED)\n\nooo        ooooo  o8o               o8o  ooooo   ooooo           oooo  oooo$(NC)"
+	@echo "$(RED)\`88.       .888'  \`\"'               \`\"'  \`888'   \`888'           \`888  \`888$(NC)"
+	@echo " $(RED)888b     d'888  oooo  ooo. .oo.   oooo   888     888   .ooooo.   888   888$(NC)"
+	@echo " $(RED)8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888$(NC)"
+	@echo " $(RED)8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888$(NC)"
+	@echo " $(RED)8    Y     888   888   888   888   888   888     888  888    .o  888   888$(NC)"
+	@echo "$(RED)o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n$(NC)"
+	@echo "✅ $(GREEN)Successfully built $(NAME)$(NC)!"
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(BONUS_OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $(BONUS_NAME)
-	@echo "\n\nooo        ooooo  o8o               o8o  ooooo   ooooo           oooo  oooo"
-	@echo "\`88.       .888'  \`\"'               \`\"'  \`888'   \`888'           \`888  \`888"
-	@echo " 888b     d'888  oooo  ooo. .oo.   oooo   888     888   .ooooo.   888   888"
-	@echo " 8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888"
-	@echo " 8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888"
-	@echo " 8    Y     888   888   888   888   888   888     888  888    .o  888   888"
-	@echo "o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n"
-	@echo "✅ Successfully built $(BONUS_NAME)!"
+	@echo "$(RED)\n\nooo        ooooo  o8o               o8o  ooooo   ooooo           oooo  oooo$(NC)"
+	@echo "$(RED)\`88.       .888'  \`\"'               \`\"'  \`888'   \`888'           \`888  \`888$(NC)"
+	@echo " $(RED)888b     d'888  oooo  ooo. .oo.   oooo   888     888   .ooooo.   888   888$(NC)"
+	@echo " $(RED)8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888$(NC)"
+	@echo " $(RED)8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888$(NC)"
+	@echo " $(RED)8    Y     888   888   888   888   888   888     888  888    .o  888   888$(NC)"
+	@echo "$(RED)o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n$(NC)"
+	@echo "✅ $(GREEN)Successfully built $(BONUS_NAME)$(NC)!"
 
 
 $(LIBFT):
