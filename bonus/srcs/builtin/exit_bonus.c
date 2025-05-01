@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:28:58 by rafaelfe          #+#    #+#             */
-/*   Updated: 2025/05/01 19:31:27 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:41:03 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int	ft_is_numeric(char **cmd)
 	return (1);
 }
 
-void	ft_free_exit(t_shell *sh)
+void	ft_free_exit(t_shell *sh, t_cmd *cmd)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		ft_fprintf(2, "exit\n");
 	free_envp(sh);
-	free_cmds(sh);
+	close_pipes(sh, cmd);
+	free_single_cmd(cmd);
 	close(sh->original_stdin);
 	close(sh->original_stdout);
 	if (sh->heredoc_count > 0)
@@ -58,13 +59,13 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 	argc = get_argc(cmds->cmd);
 	if (argc == 1)
 	{
-		ft_free_exit(sh);
+		ft_free_exit(sh, cmds);
 		ft_exit(0, 0, 1);
 	}
 	else if (!ft_is_numeric(cmds->cmd))
 	{
 		ft_fprintf(2, "exit: %s: numeric argument required\n", cmds->cmd[1]);
-		ft_free_exit(sh);
+		ft_free_exit(sh, cmds);
 		ft_exit(2, 1, 1);
 	}
 	if (argc > 2)
@@ -74,6 +75,6 @@ void	exec_exit(t_shell *sh, t_cmd *cmds)
 		return ;
 	}
 	exit_code = ft_atoll(cmds->cmd[1]);
-	ft_free_exit(sh);
+	ft_free_exit(sh, cmds);
 	ft_exit(exit_code, 1, 1);
 }

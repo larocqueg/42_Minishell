@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:19 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/05/01 18:54:01 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:40:22 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	free_envp(t_shell *sh);
 
 //exit.c
 int		ft_is_numeric(char **cmd);
-void	ft_free_exit(t_shell *sh);
+void	ft_free_exit(t_shell *sh, t_cmd *cmd);
 void	exec_exit(t_shell *sh, t_cmd *cmds);
 
 //cli.c
