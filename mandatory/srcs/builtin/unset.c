@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/23 19:35:08 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:12:41 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int	ft_strcmp_unset(char *env, char *cmd)
 	int	i;
 
 	i = 0;
-	while ((env[i] && cmd[i]) && env[i] == cmd[i])
+	if (env && *env)
 	{
-		i++;
+		while ((env[i] && cmd[i]) && env[i] == cmd[i])
+		{
+			i++;
+		}
+		if ((!env[i] || env[i] == '=') && cmd[i] == '\0')
+			return (1);
+		return (0);
 	}
-	if ((!env[i] || env[i] == '=') && cmd[i] == '\0')
-		return (1);
 	return (0);
 }
 
@@ -73,7 +77,7 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 		j = 1;
 		while (cmd[j])
 		{
-			if (ft_strcmp_unset(sh->envp[i], cmd[j]))
+			if (sh->envp && ft_strcmp_unset(sh->envp[i], cmd[j]))
 			{
 				i++;
 				break ;
@@ -81,7 +85,7 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 			j++;
 		}
 		get_new_env(sh, &i, &k, new_env);
-		if (!new_env[k - 1])
+		if (!new_env && k > 0 && !new_env[k - 1])
 			return (ft_free_back(new_env, k - 2));
 	}
 	new_env[k] = NULL;
