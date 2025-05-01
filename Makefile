@@ -143,7 +143,7 @@ $(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)
 	@echo " $(RED)8 Y88. .P  888  \`888  \`888P\"Y88b  \`888   888ooooo888  d88' \`88b  888   888$(NC)"
 	@echo " $(RED)8  \`888'   888   888   888   888   888   888     888  888ooo888  888   888$(NC)"
 	@echo " $(RED)8    Y     888   888   888   888   888   888     888  888    .o  888   888$(NC)"
-	@echo "$(RED)o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o\n\n$(NC)"
+	@echo "$(RED)o8o        o888o o888o o888o o888o o888o o888o   o888o \`Y8bod8P' o888o o888o.bonus\n\n$(NC)"
 	@echo "✅ $(GREEN)Successfully built $(BONUS_NAME)$(NC)!"
 
 
