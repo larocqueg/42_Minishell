@@ -31,8 +31,15 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
-//constants
-# define ARG_MAX 2097152
+# define BLACK   "\001\033[1;38;5;232m\002"
+# define RED     "\001\033[1;38;5;196m\002"
+# define GREEN   "\001\033[1;38;5;46m\002"
+# define YELLOW  "\001\033[1;38;5;226m\002"
+# define BLUE    "\001\033[1;38;5;27m\002"
+# define MAGENTA "\001\033[1;38;5;201m\002"
+# define CYAN    "\001\033[1;38;5;51m\002"
+# define WHITE   "\001\033[1;38;5;15m\002"
+# define RESET   "\001\033[0m\002"
 
 typedef enum e_type
 {
@@ -310,5 +317,6 @@ void	signal_reset(void);
 # define INVALID_I "not a valid identifier"
 # define LONGMAX 9223372036854775807
 # define LONGMIN -9223372036854775808
+# define ARG_MAX 2097152
 
 #endif

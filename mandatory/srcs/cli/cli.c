@@ -39,7 +39,7 @@ int	start_cli(t_shell *sh)
 {
 	while (1)
 	{
-		sh->prompt = readline("minishell $< ");
+		sh->prompt = readline(CYAN"minishell"RESET WHITE" $< "RESET);
 		if (!sh->prompt)
 			ft_eof_close(sh);
 		if (!*sh->prompt)
