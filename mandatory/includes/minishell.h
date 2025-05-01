@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:25:45 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/05/01 19:17:29 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:28:04 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,6 @@ typedef struct s_shell
 	int		*pids;
 }	t_shell;
 
-typedef struct s_fd
-{
-	int	fd_in;
-	int	fd_out;
-}	t_fd;
-
 //main.c
 void	ft_get_shlvl(t_shell *sh);
 void	ft_init_pwd(t_shell *sh);
@@ -117,9 +111,6 @@ void	exec_unset(t_shell *sh, char **cmd);
 int		ft_strcmp_unset(char *env, char *cmd);
 char	**ft_free_back(char **new_env, int k);
 char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k);
-
-//unset_utils.c
-void	get_new_env(t_shell *sh, int *i, int *k, char **new_env);
 
 //pwd.c
 void	exec_pwd(t_cmd *cmd);

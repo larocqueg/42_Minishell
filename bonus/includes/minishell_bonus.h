@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:19 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/05/01 19:40:22 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:29:21 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,6 @@ typedef struct s_shell
 	int		exit_code;
 	int		*pids;
 }	t_shell;
-
-typedef struct s_fd
-{
-	int	fd_in;
-	int	fd_out;
-}	t_fd;
 
 //main.c
 void	ft_get_shlvl(t_shell *sh);

@@ -6,7 +6,7 @@
 #    By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 15:21:10 by gde-la-r          #+#    #+#              #
-#    Updated: 2025/04/22 18:15:02 by rafaelfe         ###   ########.fr        #
+#    Updated: 2025/05/01 21:27:52 by rafaelfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/builtin/exit.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/unset.c \
-	$(SRC_DIR)/builtin/unset_utils.c \
 	$(SRC_DIR)/builtin/env.c \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/export_utils.c \
@@ -101,7 +100,6 @@ BONUS_SRC = $(BONUS_DIR)/main_bonus.c \
 	$(BONUS_DIR)/builtin/exit_bonus.c \
 	$(BONUS_DIR)/builtin/echo_bonus.c \
 	$(BONUS_DIR)/builtin/unset_bonus.c \
-	$(BONUS_DIR)/builtin/unset_utils_bonus.c \
 	$(BONUS_DIR)/builtin/env_bonus.c \
 	$(BONUS_DIR)/builtin/export_bonus.c \
 	$(BONUS_DIR)/builtin/export_utils_bonus.c \

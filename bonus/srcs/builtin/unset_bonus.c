@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/04/23 19:36:39 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:29:05 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	**ft_free_back(char **new_env, int k)
 {
-	k--;
 	while (k >= 0)
 		free(new_env[k--]);
 	free(new_env);
@@ -34,6 +33,7 @@ int	ft_strcmp_unset(char *env, char *cmd)
 		}
 		if ((!env[i] || env[i] == '=') && cmd[i] == '\0')
 			return (1);
+		return (0);
 	}
 	return (0);
 }
@@ -78,18 +78,17 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 		j = 1;
 		while (cmd[j])
 		{
-			if (ft_strcmp_unset(sh->envp[i], cmd[j]))
-			{
+			if (*sh->envp && ft_strcmp_unset(sh->envp[i], cmd[j]))
 				i++;
-				break ;
-			}
 			j++;
 		}
-		get_new_env(sh, &i, &k, new_env);
-		if (!new_env[k - 1])
-			return (ft_free_back(new_env, k - 1));
+		if (i < sh->old_env_size)
+			new_env[k++] = ft_strdup(sh->envp[i]);
+		i++;
+		if (k > 0 && !new_env[k - 1])
+			return (ft_free_back(new_env, k - 2));
 	}
-	new_env[k] = NULL;
+	new_env[sh->env_size] = NULL;
 	return (new_env);
 }
 
