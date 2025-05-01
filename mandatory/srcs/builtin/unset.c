@@ -6,7 +6,7 @@
 /*   By: rafaelfe <rafaelfe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:17 by gde-la-r          #+#    #+#             */
-/*   Updated: 2025/05/01 20:12:41 by rafaelfe         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:01:17 by rafaelfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 		j = 1;
 		while (cmd[j])
 		{
-			if (sh->envp && ft_strcmp_unset(sh->envp[i], cmd[j]))
+			if (*sh->envp && ft_strcmp_unset(sh->envp[i], cmd[j]))
 			{
 				i++;
 				break ;
@@ -86,10 +86,10 @@ char	**ft_get_unset(t_shell *sh, char **new_env, char **cmd, int k)
 			j++;
 		}
 		get_new_env(sh, &i, &k, new_env);
-		if (!new_env && k > 0 && !new_env[k - 1])
+		if (new_env && k > 0 && !new_env[k - 1])
 			return (ft_free_back(new_env, k - 2));
 	}
-	new_env[k] = NULL;
+	new_env[sh->env_size] = NULL;
 	return (new_env);
 }
 
