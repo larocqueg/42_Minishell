@@ -47,6 +47,8 @@ static void	handle_child(t_shell *sh, t_cmd *cmd, int outfd, int infd)
 	else if (!perm_error(cmd))
 	{
 		ft_get_colors(cmd);
+		if (cmd->from_pipe)
+			usleep(10);
 		exec_cmd(cmd, sh->envp, sh);
 	}
 	if (perm_error(cmd))
