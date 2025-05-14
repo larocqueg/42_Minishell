@@ -40,7 +40,7 @@ make
 You’ll see the prompt:
 
 ```shell
-minishell$
+minishell $<
 ```
 
 Start typing your commands like you would in bash!
